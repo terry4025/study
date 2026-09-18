@@ -3,7 +3,7 @@ import type { Lesson } from '../reader/types.js';
 import { PBRT_TOC } from '../data/books/pbrt-4ed/toc';
 import { curriculum } from '../reader/curriculum.js';
 import { glossary } from '../reader/glossary.js';
-import { adaptLegacy } from '../reader/legacy.js';
+import { adaptPbrt } from './pbrt-adapter.js';
 import rawOutline from './pbrt-outline.json';
 import readings from './pbrt-readings.json';
 const outline: SourceEntry[] = rawOutline.map(e=>({...e,coverage:e.coverage==='legacy-note'?'legacy-note':'reading-guide',review:'pending'}));
@@ -11,7 +11,6 @@ const guides:Lesson[]=readings.map((r,index)=>{
     const entry=outline.find(e=>e.number===r.number)!;
     if(!entry)throw new Error('Missing outline entry: '+r.number);
     const id=entry.lessonId;
-    // Alternate the answer position; never grade by displayed order assumptions.
     const reversed=index%2===1;
     return {id,chapter:entry.chapter,chapterTitle:entry.chapterTitle,title:r.number+' · '+r.title,
         deck:'원문 전에 읽는 짧은 안내 · 독립 예제와 확인 문제',kind:'reading-guide',minutes:4,
@@ -39,5 +38,5 @@ export const pbrtBook:BookPackage={
         const base=source.slice(0,source.lastIndexOf('/'));
         return [chapter,[{title:'원서의 더 읽을거리',url:base+'/Further_Reading'},...(chapter==='16'?[]:[{title:'원서 연습문제',url:base+'/Exercises'}])]];
     })),
-    legacy:{toc:PBRT_TOC,load:()=>import('../data/sections').then(m=>m.SECTIONS_MAP),adapt:adaptLegacy}
+    legacy:{toc:PBRT_TOC,load:()=>import('../data/sections').then(m=>m.SECTIONS_MAP),adapt:adaptPbrt}
 };

@@ -1,7 +1,7 @@
 name: Reader validation
 on:
   push:
-    branches: [feat/multibook-pbrt-companion]
+    branches: [main, feat/multibook-pbrt-companion]
   pull_request:
     branches: [main]
 permissions:
@@ -10,35 +10,13 @@ concurrency:
   group: reader-validation-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  migrate:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/multibook-pbrt-companion'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Base-checked one-time migration
-        run: |
-          if test -f _platform_seed/apply.py; then
-            python3 _platform_seed/apply.py
-            git add src
-            git rm -r _platform_seed
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'fix: preserve contextual lesson typing after extraction'
-            git push origin HEAD:feat/multibook-pbrt-companion
-          fi
   check:
-    needs: migrate
-    if: always() && !cancelled() && needs.migrate.result != 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.ref || 'feat/multibook-pbrt-companion' }}
+          persist-credentials: false
       - run: mkdir -p validation
       - uses: actions/setup-node@v4
         with:
