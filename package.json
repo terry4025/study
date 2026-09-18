@@ -1,27 +1,29 @@
 {
-  "name": "---------",
+  "name": "chaeksang-cs-reader",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
+  "engines": { "node": ">=22.12.0" },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "typescript": "~6.0.2",
-    "vite": "^8.3.0"
+    "preview": "vite preview",
+    "check:content": "node scripts/check-reader.mjs",
+    "test:e2e": "playwright test",
+    "check": "npm run check:content && npm run build && npm run test:e2e"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
+    "katex": "^0.16.22",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
     "@types/katex": "^0.16.8",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
-    "katex": "^0.18.7",
-    "lucide-react": "^1.47.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "tailwindcss": "^4.3.3"
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.7"
   }
 }
