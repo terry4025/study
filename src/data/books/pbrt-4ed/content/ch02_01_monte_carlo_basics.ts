@@ -19,8 +19,8 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
   summary: {
     keyTakeaways: [
       '몬테카를로 적분은 무작위 난수(Random Sampling)를 이용하여 수식으로 직접 풀 수 없는 복잡한 고차원 적분의 근사치를 구하는 컴퓨터 수치해석 기법입니다.',
-      '몬테카를로 추정량(Estimator) $F_N = \\frac{1}{N} \\sum_{i=1}^N \\frac{f(X_i)}{p(X_i)}$ 은 수학적으로 기댓값이 원래 적분값과 정확히 일치하는 비편향(Unbiased) 추정량입니다.',
-      '전통적인 수치적분(사다리꼴 공식, 심슨 공식)은 차원이 늘어날 때마다 연산량이 기하급수적으로 폭증하는 "차원의 저주(Curse of Dimensionality, $O(N^{-1/d})$)"에 빠지지만, 몬테카를로는 차원 수와 무관하게 언제나 $O(N^{-1/2})$ 속도로 수렴합니다.',
+      '몬테카를로 추정량(Estimator) $F_N = \\frac{1}{N} \\sum_{i=1}^N \\frac{f(X_i)}{p(X_i)}$ 은 표본을 실제 밀도 $p$에 따라 뽑고, 적분에 기여하는 영역을 빠뜨리지 않으며 기댓값이 존재할 때 비편향(Unbiased) 추정량입니다. 비편향이란 반복 실험의 평균이 참값과 같다는 뜻이지, 한 번의 계산이 항상 정확하다는 뜻은 아닙니다.',
+      '규칙적인 격자로 여러 변수를 나누면 차원이 늘수록 필요한 점이 빠르게 많아집니다. 몬테카를로 적분은 독립 표본과 유한 분산을 전제로 표준오차가 $O(N^{-1/2})$로 줄어듭니다. 다만 분산과 표본 하나의 계산 비용은 문제와 차원에 따라 달라집니다. 사다리꼴·심슨 공식의 오차 차수도 방법과 함수의 매끄러움에 따라 다르므로 하나의 차수로 묶지 않습니다.',
       '오차(표준편차)가 표본 수의 제곱근에 반비례($\\sigma \\propto 1/\\sqrt{N}$)하므로, 렌더링 노이즈를 절반(1/2)으로 줄이기 위해서는 샘플 수를 4배 늘려야 합니다.'
     ],
     prerequisites: [
@@ -31,7 +31,7 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
   blocks: [
     {
       type: 'paragraph',
-      textKo: '몬테카를로 적분(Monte Carlo Integration)은 **무작위성(Randomization)**을 핵심 도구로 삼는 강력한 수치해석 알고리즘입니다. 컴퓨터 그래픽스에서 물리 기반 렌더링의 심장부를 이루는 렌더링 방정식(Rendering Equation)은 수식으로 직접 적분하기가 사실상 불가능합니다. 하지만 컴퓨터가 무작위 주사위를 굴려 확률적으로 표본을 추출하면, 놀랍도록 단순한 사칙연산의 평균만으로 복잡한 우주의 빛 적분을 정확하게 풀어낼 수 있습니다.  \n본격적인 적분 알고리즘으로 들어가기에 앞서, 본 절에서는 몬테카를로 적분의 든든한 뼈대가 되는 핵심 확률론 개념들을 차근차근 짚어보겠습니다.',
+      textKo: '몬테카를로 적분(Monte Carlo Integration)은 **무작위성(Randomization)**을 핵심 도구로 삼는 강력한 수치해석 알고리즘입니다. 컴퓨터 그래픽스에서 물리 기반 렌더링의 심장부를 이루는 렌더링 방정식(Rendering Equation)은 수식으로 직접 적분하기가 사실상 불가능합니다. 하지만 컴퓨터가 무작위 주사위를 굴려 확률적으로 표본을 추출하면, 여러 표본의 계산값을 평균 내어 복잡한 빛의 적분을 근사할 수 있습니다. 표본이 유한하면 오차가 남으므로, 결과를 정확한 정답과 구별해야 합니다.  \n본격적인 적분 알고리즘으로 들어가기에 앞서, 본 절에서는 몬테카를로 적분의 든든한 뼈대가 되는 핵심 확률론 개념들을 차근차근 짚어보겠습니다.',
       textEn: 'Because Monte Carlo integration is based on randomization, we will start this chapter with a brief review of ideas from probability theory. The rendering equation at the heart of physically based rendering cannot be integrated analytically, but by using random sampling, computers can approximate complex integrals through simple sample averages.'
     },
     {
@@ -54,13 +54,13 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: '두 확률 변수 $X$와 $Y$가 서로에게 아무런 영향을 미치지 않을 때 두 변수는 **독립(Independent)**이라고 부릅니다. 독립 변수의 결합 확률(Joint Probability)은 각각의 확률의 곱과 같습니다:  \n$$p(x, y) = p(x) p(y)$$  \n' +
+      textKo: '두 확률 변수 $X$와 $Y$는 한쪽 결과를 알아도 다른 쪽 결과의 확률 분포가 달라지지 않을 때 **독립(Independent)**이라고 부릅니다. 이는 확률에 관한 조건이며, 두 대상 사이에 물리적인 원인과 결과가 있는지를 말하는 정의는 아닙니다. 독립 변수의 결합 확률(Joint Probability)은 각각의 확률의 곱과 같습니다:  \n$$p(x, y) = p(x) p(y)$$  \n' +
         '반면, 한 사건의 발생이 다른 사건에 영향을 미치는 경우를 **종속(Dependent)**이라고 합니다. 예를 들어 검은 공 2개와 흰 공 1개가 든 주머니에서 공을 하나 꺼낸 뒤 다시 넣지 않고 두 번째 공을 꺼낼 때, 첫 번째 결과는 두 번째 공의 확률을 바꿉니다. 이때는 **조건부 확률(Conditional Probability)**을 사용하여 결합 확률을 정의합니다:  \n$$p(x, y) = p(x) p(y \\mid x)$$',
       textEn: 'Two random variables are independent if the probability of one does not affect the probability of the other, so p(x, y) = p(x) p(y). For dependent variables, one\'s probability affects the other\'s, governed by conditional probability: p(x, y) = p(x) p(y | x).'
     },
     {
       type: 'paragraph',
-      textKo: '컴퓨터 그래픽스에서 가장 기본이 되는 중요한 확률 변수는 **표준 균일 확률 변수(Canonical Uniform Random Variable $\\xi$)**입니다. 이 변수는 구간 $[0, 1)$ 사이의 임의의 실수 값을 완벽하게 균일한 확률로 가집니다. 컴퓨터의 난수 생성기(`sampler.Get1D()`, `sampler.Get2D()`)가 뿜어내는 기본 값이 바로 이 $\\xi$입니다.  \n' +
+      textKo: '컴퓨터 그래픽스에서 가장 기본이 되는 중요한 확률 변수는 **표준 균일 확률 변수(Canonical Uniform Random Variable $\\xi$)**입니다. 이 변수는 구간 $[0, 1)$ 사이의 임의의 실수 값을 완벽하게 균일한 확률로 가집니다. 샘플러의 `Get1D()`는 한 성분, `Get2D()`는 두 성분의 표본을 제공합니다. 실제 컴퓨터는 유한한 정밀도의 수만 표현하므로 연속 균일 변수를 근사합니다. 표본 사이의 독립성 여부는 선택한 샘플러에 따라 다릅니다.  \n' +
         '예를 들어 씬에 여러 개의 광선 조명이 있을 때, 각 조명의 밝기 비율에 따라 구간 $[0, 1)$을 쪼개어 놓으면, 단 하나의 균일 난수 $\\xi$만으로도 밝은 전등을 더 자주 샘플링하도록 손쉽게 분기시킬 수 있습니다.',
       textEn: 'A particularly important random variable is the canonical uniform random variable, written as xi. This variable takes on values uniformly in the range [0, 1). Standard pseudo-random number generators provide samples of xi, which can then be mapped to sample lights or surface reflection directions.'
     },
@@ -87,7 +87,7 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: '간단한 예로, 구간 $[0, \\pi]$에서 균일한 확률 분포($p(x) = 1/\\pi$)를 가질 때 $\\cos(x)$ 함수의 기댓값을 구해봅시다:  \n$$E[\\cos(x)] = \\int_0^\\pi \\cos(x) \\frac{1}{\\pi} dx = \\frac{1}{\\pi} [\\sin(x)]_0^\\pi = \\frac{1}{\\pi}(0 - 0) = 0$$  \n코사인 그래프를 그려보면 $0$부터 $\\pi/2$까지는 양수이고, $\\pi/2$부터 $\\pi$까지는 정확히 대칭인 음수이므로, 무작위로 뽑은 코사인 값들의 평균이 0이 되는 것은 너무나 당연하고 직관적인 결과입니다.',
+      textKo: '간단한 예로, 구간 $[0, \\pi]$에서 균일한 확률 분포($p(x) = 1/\\pi$)를 가질 때 $\\cos(x)$ 함수의 기댓값을 구해봅시다:  \n$$E[\\cos(x)] = \\int_0^\\pi \\cos(x) \\frac{1}{\\pi} dx = \\frac{1}{\\pi} [\\sin(x)]_0^\\pi = \\frac{1}{\\pi}(0 - 0) = 0$$  \n코사인 그래프를 그려보면 $0$부터 $\\pi/2$까지는 양수이고, $\\pi/2$부터 $\\pi$까지는 정확히 대칭인 음수이므로, 이론적인 기댓값이 0이라는 것을 확인할 수 있습니다. 유한하게 뽑은 표본의 평균은 보통 0과 조금 다릅니다. 예를 들어 표본 하나만 뽑으면 그 코사인 값이 양수나 음수일 수 있습니다.',
       textEn: 'As an example, consider the expected value of cos(x) on [0, pi] with a uniform PDF p(x) = 1/pi: E[cos(x)] = integral_0^pi cos(x) (1/pi) dx = 0. Symmetrical positive and negative areas cancel each other out, giving an intuitive expectation of zero.'
     },
     {
@@ -167,7 +167,7 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
         '즉, **추정량의 분산은 표본 수 $N$에 정확히 반비례하여 선형적으로 감소**합니다!  \n' +
         '우리가 실제 눈으로 인지하는 노이즈의 진폭, 즉 **표준 오차 (Standard Error $\\sigma[F_N]$)**는 분산의 제곱근입니다:  \n$$\\sigma[F_N] = \\sqrt{V[F_N]} = \\frac{\\sigma}{\\sqrt{N}}$$  \n' +
         '따라서 몬테카를로의 오차 수렴 속도는 **$O(N^{-1/2}) = O(1/\\sqrt{N})$**가 됩니다.',
-      textEn: 'Computing the variance of F_N reveals V[F_N] = 1/N * V[f(X)/p(X)]. Variance decreases linearly with N. Standard error, the standard deviation of the estimate, is sigma[F_N] = sigma / sqrt(N), proving the characteristic O(N^{-1/2}) error convergence rate of Monte Carlo.'
+      textEn: 'For independent, identically distributed samples with finite variance, V[F_N] = V[f(X)/p(X)] / N. Variance decreases linearly with N. Standard error, the standard deviation of the estimate, is sigma[F_N] = sigma / sqrt(N), proving the characteristic O(N^{-1/2}) error convergence rate of Monte Carlo.'
     },
     {
       type: 'concept-tip',
@@ -177,10 +177,10 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
       points: [
         {
           title: '노이즈 50% 감소 = 샘플 수 400% 필요',
-          content: '표준 오차 공식이 $\\sigma \\propto 1/\\sqrt{N}$ 이기 때문에, 분모의 오차를 $1/2$로 깎으려면 루트 안의 $N$이 **$4$배**가 되어야 합니다. 화면의 지글거리는 노이즈를 $1/10$ 수준으로 완전히 없애려면 샘플 수를 무려 **$100$배** 늘려야 합니다!'
+          content: '독립 표본을 같은 분포에서 뽑고 분산이 유한하면 표준오차는 $1/\\sqrt{N}$에 비례합니다. 표준오차를 절반으로 줄이려면 표본을 4배, 10분의 1로 줄이려면 100배 사용합니다. 이는 반복 실험의 오차 규모에 대한 관계이지, 노이즈가 완전히 사라지거나 한 장의 이미지에서 정확히 그 비율만큼 줄어든다는 보장은 아닙니다.'
         },
         {
-          title: '무작정 샘플만 늘리는 것은 하수(下手)다',
+          title: '표본 수를 늘리는 방법과 표본을 효율적으로 고르는 방법',
           content: '컴퓨터 시간을 100배씩 태울 수는 없습니다. 바로 이 때문에 똑똑한 그래픽스 연구자들은 샘플 수($N$)를 무작정 늘리는 대신, 분자의 분산($V[f/p]$) 자체를 줄이는 기술인 **중요도 샘플링(Importance Sampling)**과 **다중 중요도 샘플링(MIS)**을 발명했습니다. 이것이 다음 2.2절에서 배울 핵심 주제입니다.'
         }
       ],
@@ -188,7 +188,7 @@ export const CH02_01_MONTE_CARLO_BASICS: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: '두 개의 서로 다른 몬테카를로 알고리즘이 있을 때, 어느 쪽이 더 우수한 알고리즘인지 어떻게 공정하게 비교할 수 있을까요?  \n단순히 노이즈가 적다고 해서 좋은 것이 아닙니다. 노이즈를 줄이느라 알고리즘이 100배 느리게 돈다면 실격입니다. 제임스 해머슬리(Hammersley)와 핸스컴(Handscomb)은 **효율성 척도 (Efficiency Metric $\\epsilon[F]$)**를 제안했습니다:  \n$$\\epsilon[F] = \\frac{1}{V[F] \\cdot T[F]}$$  \n여기서 $V[F]$는 추정량의 분산이고, $T[F]$는 해당 계산을 수행하는 데 걸린 실제 실행 시간(초)입니다. 분산과 실행 시간의 곱이 작을수록 효율성 $\\epsilon$은 커집니다. 이 수치는 샘플 수 $N$에 영향을 받지 않는 고유한 알고리즘의 우수성을 완벽히 대변합니다.',
+      textKo: '두 개의 서로 다른 몬테카를로 알고리즘이 있을 때, 어느 쪽이 더 우수한 알고리즘인지 어떻게 공정하게 비교할 수 있을까요?  \n단순히 노이즈가 적다고 해서 좋은 것이 아닙니다. 노이즈를 줄이느라 알고리즘이 100배 느리게 돈다면 실격입니다. 제임스 해머슬리(Hammersley)와 핸스컴(Handscomb)은 **효율성 척도 (Efficiency Metric $\\epsilon[F]$)**를 제안했습니다:  \n$$\\epsilon[F] = \\frac{1}{V[F] \\cdot T[F]}$$  \n여기서 $V[F]$는 추정량의 분산이고, $T[F]$는 해당 계산을 수행하는 데 걸린 실제 실행 시간(초)입니다. 분산과 실행 시간의 곱이 작을수록 효율성 $\\epsilon$은 커집니다. 표본 수에 반비례해 분산이 줄고 실행 시간이 표본 수에 비례할 때, 이 곱은 표본 수의 영향을 대략 상쇄합니다. 초기 준비 비용, 편향, 하드웨어와 문제의 차이까지 없애 주는 절대적인 점수는 아닙니다.',
       textEn: 'To compare different Monte Carlo estimators, Hammersley and Handscomb defined an efficiency metric: epsilon[F] = 1 / (V[F] * T[F]), where V[F] is variance and T[F] is execution time. Because variance decreases linearly with sample count and running time increases linearly with sample count, their product is independent of N, providing an objective comparison metric.'
     },
     {

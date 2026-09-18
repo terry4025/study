@@ -20,8 +20,8 @@ export const CH05_02_PROJECTIVE_CAMERA: SectionContent = {
     keyTakeaways: [
       '투영 변환 파이프라인은 카메라 공간 $\\to$ 스크린 공간 $\\to$ 정규화 장치 좌표(NDC) $\\to$ 래스터(픽셀) 공간의 단계적 행렬 사상으로 구성되며, `cameraFromRaster`를 통해 역방향 광선을 생성합니다.',
       '직교 카메라(Orthographic Camera)는 모든 투영선이 평행하여 거리에 따른 크기 왜곡이 없으므로 건축 도면, 기계 CAD, 아이소메트릭 게임 렌더링에 적합합니다.',
-      '원근 카메라(Perspective Camera)는 인간의 눈과 핀홀 카메라처럼 한 점(초점)으로 수렴하는 광선을 모델링하며, 4차원 동차좌표계의 투영 나눗셈($w\'=z$)을 통해 "가까운 것은 크게, 먼 것은 작게" 표현합니다.',
-      '얇은 렌즈 모델(Thin Lens Model)은 가우스 렌즈 방정식($\\frac{1}{z} + \\frac{1}{z\'} = \\frac{1}{f}$)을 바탕으로 유한한 크기의 조리개 구경을 시뮬레이션하여, 초점면 밖의 피사체가 부드럽게 흐려지는 **피사계 심도(Depth of Field / Bokeh)**를 완벽히 구현합니다.'
+      '가장 단순한 원근 카메라(Perspective Camera)는 하나의 투영 중심을 지나는 광선을 모델링하며, 4차원 동차좌표계의 투영 나눗셈($w\'=z$)을 통해 "가까운 것은 크게, 먼 것은 작게" 표현합니다.',
+      '얇은 렌즈 모델(Thin Lens Model)은 가우스 렌즈 방정식($\\frac{1}{z} + \\frac{1}{z\'} = \\frac{1}{f}$)을 바탕으로 유한한 크기의 조리개 구경을 시뮬레이션하여, 초점면 밖의 피사체가 부드럽게 흐려지는 **피사계 심도(Depth of Field)**를 근사합니다. 실제 렌즈의 수차와 복잡한 조리개 모양까지 모두 재현하는 모델은 아닙니다. 보케는 초점 밖 흐림의 모양과 성질을 가리키며 피사계 심도와 같은 용어는 아닙니다.'
     ],
     prerequisites: [
       '4x4 동차좌표 변환 행렬 (Homogeneous Coordinates)',
@@ -38,8 +38,8 @@ export const CH05_02_PROJECTIVE_CAMERA: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: '컴퓨터 그래픽스에서 가장 널리 쓰이는 카메라 모델은 4x4 선형 투영 변환 행렬로 표현할 수 있는 **투영 카메라 모델(Projective Camera Models)**입니다. 이 절에서는 평행 투영을 수행하는 **직교 카메라(Orthographic Camera)**와 일상적인 원근감을 형성하는 **원근 카메라(Perspective Camera)**, 그리고 실제 카메라 렌즈의 유한한 구경 크기로 인해 발생하는 아웃포커싱 현상을 재현하는 **얇은 렌즈 기반 피사계 심도 모델(Depth of Field)**을 다룹니다.',
-      textEn: 'The most commonly used camera models in computer graphics are projective camera models, which can be expressed with 4x4 linear projection transformation matrices. This section covers the orthographic camera (parallel projection), the perspective camera (standard perspective viewing), and the thin lens model that reproduces depth of field.'
+      textKo: '컴퓨터 그래픽스에서 가장 널리 쓰이는 카메라 모델은 4x4 동차좌표 행렬과, 원근 투영의 경우 마지막 성분으로 나누는 연산으로 표현하는 **투영 카메라 모델(Projective Camera Models)**입니다. 이 절에서는 평행 투영을 수행하는 **직교 카메라(Orthographic Camera)**와 일상적인 원근감을 형성하는 **원근 카메라(Perspective Camera)**, 그리고 실제 카메라 렌즈의 유한한 구경 크기로 인해 발생하는 아웃포커싱 현상을 재현하는 **얇은 렌즈 기반 피사계 심도 모델(Depth of Field)**을 다룹니다.',
+      textEn: 'The most commonly used camera models in computer graphics are projective camera models, which can be expressed with 4x4 homogeneous matrices followed, for perspective projection, by a division by the homogeneous coordinate. This section covers the orthographic camera (parallel projection), the perspective camera (standard perspective viewing), and the thin lens model that reproduces depth of field.'
     },
     {
       type: 'subheading',
@@ -54,8 +54,8 @@ export const CH05_02_PROJECTIVE_CAMERA: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: '1. **카메라 공간(Camera Space)**: 카메라 원점이 $(0,0,0)$이고 $+z$가 시선 방향인 좌표계.\n2. **스크린 공간(Screen Space)**: 투영 변환이 적용된 후, 뷰 평면 위에 정의되는 연속적인 $x, y$ 윈도우 영역 (예: $[-1, 1] \\times [-1, 1]$).\n3. **래스터 공간(Raster Space)**: 모니터의 정수 픽셀 격자 좌표계 ($[0, \\text{width}] \\times [0, \\text{height}]$).',
-      textEn: '1. Camera Space: origin at camera location, looking along +z.\n2. Screen Space: continuous 2D window on the projection plane.\n3. Raster Space: discrete pixel grid coordinates.'
+      textKo: '1. **카메라 공간(Camera Space)**: 카메라 원점이 $(0,0,0)$이고 $+z$가 시선 방향인 좌표계.\n2. **스크린 공간(Screen Space)**: 투영 변환이 적용된 후, 뷰 평면 위에 정의되는 연속적인 $x, y$ 윈도우 영역 (예: $[-1, 1] \\times [-1, 1]$).\n3. **래스터 공간(Raster Space)**: 픽셀 단위로 위치를 나타내는 좌표계로, 픽셀 번호는 정수지만 픽셀 내부의 표본 위치는 실수로 표현할 수 있습니다 ($[0, \\text{width}] \\times [0, \\text{height}]$).',
+      textEn: '1. Camera Space: origin at camera location, looking along +z.\n2. Screen Space: continuous 2D window on the projection plane.\n3. Raster Space: coordinates measured in pixel units; sample positions may be fractional even though pixel indices are integers.'
     },
     {
       type: 'figure',

@@ -28,3 +28,6 @@ scratch/
 .playwright-cli/
 scripts/*.html
 *.txt
+.pbrt-content-backups/
+.*-backups/
+*-backups/

@@ -19,17 +19,17 @@ export const CH07_03_BVH: SectionContent = {
   summary: {
     keyTakeaways: [
       'BVH(Bounding Volume Hierarchy, 바운딩 볼륨 계층)는 물체들을 계층적인 축정렬 바운딩 박스(AABB) 트리로 감싸는 물체 분할(Object Partitioning) 가속 구조입니다.',
-      '각 기하 프리미티브는 트리 전체에서 오직 단 하나의 리프 노드에만 정확히 속하므로, 공간 분할 구조(Kd-트리)처럼 물체 쪼개짐(Primitive Splitting)이나 메모리 폭발 문제가 전혀 발생하지 않습니다.',
+      '이 절의 물체 분할 BVH에서는 한 프리미티브를 여러 리프에 중복 배정하지 않아 노드 수의 상한을 구하기 쉽습니다. 모든 BVH 변형이 이 규칙을 따르거나, 큰 장면에서 메모리 문제가 전혀 없다는 뜻은 아닙니다.',
       '분할 축은 프리미티브 중심점들의 바운딩 박스(Centroid Bounds) 중 가장 긴 축(Maximum Extent)을 기준으로 선택합니다.',
-      'SAH(Surface Area Heuristic, 표면적 휴리스틱)는 기하학적 확률 이론(Crofton 공식)에 기반하여 광선이 바운딩 박스를 관통할 확률이 표면적에 비례함을 이용해 최적의 분할 지점을 계산하는 비용 모델입니다.',
+      'SAH(Surface Area Heuristic, 표면적 휴리스틱)는 광선 분포에 대한 단순화된 가정 아래 상자의 표면적 비율로 방문 확률을 근사하고, 후보 분할의 예상 검사 비용을 비교하는 모델입니다. 선택한 후보 중 비용이 낮은 분할을 찾는 것이며 모든 실제 광선에 대한 전역 최적해를 보장하지 않습니다.',
       'HLBVH(계층적 선형 BVH)는 3차원 좌표를 1차원 모턴 코드(Morton Code, Z-순서 곡선)로 변환한 후 $O(N)$ 기수 정렬(Radix Sort)을 적용하여 멀티코어/GPU에서 극초고속으로 트리를 병렬 구축합니다.',
-      'LinearBVH는 포인터 추적(Pointer Chasing)으로 인한 캐시 미스를 박멸하기 위해, 트리를 전위 순회(Pre-order) 순서의 1차원 배열로 평탄화하고 노드 크기를 정확히 32바이트로 패킹하여 64바이트 캐시 라인당 2개씩 캐싱되도록 설계되었습니다.',
-      '광선 순회(Traversal)는 함수 재귀 호출 오버헤드를 없애기 위해 64개 깊이의 로컬 스택을 사용하며, 광선의 진행 방향 부호에 따라 앞쪽 자식 노드를 먼저 방문하여 탐색을 조기 종료(Early Termination)합니다.'
+      'LinearBVH는 포인터 추적(Pointer Chasing)을 줄이고 캐시 지역성을 개선하기 위해, 트리를 전위 순회(Pre-order) 순서의 1차원 배열로 평탄화하고 노드 크기를 정확히 32바이트로 패킹하여 64바이트 캐시 라인당 2개씩 캐싱되도록 설계되었습니다.',
+      '광선 순회는 재귀 대신 배열 스택으로 다음에 방문할 노드를 기억합니다. 가까울 것으로 예상되는 자식을 먼저 검사하면, 가장 가까운 교차점을 찾을 때 거리 상한을 줄여 뒤쪽 후보를 제외할 수 있습니다. 다만 첫 교차점에서 항상 종료하지는 않습니다. 가려짐 여부만 묻는 검사는 한 번의 유효한 교차로 종료할 수 있습니다.'
     ],
     prerequisites: [
       '7장 7.1 Primitive 인터페이스 및 GeometricPrimitive',
       '7장 7.2 선형 탐색의 한계와 집합체(Aggregate) 기본 개념',
-      '6장 6.1 축정렬 바운딩 박스(AABB)와 슬랩(Slab) 교차 검사 알고리즘',
+      '3장 3.7 바운딩 박스(AABB)의 정의와 6장 형상 교차 검사의 기초',
       '자료구조: 이진 트리(Binary Tree), 전위 순회(Pre-order Traversal), 기수 정렬(Radix Sort)'
     ]
   },
@@ -57,7 +57,7 @@ export const CH07_03_BVH: SectionContent = {
     },
     {
       type: 'paragraph',
-      textKo: 'BVH의 핵심적인 장점은 공간 분할(Spatial Subdivision, 예: 그리드나 Kd-트리)과 달리 물체 분할(Object Partitioning) 방식을 취한다는 점입니다. 공간 분할에서는 커다란 삼각형 하나가 여러 개의 공간 셀에 걸쳐 존재할 수 있어서 트리의 여러 리프 노드에 중복 참조되고, 이로 인해 트리의 노드 수가 기하급수적으로 폭증하거나 광선이 동일한 삼각형과 중복 교차 검사를 수행하는 문제가 발생합니다. 반면 BVH에서는 모든 프리미티브가 정확히 단 하나의 리프 노드에만 속하므로, $N$개의 프리미티브가 주어졌을 때 리프 노드의 개수는 정확히 $N$개, 내부 노드의 개수는 $N-1$개로 트리의 총 노드 수가 $2N-1$개로 엄격하게 상한선이 고정됩니다.',
+      textKo: 'BVH의 핵심적인 장점은 공간 분할(Spatial Subdivision, 예: 그리드나 Kd-트리)과 달리 물체 분할(Object Partitioning) 방식을 취한다는 점입니다. 공간 분할에서는 커다란 삼각형 하나가 여러 개의 공간 셀에 걸쳐 존재할 수 있어서 트리의 여러 리프 노드에 중복 참조되고, 이로 인해 트리의 노드 수가 기하급수적으로 폭증하거나 광선이 동일한 삼각형과 중복 교차 검사를 수행하는 문제가 발생합니다. 여기서 다루는 물체 분할 이진 BVH에서는 각 프리미티브를 한 리프에 배정합니다. 리프가 $L$개이고 내부 노드마다 자식이 둘이면 전체 노드는 $2L-1$개입니다. 비어 있지 않은 리프에 여러 프리미티브를 담을 수 있으므로 $L$은 $N$ 이하이며, 전체 노드는 최대 $2N-1$개입니다. 예를 들어 프리미티브 4개를 두 개씩 두 리프에 넣으면 루트까지 총 3개 노드입니다.',
       textEn: 'Unlike spatial partitioning schemes, each primitive in a BVH appears only once in the hierarchy. This bounds the total number of nodes in a binary BVH to at most 2N - 1 for N primitives, preventing memory explosion.'
     },
     {
@@ -78,7 +78,7 @@ export const CH07_03_BVH: SectionContent = {
       title: 'Choosing the partition axis based on centroid bounds extent',
       titleKo: '중심점 바운딩 박스의 최장 축을 기준으로 한 분할 축 선택',
       src: '/books/pbrt-4ed/images/pha07f04.svg',
-      captionKo: '그림 7.4: 프리미티브들의 중심점(점)들을 감싸는 바운딩 박스(점선)의 $x$축 길이와 $y$축 길이를 비교하여, 더 긴 축(여기서는 $x$축)을 분할 축으로 선정합니다. 이렇게 하면 공간이 가로세로 균형 있게 분할되어 바운딩 박스들의 중첩 면적이 최소화됩니다.',
+      captionKo: '그림 7.4: 프리미티브들의 중심점(점)들을 감싸는 바운딩 박스(점선)의 $x$축 길이와 $y$축 길이를 비교하여, 더 긴 축(여기서는 $x$축)을 분할 축으로 선정합니다. 이 선택은 길게 늘어진 중심점 분포를 나누는 간단한 기준입니다. 자식 상자의 겹침이 최소가 되거나 실제 순회 비용이 가장 작아진다는 보장은 없습니다.',
       captionEn: 'Figure 7.4: Choosing the partition axis based on the extent of the bounding box of primitive centroids. The axis with the maximum extent (here x) is chosen to keep bounding boxes well-proportioned.'
     },
     {
