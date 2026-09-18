@@ -73,16 +73,32 @@ export function adaptLegacy(id: string, source: SectionContent): Lesson {
     return { id, chapter: source.chapterNumber, chapterTitle: chapterNames[source.chapterNumber] || tidy(source.chapterTitleKo), title: tidy(source.sectionTitleKo), deck: `${source.sectionNumber} · 보존한 한국어 학습 노트`, kind: 'legacy', minutes: Math.max(5, Math.ceil(JSON.stringify(source.blocks).length / 1900)), goals, prerequisites: [], blocks, references: [{ title: '출처에서 실제 원문 읽기', url: source.originalUrl, role: 'further-reading' }], notice: notices[id] || '기존 한국어 학습 노트를 보존했습니다. 전체 원문 대조가 완료된 자료는 아니며, 영어 필드·코드·그림 캡션의 원문 일치 여부는 별도 검수가 필요합니다.' };
 }
 export class Repository {
-    readonly originals = new Map(curriculum.map(x => [x.id, x]));
+    readonly originals: Map<string, Lesson>;
     readonly metas: LessonMeta[];
     readonly chapters: Chapter[];
     private legacyPromise?: Promise<Record<string, SectionContent>>;
     private lessonCache = new Map<string, Lesson>();
-    constructor(toc: ChapterMeta[] = [], private loader?: LegacyLoader) {
-        const old = toc.flatMap(ch => ch.sections.filter(s => s.isAvailable).map(s => ({ id: s.id, chapter: ch.number, chapterTitle: chapterNames[ch.number] || tidy(ch.titleKo), title: s.id === 'ch06-05' ? '삼각 메시 · 정정 해설' : tidy(s.titleKo), deck: `${s.number} · 기존 학습 노트`, kind: (s.id === 'ch06-05' ? 'correction' : 'legacy') as LessonMeta['kind'], minutes: 0 })));
-        this.metas = [...curriculum.filter(x => x.chapter === '0'), ...old, ...curriculum.filter(x => x.chapter !== '0')].map(({ id, chapter, chapterTitle, title, deck, kind, minutes }) => ({ id, chapter, chapterTitle, title, deck, kind, minutes }));
-        const ids = [...new Set(this.metas.map(x => x.chapter))].sort((a, b) => Number(a) - Number(b));
-        this.chapters = ids.map(id => ({ id, title: this.metas.find(x => x.chapter === id)!.chapterTitle, subtitle: id === '0' ? '수학·컴공 준비 코스' : Number(id) < 9 ? '기존 학습 노트 · 대조 미완료' : '독자 입문 강의 · 원문 번역 아님', lessons: this.metas.filter(x => x.chapter === id) }));
+    readonly warnings: string[] = [];
+    constructor(toc: ChapterMeta[] = [], private loader?: LegacyLoader,
+        lessons: Lesson[] = curriculum,
+        private adapter: (id: string, source: SectionContent) => Lesson = adaptLegacy) {
+        this.originals = new Map(lessons.map(x => [x.id, x]));
+        if (this.originals.size !== lessons.length) throw new Error('Duplicate lesson IDs');
+        const old: LessonMeta[] = toc.flatMap(ch => ch.sections.filter(s => s.isAvailable).map(s => ({
+            id: s.id, chapter: ch.number, chapterTitle: tidy(ch.titleKo),
+            title: tidy(s.titleKo), deck: `${s.number} · 기존 학습 노트`, kind: 'legacy' as const, minutes: 0
+        })));
+        const metas = [...old.filter(m => !this.originals.has(m.id)), ...lessons];
+        const seen = new Set<string>();
+        this.metas = metas.map(({ id, chapter, chapterTitle, title, deck, kind, minutes }) => {
+            if (seen.has(id)) throw new Error(`Duplicate lesson ID: ${id}`);
+            seen.add(id);
+            return { id, chapter, chapterTitle, title, deck, kind, minutes };
+        }).sort((a,b) => chapterOrder(a.chapter)-chapterOrder(b.chapter));
+        const ids = [...new Set(this.metas.map(x => x.chapter))];
+        this.chapters = ids.map(id => ({ id, title: this.metas.find(x => x.chapter === id)!.chapterTitle,
+            subtitle: id === '0' ? '공통 준비 코스' : '학습 노트·독자 해설 · 완역 여부와 구분',
+            lessons: this.metas.filter(x => x.chapter === id) }));
     }
     has(id: string): boolean { return this.metas.some(x => x.id === id); }
     meta(id: string): LessonMeta | undefined { return this.metas.find(x => x.id === id); }
@@ -92,44 +108,39 @@ export class Repository {
         return this.legacyPromise;
     }
     async get(id: string): Promise<Lesson | null> {
-        if (this.originals.has(id))
-            return this.originals.get(id)!;
-        if (this.lessonCache.has(id))
-            return this.lessonCache.get(id)!;
-        if (!this.has(id))
-            return null;
+        if (this.originals.has(id)) return this.originals.get(id)!;
+        if (this.lessonCache.has(id)) return this.lessonCache.get(id)!;
+        if (!this.has(id)) return null;
         const all = await this.legacy();
-        if (!all[id])
-            return null;
-        const lesson = adaptLegacy(id, all[id]);
+        if (!all[id]) return null;
+        const lesson = this.adapter(id, all[id]);
         this.lessonCache.set(id, lesson);
         return lesson;
     }
     async search(query: string): Promise<SearchHit[]> {
         const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-        if (!terms.length)
-            return [];
+        if (!terms.length) return [];
         const hits: SearchHit[] = [];
+        this.warnings.length = 0;
+        let legacyFailed = false;
         for (const meta of this.metas) {
-            const l = await this.get(meta.id);
-            if (!l)
-                continue;
+            if (legacyFailed && !this.originals.has(meta.id)) continue;
+            let l: Lesson | null;
+            try { l = await this.get(meta.id); }
+            catch { legacyFailed = true; this.warnings.push('기존 노트를 불러오지 못했습니다. 검색 결과가 일부만 표시됩니다.'); continue; }
+            if (!l) { this.warnings.push(`자료 누락: ${meta.id}`); continue; }
             const title = l.title.toLocaleLowerCase();
-            const matches = l.blocks.filter(b => {
-                const t = blockText(b).toLocaleLowerCase();
-                return terms.every(q => t.includes(q) || title.includes(q));
-            });
-            if (terms.every(q => title.includes(q)))
-                hits.push({ lesson: meta, blockId: 'lesson-title', excerpt: l.deck });
-            for (const b of matches.slice(0, 3)) {
-                const text = blockText(b);
-                const i = text.toLowerCase().indexOf(terms[0]);
-                const start = Math.max(0, i - 32);
-                hits.push({ lesson: meta, blockId: b.id, excerpt: (start ? '…' : '') + text.slice(start, start + 170) + (text.length > start + 170 ? '…' : '') });
+            if (terms.every(q => title.includes(q))) hits.push({ lesson: meta, blockId: 'lesson-title', excerpt: l.deck });
+            for (const b of l.blocks.filter(b => terms.every(q => blockText(b).toLocaleLowerCase().includes(q) || title.includes(q))).slice(0,3)) {
+                const text = blockText(b), i = text.toLocaleLowerCase().indexOf(terms[0]), start = Math.max(0,i-32);
+                hits.push({ lesson: meta, blockId: b.id, excerpt: (start?'…':'')+text.slice(start,start+170)+(text.length>start+170?'…':'') });
             }
         }
-        return hits.slice(0, 60);
+        return hits.slice(0,60);
     }
+}
+export function chapterOrder(id: string): number {
+    return /^\d+$/.test(id) ? Number(id) : /^[ABC]$/.test(id) ? 100+id.charCodeAt(0)-65 : 200;
 }
 export function blockText(b: Block): string {
     switch (b.type) {
