@@ -1,75 +1,60 @@
-# 📚 컴공 지식 베이스캠프 (CS Reader)
-> **물리 기반 렌더링: 이론부터 구현까지 (PBRT v4 한국어 학습판)**  
-> *Physically Based Rendering: From Theory to Implementation (4th Edition) - Matt Pharr, Wenzel Jakob, and Greg Humphreys*
+# 결 스터디 — 수학에서 한 픽셀까지
 
-![PBRT v4 Korean Reader](https://img.shields.io/badge/pbrt--4ed-1~8장_완독-6366f1?style=flat-square)
-![Total Sections](https://img.shields.io/badge/완성_섹션-50개-10b981?style=flat-square)
-![Assets Included](https://img.shields.io/badge/공식_다이어그램_에셋-189개-f59e0b?style=flat-square)
-![Glossary Items](https://img.shields.io/badge/수학·컴공_용어_치트키-79개-ec4899?style=flat-square)
-![Stack](https://img.shields.io/badge/Stack-React_19_|_TypeScript_|_Tailwind_|_Vite-blue?style=flat-square)
+한국어로 기술서를 읽고 개념을 정리하는 개인 학습 리더입니다. React·TypeScript·Vite 기반을 유지하되, 기존 UI 컴포넌트와 스타일을 새 읽기 화면으로 교체했습니다.
 
-컴퓨터 그래픽스와 렌더링 분야의 바이블인 **PBRT 제4판(4ed)**을 컴퓨터공학 및 컴퓨터 그래픽스 입문자부터 실무 연구자까지 누구나 깊이 있게 학습할 수 있도록 번역·구조화한 인터랙티브 학습 리더 플랫폼입니다.
+## 콘텐츠의 범위
 
----
+**이 프로젝트는 PBRT의 완역본이 아닙니다.**
 
-## ✨ 핵심 기능 및 특징
+- 기존 1~8장의 한국어 학습 노트 50개는 `src/data`와 `public`에서 보존하고, 새 리더의 어댑터로 읽습니다. 전체 원문 대조·개념 검수는 완료되지 않았습니다.
+- 기초 수학·컴공 8수업과 9~16장 주제의 독자 입문 강의 24수업을 추가했습니다. 새로운 32수업은 원문 번역이 아니라 독립적으로 작성한 설명·계산 예시·확인 문제입니다.
+- 공식 절의 모든 내용·코드·그림·연습 문제를 대응시키지 않습니다. 부록 A~C의 전체 강의도 포함하지 않습니다.
+- `ch06-05`는 잘못된 알고리즘 대응을 교정하는 독자 해설로 표시합니다. 기존 원본 파일은 지우지 않습니다.
 
-1. **원문 누락 없는 완벽한 한글 완역 & 컴퓨터공학 친화적 해설**
-   - 방대한 수식과 알고리즘을 단순 번역에 그치지 않고, 직관적인 비유와 컴퓨터 아키텍처 관점(CPU 캐시 라인, 비트 연산, SIMD, 메모리 정렬 등)의 **"💡 컴공 기초 콕콕"** 팁을 전 섹션에 수록했습니다.
-2. **189개 공식 벡터 다이어그램 & 실사 비교 렌더링 에셋 통합**
-   - 원서의 고해상도 SVG 벡터 다이어그램과 장면 렌더링 이미지를 각 단락과 완벽하게 매핑하고 한/영 대조 캡션 및 전체화면 줌 기능을 지원합니다.
-3. **KaTeX 기반 무결점 수학 공식 렌더링**
-   - 몬테카를로 적분, 구면 삼각법, 방사측정학, 푸리에 변환, 나이퀴스트-섀넌 정리, 저불일치 수열(Sobol/Halton) 등 모든 정밀 수식을 미려하게 렌더링합니다.
-4. **수학 & 컴공 핵심 용어 치트키 사전 (총 79종)**
-   - "미분·적분이 뭐였더라?", "표면적 휴리스틱(SAH)이 왜 필요하지?" 등 초보자 안심 3단계 해설과 일상 비유, 기호 해독을 제공하는 인터랙티브 모달 사전 탑재.
-5. **학습자 맞춤형 뷰어 UI**
-   - 친절 의역 모드, 한/영 대조 모드, 영문 원문 모드 3단 전환
-   - 라이트 / 다크 테마 지원 및 폰트 크기 조절
-   - 챕터별 점진적 진행률(Progress Bar) 및 전역 섹션 검색
+## 읽기와 학습
 
----
+서재, 기초 코스, 본문, 문단 메모, 나중에 읽기, 읽음 표시, 본문 검색, 키보드 검색(Ctrl/Cmd+K), 용어 사전, 밝게/종이/어둡게 모드, 글자 크기·줄 간격·너비 조절, JSON 기록 내보내기·복원을 제공합니다. 현재 책은 PBRT 하나입니다. 다른 책 ID를 PBRT 내용으로 잘못 표시하지 않습니다.
 
-## 📖 현재 학습 완료 챕터 현황 (1 ~ 8장 / 총 50개 섹션 완독)
+새 코스에는 확인 문제 32개와 조작 실험 9개가 있습니다. 미분, 적분, 표본 평균, 코사인 반응, 텍스처 평균, 통과율, 거리와 조도, 러시안 룰렛, GPU 작업 분류를 다룹니다. GPU 실행 시간이나 실제 렌더러의 성능을 시뮬레이션하는 도구는 아닙니다.
 
-| 챕터 | 국문 제목 | 영문 원제 | 섹션 수 | 수록 에셋 |
-| :---: | :--- | :--- | :---: | :---: |
-| **제1장** | 소개 및 시스템 개요 | Introduction | 6개 전 섹션 | 6개 |
-| **제2장** | 몬테카를로 적분 | Monte Carlo Integration | 4개 전 섹션 | 12개 |
-| **제3장** | 기하학과 변환 | Geometry and Transformations | 11개 전 섹션 | 24개 |
-| **제4장** | 방사측정학, 스펙트럼, 색상 | Radiometry, Spectra, and Color | 6개 전 섹션 | 22개 |
-| **제5장** | 가상 카메라와 필름 | Cameras and Film | 4개 전 섹션 | 18개 |
-| **제6장** | 3차원 형상과 교차 검사 | Shapes | 8개 전 섹션 | 42개 |
-| **제7장** | 프리미티브와 가속 구조 BVH | Primitives and Intersection Acceleration | 3개 전 섹션 | 14개 |
-| **제8장** | 샘플링과 이미지 복원 | Sampling and Reconstruction | 8개 전 섹션 | 51개 |
-| **합계** | **1~8장 완독 완료** | - | **50개 섹션** | **189개 에셋** |
+학습 기록은 현재 브라우저의 `gyeol.reader.v2`에만 저장합니다. 계정·서버 동기화는 없습니다. 기존 `cs_*`의 마지막 절·테마·글자 크기를 가능한 범위에서 가져오며, 이전 키를 삭제하지 않습니다. 중요한 기록은 JSON으로 내보내 보관하세요.
 
----
+## 실행 및 확인
 
-## 🛠️ 기술 스택
+기존 프로젝트에 이 변경 파일을 적용한 뒤 실행합니다. 이 오버레이 자체는 기존 책 데이터나 전체 저장소를 포함하지 않습니다.
 
-- **Frontend**: React 19, TypeScript, Vite
-- **Styling**: Tailwind CSS, Lucide React
-- **Math Engine**: KaTeX (`rehype-katex`, `remark-math`)
-- **Testing & Verification**: Playwright (Headless End-to-End Visual Verification)
-
----
-
-## 🚀 로컬 실행 방법
-
-```bash
-# 1. 의존성 패키지 설치
+```sh
 npm install
-
-# 2. 로컬 개발 서버 실행 (기본 포트: 5173)
-npm run dev
-
-# 3. 프로덕션 빌드 및 미리보기
 npm run build
-npm run preview
+node scripts/check-reader.mjs
+npm run dev
 ```
 
----
+의존성은 기존 `package.json`을 유지합니다. 새 패키지를 추가하지 않았습니다. 수식은 기존 KaTeX 의존성으로 MathML을 생성하여 표시합니다. 브라우저의 기본 수학·한글 글꼴을 사용합니다.
 
-## 📜 저작권 및 라이선스 고지
+## 소스 구조
 
-본 프로젝트의 학습 해설 및 번역 콘텐츠는 Matt Pharr, Wenzel Jakob, Greg Humphreys 저 **"Physically Based Rendering: From Theory to Implementation" (4th Edition)**의 오픈 액세스 판본([pbr-book.org](https://pbr-book.org))을 기반으로 비상업적 학술 및 교육 연구 목적으로 제작되었습니다.
+- `src/App.tsx`: React 호스트 및 리더 시작/정리
+- `src/reader/app.ts`: 화면, 라우팅, 검색, 기록, 설정
+- `src/reader/repository.ts`: 기존 자료 연결·표시 어댑터와 정정 안내
+- `src/reader/curriculum.ts`: 독자 수업 32개
+- `src/reader/labs.ts`: 교육용 조작 실험
+- `src/reader/text.ts`: 안전한 문단·수식 표시 및 오류 대체 표시
+- `src/reader/store.ts`: 기록 저장·검증·이전 설정 가져오기
+- `src/reader/glossary.ts`: 새 기초 용어 25개
+- `src/index.css`: 전체 교체한 리더 디자인
+
+기존 영어 필드는 ‘영어 노트 · 실제 원문 일치 미검수’로 표시하며 기본적으로 숨깁니다. 실제 원문은 출처 링크에서 확인합니다. 그림 캡션도 번호·의미 매핑이 검수되기 전까지 접힌 상태로 표시합니다. 지원하지 않는 블록이나 수식은 조용히 삭제하지 않고 오류 내용을 표시합니다.
+
+## 검수의 한계
+
+새 모듈의 TypeScript 검사, 독자 콘텐츠 구조 검사, Chromium UI 검사를 수행했습니다. 검증 환경은 `docs/VERIFICATION.md`에 구체적으로 기록했습니다. 원격 저장소 전체의 설치·프로덕션 빌드, 실제 사용자 데이터·기기에서의 통합 테스트, 원문 전체 번역 검수까지 끝났다는 뜻은 아닙니다.
+
+## 출처와 권리
+
+참고 도서는 Matt Pharr, Wenzel Jakob, Greg Humphreys의 *Physically Based Rendering: From Theory to Implementation, 4th Edition*입니다.
+
+- 공식 목차: https://pbr-book.org/4ed/contents
+- 웹판이 연결하는 라이선스: https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+웹에서 무료로 읽을 수 있다는 사실이 번역·각색물의 공개 배포 권한을 자동으로 부여하지는 않습니다. 기존 노트·그림 등의 공개 이용에 필요한 별도 허락 또는 적용 가능한 예외는 운영자가 확인해야 합니다. 이 UI 교체 작업은 그 권리를 새로 부여하거나 검증하지 않습니다. 새로운 입문 강의는 독자 설명으로 분리하고 참고 자료 링크를 제공합니다.
