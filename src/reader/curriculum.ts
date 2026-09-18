@@ -1,7 +1,7 @@
 import type { Lesson } from './types.js';
 import { foundations } from './foundations.js';
 // Independent thematic lessons, not a translation of PBRT.
-export const curriculum: Lesson[] = [...foundations, ...[
+const themedLessons: Lesson[] = [
     {
         "id": "guide-09-01",
         "chapter": "9",
@@ -2182,4 +2182,5 @@ export const curriculum: Lesson[] = [...foundations, ...[
             }
         ]
     }
-]];
+];
+export const curriculum: Lesson[] = [...foundations, ...themedLessons];

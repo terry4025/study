@@ -4,7 +4,7 @@ import { Store } from './store.js';
 import { element as el, button, prose, inline, math, externalLink } from './text.js';
 import { createLab } from './labs.js';
 const modeLabel = (kind: Lesson['kind']) => kind === 'reading-guide' ? '원문 읽기 안내' : kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : '독자 입문 강의';
-const cleanTitle = (s: string) => s.replace(/^\d+\.\d+\s*/, '').replace(/\s*\([^)]*\)$/, '');
+const cleanTitle = (s: string) => s.replace(/^(?:\d+|[A-C])\.\d+\s*(?:·\s*)?/, '').replace(/\s*\([^)]*\)$/, '');
 export function createReader(host: HTMLElement, repo: Repository, navigation?: { shelf: () => void; outline: () => void }): () => void {
     const SOURCE_BOOK = repo.book.id;
     const glossary = repo.book.glossary || [];
@@ -153,7 +153,7 @@ export function createReader(host: HTMLElement, repo: Repository, navigation?: {
         const book = el('section', 'book-feature');
         const cover = el('div', 'book-cover');
         cover.setAttribute('aria-hidden', 'true');
-        cover.append(el('span', 'cover-small', repo.book.id.toUpperCase()), el('strong', 'cover-title', repo.book.coverLines.join('\n')), el('div', 'cover-orbit'), el('span', 'cover-foot', '수학에서 한 픽셀까지\nA STUDY COMPANION'));
+        cover.append(el('span', 'cover-small', repo.book.id.toUpperCase()), el('strong', 'cover-title', repo.book.coverLines.join('\n')), el('div', 'cover-orbit'), el('span', 'cover-foot', '질문에서 이해까지\nA STUDY COMPANION'));
         const detail = el('div', 'book-detail');
         detail.append(el('p', 'eyebrow', 'CURRENT BOOK'), el('h2', '', repo.book.title), el('p', 'book-subtitle', repo.book.subtitle), el('p', 'book-description', repo.book.description));
         const facts = el('div', 'book-facts');
