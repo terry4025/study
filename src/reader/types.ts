@@ -68,7 +68,9 @@ export interface Lesson {
     chapterTitle: string;
     title: string;
     deck: string;
-    kind: 'original' | 'legacy' | 'correction';
+    kind: 'original' | 'legacy' | 'correction' | 'guide';
+    sourceSection?: string;
+    review?: 'draft' | 'editorial-check' | 'source-reviewed';
     minutes: number;
     goals: string[];
     prerequisites: string[];
@@ -111,4 +113,51 @@ export interface Progress {
     positions: Record<string, Position>;
     notes: Record<string, Note>;
     answers: Record<string, number>;
+}
+
+/** A book is a content provider, not a hard-coded screen. Foundation courses are
+ * shared resources and do not consume one of the six planned book slots. */
+export interface SourceSection {
+    id: string;
+    chapter: string;
+    number: string;
+    title: string;
+    titleKo: string;
+    url: string;
+    lessonId?: string;
+    coverage: 'legacy-note' | 'companion-guide' | 'source-only';
+    review: 'unreviewed' | 'editorial-check' | 'source-reviewed';
+}
+export interface SourceChapter {
+    id: string;
+    title: string;
+    titleKo: string;
+    sections: SourceSection[];
+    resources: Reference[];
+}
+export interface BookDefinition {
+    id: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    authors: string[];
+    edition: string;
+    role: 'book' | 'foundation';
+    status: 'available' | 'planned';
+    sourceUrl?: string;
+    rights: { status: 'original' | 'permission-required' | 'unverified'; label: string; url?: string };
+    outline?: SourceChapter[];
+    glossary?: { term: string; english: string; text: string; lesson?: string }[];
+}
+export type BookProgress = Omit<Progress, 'version' | 'settings'> & {
+    sourceRead: string[];
+    quizAttempts: Record<string, { selected: number; attempts: number; correct: boolean; updated: string }>;
+};
+export interface PlatformProgress {
+    version: 3;
+    settings: Settings;
+    activeBookId: string;
+    books: Record<string, BookProgress>;
+    /** Retains fields in imported future/older data which are not understood. */
+    preserved?: Record<string, unknown>;
 }

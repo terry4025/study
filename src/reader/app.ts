@@ -1,21 +1,34 @@
 import type { Lesson, Block, Settings, Note } from './types.js';
 import { Repository } from './repository.js';
+import { Library, type BookEntry } from './library.js';
 import { Store } from './store.js';
 import { element as el, button, prose, inline, math, externalLink } from './text.js';
 import { createLab } from './labs.js';
 import { glossary } from './glossary.js';
-const SOURCE_BOOK = 'pbrt-4ed';
-const modeLabel = (kind: Lesson['kind']) => kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : '독자 입문 강의';
+const modeLabel = (kind: Lesson['kind']) => kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : kind === 'guide' ? '원문 읽기 길잡이' : '독자 입문 강의';
 const cleanTitle = (s: string) => s.replace(/^\d+\.\d+\s*/, '').replace(/\s*\([^)]*\)$/, '');
-export function createReader(host: HTMLElement, repo: Repository): () => void {
+/** Injectable browser boundary for isolated rendering tests. Production callers
+ * omit this argument and use native URL, History and LocalStorage. */
+export interface ReaderEnvironment {
+    location: Pick<Location,'href'|'search'|'hash'>;
+    history: Pick<History,'pushState'|'replaceState'>;
+    storage?: Storage;
+}
+export function createReader(host: HTMLElement, catalog: Library, environment?: ReaderEnvironment): () => void {
+    const location = environment?.location || window.location;
+    const history = environment?.history || window.history;
     const abort = new AbortController();
     const signal = abort.signal;
     let storage: Storage | undefined;
     try {
-        storage = window.localStorage;
+        storage = environment ? environment.storage : window.localStorage;
     }
     catch { }
     const store = new Store(storage);
+    let activeEntry = catalog.get(store.value.activeBookId) || catalog.books.find(x => x.definition.status === 'available');
+    if (!activeEntry) throw new Error('최소 한 개의 학습 자료를 등록해 주세요.');
+    let repo: Repository = activeEntry.repository;
+    const bookId = () => activeEntry!.definition.id;
     let current: Lesson | null = null, routeToken = 0, observer: IntersectionObserver | null = null;
     let scrollTimer: number | undefined, searchTimer: number | undefined, toastTimer: number | undefined, destroyed = false;
     const shell = el('div', 'reader-app');
@@ -102,10 +115,11 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             store.position(current.id, { block: target.id, offset: target.getBoundingClientRect().top - 88, y: window.scrollY });
     }
     function restorePosition(id: string, anchor?: string) {
-        const p = store.value.positions[id];
+        const p = store.book.positions[id];
+        const owner=bookId();
         const key = anchor || p?.block;
         requestAnimationFrame(() => requestAnimationFrame(() => {
-            if (destroyed || current?.id !== id)
+            if (destroyed || current?.id !== id || bookId()!==owner)
                 return;
             const target = key ? document.getElementById(key) : null;
             if (target) {
@@ -120,90 +134,118 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
                 window.scrollTo({ top: anchor ? 0 : p?.y || 0, behavior: 'instant' });
         }));
     }
-    function navigate(id: string, anchor?: string) { recordPosition(); const url = new URL(window.location.href); url.search = ''; url.searchParams.set('book', SOURCE_BOOK); url.searchParams.set('sec', id); url.hash = anchor || ''; history.pushState({}, '', url); void renderRoute(); }
-    function goLibrary() { recordPosition(); const url = new URL(window.location.href); url.search = '?view=library'; url.hash = ''; history.pushState({}, '', url); void renderRoute(); }
-    function linkLesson(id: string, title: string, className = '', anchor?: string): HTMLAnchorElement {
+    function routeTo(url: URL) {
+        recordPosition(); activeDialog?.close(); window.clearTimeout(scrollTimer);
+        history.pushState({}, '', url); void renderRoute();
+    }
+    function navigate(id: string, anchor?: string, targetBook = bookId()) {
+        const resolved = catalog.resolveLesson(targetBook,id);
+        const url = new URL(location.href); url.search = '';
+        url.searchParams.set('book',resolved?.bookId || targetBook);
+        url.searchParams.set('sec',resolved?.meta.id || id); url.hash=anchor || ''; routeTo(url);
+    }
+    function goLibrary() { const url=new URL(location.href); url.search='?view=library'; url.hash=''; routeTo(url); }
+    function goBook(id = bookId()) { const url=new URL(location.href); url.search=''; url.searchParams.set('book',id); url.hash=''; routeTo(url); }
+    function linkBook(id:string,title:string,className=''): HTMLAnchorElement {
+        const a=el('a',className,title); a.href=`?book=${encodeURIComponent(id)}`;
+        a.addEventListener('click',e=>{if(e.button===0&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey){e.preventDefault();goBook(id);}});return a;
+    }
+    function linkLesson(id: string, title: string, className = '', anchor?: string, targetBook = bookId()): HTMLAnchorElement {
+        const resolved=catalog.resolveLesson(targetBook,id), owner=resolved?.bookId||targetBook, lessonId=resolved?.meta.id||id;
         const a = el('a', className, title);
-        a.href = `?book=${SOURCE_BOOK}&sec=${encodeURIComponent(id)}${anchor ? '#' + encodeURIComponent(anchor) : ''}`;
+        a.href = `?book=${encodeURIComponent(owner)}&sec=${encodeURIComponent(lessonId)}${anchor ? '#' + encodeURIComponent(anchor) : ''}`;
         a.addEventListener('click', e => { if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
-            e.preventDefault();
-            activeDialog?.close();
-            navigate(id, anchor);
-        } });
-        return a;
+            e.preventDefault(); navigate(lessonId, anchor, owner);
+        } }); return a;
     }
     function originalBadge(): HTMLElement { return el('span', 'kind-label', '독자 집필 · 원문 번역 아님'); }
-    function progressText() { const done = store.value.completed.filter(x => repo.has(x)).length; return `${done} / ${repo.metas.length} 수업 읽음`; }
+    function progressText() { const done = store.book.completed.filter(x => repo.has(x)).length; return `${done} / ${repo.metas.length} 수업 읽음`; }
     function library() {
-        current = null;
-        observer?.disconnect();
-        document.title = '결 스터디 · 서재';
-        const main = el('main', 'library');
-        main.id = 'main-content';
-        main.tabIndex = -1;
-        const top = el('section', 'library-intro');
-        const intro = el('div', 'intro-copy');
-        intro.append(el('p', 'eyebrow', 'A PERSONAL FIELD GUIDE'), el('h1', '', '이해하며,\n한 장씩.'), el('p', 'intro-description', '모르는 기호 앞에서 멈춰도 괜찮습니다.\n작은 계산부터 시작해, 빛이 만드는 세계를 읽습니다.'));
-        const info = el('div', 'intro-index');
-        info.append(el('span', 'eyebrow', 'YOUR READING DESK'), el('p', 'progress-counter', progressText()));
-        const note = el('p', 'muted', '수업의 준비 여부가 아닌, 직접 표시한 읽기 기록입니다.');
-        info.append(note);
-        top.append(intro, info);
-        main.append(top);
-        const book = el('section', 'book-feature');
-        const cover = el('div', 'book-cover');
-        cover.setAttribute('aria-hidden', 'true');
-        cover.append(el('span', 'cover-small', 'RENDERING / FIELD NOTES'), el('strong', 'cover-title', '빛을\n이해하는\n시간'), el('div', 'cover-orbit'), el('span', 'cover-foot', '수학에서 한 픽셀까지\nA STUDY COMPANION'));
-        const detail = el('div', 'book-detail');
-        detail.append(el('p', 'eyebrow', '01 / 현재의 책'), el('h2', '', '물리 기반 렌더링'), el('p', 'book-subtitle', 'Physically Based Rendering · 제4판 학습 동반자'), el('p', 'book-description', '기존 한국어 노트와 새로 작성한 입문 강의를 한곳에서 읽습니다. 수식의 뜻, 작은 계산, 확인 문제를 연결해 차근차근 공부하세요.'));
-        const facts = el('div', 'book-facts');
-        facts.append(el('span', '', `${repo.metas.filter(x => x.chapter === '0').length}개 기초 수업`), el('span', '', '9–16장 주제 입문'), el('span', '', '기기 안에 기록 저장'));
-        detail.append(facts);
-        const actions = el('div', 'book-actions');
-        const last = store.value.lastLesson && repo.meta(store.value.lastLesson);
-        actions.append(linkLesson(last ? last.id : 'math-01', last ? '이어 읽기 →' : '기초부터 시작하기 →', 'button primary'), button('목차 살펴보기', () => document.getElementById('course-contents')?.scrollIntoView({ behavior: 'smooth' }), 'button secondary'));
-        detail.append(actions);
-        if (last)
-            detail.append(el('p', 'resume-caption', `마지막 수업 · ${last.title}`));
-        const disclosure = el('details', 'scope-note');
-        disclosure.append(el('summary', '', '자료의 범위와 출처'));
-        disclosure.append(prose('1~8장: 저장소에 이미 있던 학습 노트이며 전체 원문 대조가 끝난 자료는 아닙니다.\n\n기초 및 9~16장 주제 수업: 수학·컴공 입문자를 위한 독자 강의입니다. PBRT의 전체 번역, 모든 절의 완역, 원문 구현의 대체물이 아닙니다. 부록의 전체 강의는 포함하지 않습니다.'));
-        disclosure.append(externalLink('PBRT 공식 목차', 'https://pbr-book.org/4ed/contents'));
-        detail.append(disclosure);
-        book.append(cover, detail);
-        main.append(book);
-        const section = el('section', 'course-contents');
-        section.id = 'course-contents';
-        const head = el('div', 'section-heading');
-        head.append(el('h2', '', '학습 목차'), el('span', 'muted', `${repo.metas.length}개 수업 · ${repo.chapters.length}개 묶음`));
-        section.append(head);
-        if (!repo.metas.some(x => x.kind === 'legacy')) {
-            const p = el('p', 'preview-notice', '독립 실행 미리보기입니다. 기존 1~8장 50개 노트는 저장소에 변경 파일을 적용하면 자동 연결됩니다.');
-            section.append(p);
+        current=null; observer?.disconnect(); document.title='결 스터디 · 서재';
+        const main=el('main','library'); main.id='main-content'; main.tabIndex=-1;
+        const top=el('section','library-intro'), intro=el('div','intro-copy');
+        intro.append(el('p','eyebrow','YOUR PERSONAL LIBRARY'),el('h1','','깊이 읽고,\n서로 연결하기.'),el('p','intro-description','한 권에서 배운 기초가 다음 책의 출발점이 됩니다.\n읽기 기록과 메모는 책마다 따로, 기초 개념은 함께.'));
+        const stats=el('div','intro-index');
+        const books=catalog.books.filter(x=>x.definition.role==='book');
+        const available=books.filter(x=>x.definition.status==='available');
+        stats.append(el('span','eyebrow','A GROWING COLLECTION'),el('p','progress-counter',`${String(books.length).padStart(2,'0')}권의 서재`),el('p','muted',`${available.length}권 학습 자료 제공 · ${books.length-available.length}권 준비 예정`));
+        top.append(intro,stats);main.append(top);
+        const lastEntry=catalog.get(store.value.activeBookId),lastId=lastEntry&&store.forBook(lastEntry.definition.id).lastLesson;
+        if(lastEntry&&lastId&&lastEntry.repository.has(lastId)) {
+            const resume=el('section','resume-strip'); resume.append(el('div','',lastEntry.definition.title+' · '+lastEntry.repository.meta(lastId)!.title),linkLesson(lastId,'이어 읽기 →','button primary',undefined,lastEntry.definition.id));main.append(resume);
         }
-        for (const ch of repo.chapters) {
-            const d = el('details', 'chapter-row');
-            d.open = ch.id === '0' || ch.id === '9';
-            const sum = el('summary');
-            sum.append(el('span', 'chapter-number', ch.id === '0' ? '00' : ch.id.padStart(2, '0')), el('span', 'chapter-name', ch.title), el('span', 'chapter-count', `${ch.lessons.length} 수업`), el('span', 'chevron', '+'));
-            d.append(sum);
-            d.append(el('p', 'chapter-subtitle', ch.subtitle));
-            const list = el('div', 'chapter-lessons');
-            for (const m of ch.lessons) {
-                const a = linkLesson(m.id, m.title, 'lesson-row');
-                a.prepend(el('span', 'lesson-state', store.value.completed.includes(m.id) ? '✓' : '—'));
-                a.append(el('span', 'lesson-meta', modeLabel(m.kind)));
-                list.append(a);
+        const grid=el('section','shelf-grid');grid.setAttribute('aria-label','책 목록');
+        books.forEach((entry,index)=>{
+            const b=entry.definition,card=el('article','shelf-card'+(b.status==='planned'?' planned':''));
+            const cover=el('div','shelf-cover');cover.setAttribute('aria-hidden','true');
+            cover.append(el('span','eyebrow',`VOLUME ${String(index+1).padStart(2,'0')}`),el('strong','',b.title),el('span','cover-edition',b.edition));
+            const copy=el('div','shelf-copy');copy.append(el('p','kind-label',b.status==='planned'?'준비 예정':'학습 동반자 · 완역 아님'),el('h2','',b.title),el('p','muted',b.subtitle));
+            if(b.status==='available') {
+                const cov=catalog.coverage(b.id),read=store.forBook(b.id).completed.filter(id=>entry.repository.has(id)).length;
+                copy.append(el('p','shelf-status',`${cov.sections}개 원문 절 안내 · ${read}개 수업 읽음`));
+            } else copy.append(el('p','shelf-status','본문 미등록 · 학습 진도 없음'));
+            copy.append(linkBook(b.id,b.status==='available'?'책 펼치기 →':'준비 상태 보기','button '+(b.status==='available'?'primary':'secondary')));
+            card.append(cover,copy);grid.append(card);
+        });main.append(grid);
+        const shared=el('section','shared-foundations');shared.append(el('p','eyebrow','BEFORE YOU BEGIN'),el('h2','','수학과 코드, 함께 쓰는 기초'));
+        for(const entry of catalog.books.filter(x=>x.definition.role==='foundation'))shared.append(el('p','muted',entry.definition.description),linkBook(entry.definition.id,`${entry.repository.metas.length}개 공통 기초 수업 →`,'button secondary'));
+        shared.append(el('p','muted','공통 준비실은 여섯 권의 책 수에 포함하지 않습니다.'));main.append(shared);
+        main.append(el('footer','library-footer','결 스터디 · 이 브라우저에 기록 저장 · 계정/기기 간 자동 동기화 없음'));
+        view.replaceChildren(main);window.scrollTo({top:0,behavior:'instant'});
+    }
+    function bookOverview() {
+        current=null;observer?.disconnect(); const entry=activeEntry!,b=entry.definition;
+        document.title=b.title+' · 결 스터디';const main=el('main','library book-overview');main.id='main-content';main.tabIndex=-1;
+        main.append(button('← 전체 서재',goLibrary,'text-button'));
+        const head=el('header','book-overview-head');head.append(el('p','eyebrow',b.role==='foundation'?'SHARED FOUNDATIONS':'READING COMPANION'),el('h1','',b.title),el('p','book-subtitle',b.subtitle),el('p','book-description',b.description));
+        if(b.authors.length)head.append(el('p','muted',b.authors.join(' · ')+' / '+b.edition));
+        main.append(head);
+        if(b.status==='planned') {
+            main.append(el('section','preview-notice','이 책은 아직 학습 본문이 없습니다. 제목을 눌러도 다른 책의 내용이나 임의의 예제를 대신 표시하지 않습니다.'));
+            if(b.sourceUrl)main.append(externalLink('도서 공식 사이트 확인',b.sourceUrl));
+            main.append(el('p','muted',b.rights.label));view.replaceChildren(main);window.scrollTo(0,0);return;
+        }
+        const actions=el('div','book-actions');const last=store.book.lastLesson&&repo.meta(store.book.lastLesson),first=repo.metas[0];
+        if(last||first)actions.append(linkLesson((last||first)!.id,last?'이어 읽기 →':'첫 수업 읽기 →','button primary'));
+        if(b.role==='book')actions.append(linkBook('foundations','미분·적분 기초부터','button secondary'));
+        actions.append(button('기록 보기',openHistory,'button secondary'));main.append(actions,el('p','progress-counter small-counter',progressText()));
+        if(b.outline?.length)main.append(sourceOutline(entry));
+        const sections=el('section','course-contents');sections.id='course-contents';
+        const sh=el('div','section-heading');sh.append(el('h2','','앱에서 읽는 학습 자료'),el('span','muted',`${repo.metas.length}개 수업 · 원문 절 개수와는 다른 수치`));sections.append(sh);
+        for(const ch of repo.chapters) {
+            const d=el('details','chapter-row');d.open=repo.chapters[0]===ch;
+            const sum=el('summary');sum.append(el('span','chapter-number',ch.id==='0'?'00':ch.id.padStart(2,'0')),el('span','chapter-name',ch.title),el('span','chapter-count',`${ch.lessons.length} 수업`),el('span','chevron','+'));d.append(sum,el('p','chapter-subtitle',ch.subtitle));
+            const list=el('div','chapter-lessons');for(const m of ch.lessons){const a=linkLesson(m.id,m.title,'lesson-row');a.prepend(el('span','lesson-state',store.book.completed.includes(m.id)?'✓':'—'));a.append(el('span','lesson-meta',modeLabel(m.kind)));list.append(a);}d.append(list);sections.append(d);
+        }main.append(sections);
+        const rights=el('details','scope-note');rights.append(el('summary','','자료 범위와 이용 조건'),el('p','',b.rights.label));
+        if(b.rights.url)rights.append(externalLink('이용 조건 원문',b.rights.url));
+        rights.append(el('p','','로컬 해설이 있거나 읽음으로 표시했다고 원문 번역·정확성 검수가 완료되는 것은 아닙니다.'));main.append(rights);
+        view.replaceChildren(main);window.scrollTo({top:0,behavior:'instant'});
+    }
+    function sourceOutline(entry:BookEntry): HTMLElement {
+        const b=entry.definition,cov=catalog.coverage(b.id),panel=el('section','source-outline');panel.id='source-outline';
+        panel.append(el('div','eyebrow','THE SOURCE / READING MAP'),el('h2','','원문 목차와 학습 현황'));
+        const stats=el('div','coverage-stats');
+        for(const [value,label] of [[cov.sections,'번호가 붙은 원문 절'],[cov.legacyNotes,'기존 노트 연결'],[cov.guides,'독자 길잡이 연결'],[cov.sourceReviewed,'원문 대조 검수 완료']] as const){const item=el('div');item.append(el('strong','',String(value)),el('span','',label));stats.append(item);}panel.append(stats);
+        panel.append(el('p','preview-notice','원문 전체의 완역본이 아닙니다. 길잡이는 원문을 읽기 위한 준비 설명이며 모든 수식 유도·코드 구현을 대신하지 않습니다. 기존 노트는 미검수 상태를 유지합니다.'));
+        if(cov.sourceOnly)panel.append(el('p','muted',`${cov.sourceOnly}개 절은 이 실행 환경에 로컬 자료가 연결되지 않았습니다. 공식 원문으로 열 수 있습니다.`));
+        const readStatus=el('p','source-read-count');const refresh=()=>readStatus.textContent=`직접 표시한 원문 읽기: ${store.book.sourceRead.filter(id=>b.outline!.some(ch=>ch.sections.some(s=>s.id===id))).length} / ${cov.sections}절`;
+        refresh();panel.append(readStatus);
+        if(b.sourceUrl)panel.append(externalLink('공식 전체 목차 · 서문과 색인 포함',b.sourceUrl));
+        for(const ch of b.outline||[]) {
+            const details=el('details','source-chapter');details.open=ch.id==='9';
+            details.append(el('summary','',`${ch.id} · ${ch.titleKo} (${ch.sections.length})`));
+            for(const section of ch.sections){const row=el('div','source-row');row.dataset.sourceSection=section.id;
+                const name=el('div','source-name');name.append(el('strong','',section.number+' '+section.titleKo),el('small','muted',section.title));
+                const status=section.review==='source-reviewed'?'원문 대조 검수 완료':section.coverage==='legacy-note'?'기존 노트 · 대조 필요':'독자 길잡이 · 완역 아님';name.append(el('span','kind-label',status));row.append(name);
+                const controls=el('div','source-actions');if(section.lessonId&&repo.has(section.lessonId))controls.append(linkLesson(section.lessonId,section.coverage==='legacy-note'?'노트 열기':'길잡이 열기','text-link'));
+                controls.append(externalLink('원문 ↗',section.url));
+                const read=button('',()=>{store.toggle('sourceRead',section.id);update();refresh();saveFeedback();},'source-read-button');
+                function update(){const yes=store.book.sourceRead.includes(section.id);read.textContent=yes?'원문 읽음 ✓':'원문 읽음 표시';read.setAttribute('aria-pressed',String(yes));read.setAttribute('aria-label',section.number+' '+read.textContent);}update();controls.append(read);row.append(controls);details.append(row);
             }
-            d.append(list);
-            section.append(d);
+            const links=el('div','chapter-resources');if(ch.sections[0])links.append(externalLink('장 도입부',ch.sections[0].url.slice(0,ch.sections[0].url.lastIndexOf('/'))));for(const r of ch.resources)links.append(externalLink(r.title,r.url));details.append(links);panel.append(details);
         }
-        main.append(section);
-        const foot = el('footer', 'library-footer');
-        foot.append(el('span', '', '결 스터디 · 읽고, 이해하고, 남기기'), externalLink('PBRT 원문', 'https://pbr-book.org/4ed/contents'));
-        main.append(foot);
-        view.replaceChildren(main);
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        return panel;
     }
     function tocContent(id: string, close?: () => void): HTMLElement { const list = el('div', 'toc-list'); for (const ch of repo.chapters) {
         const d = el('details', 'toc-chapter');
@@ -217,7 +259,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
                 a.classList.add('active');
                 a.setAttribute('aria-current', 'page');
             }
-            if (store.value.completed.includes(m.id))
+            if (store.book.completed.includes(m.id))
                 a.append(el('span', 'toc-done', '✓'));
             if (close)
                 a.addEventListener('click', close);
@@ -228,7 +270,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
     function openToc() { const { body, close } = modal('학습 목차', 'toc-dialog'); body.append(tocContent(current?.id || '', close)); }
     function reader(l: Lesson) {
         current = l;
-        store.value.lastLesson = l.id;
+        store.book.lastLesson = l.id;
         store.save();
         document.title = `${l.title} · 결 스터디`;
         observer?.disconnect();
@@ -236,17 +278,17 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const sidebar = el('aside', 'reader-sidebar');
         sidebar.setAttribute('aria-label', '책 전체 목차');
         const sh = el('div', 'sidebar-head');
-        sh.append(el('span', 'eyebrow', 'READING / 01'), el('h2', '', '물리 기반 렌더링'), button('← 서재로', () => goLibrary(), 'text-button'));
+        sh.append(el('span', 'eyebrow', 'READING / '+bookId()), el('h2', '', activeEntry!.definition.title), button('← 책 목차로', () => goBook(), 'text-button'), button('전체 서재',goLibrary,'text-button'));
         sidebar.append(sh, tocContent(l.id), el('p', 'sidebar-progress', progressText()));
         const main = el('main', 'reader-main');
         main.id = 'main-content';
         main.tabIndex = -1;
         const top = el('div', 'reading-toolbar');
         const bc = el('div', 'reading-breadcrumb');
-        bc.append(button('목차', openToc, 'button secondary mobile-toc'), el('span', '', l.chapter === '0' ? '준비 코스' : `제${l.chapter}장`), el('span', 'crumb-divider', '/'), el('span', '', l.chapterTitle));
+        bc.append(button('목차', openToc, 'button secondary mobile-toc'), el('span', '', l.chapter === '0' ? '준비 코스' : /^[A-Z]$/.test(l.chapter) ? `부록 ${l.chapter}` : `제${l.chapter}장`), el('span', 'crumb-divider', '/'), el('span', '', l.chapterTitle));
         top.append(bc);
         const bookMark = button('', () => { store.toggle('bookmarks', l.id); updateBookmark(); saveFeedback(); }, 'text-button bookmark-button');
-        function updateBookmark() { const yes = store.value.bookmarks.includes(l.id); bookMark.textContent = yes ? '저장됨 ✓' : '나중에 읽기 +'; bookMark.setAttribute('aria-pressed', String(yes)); }
+        function updateBookmark() { const yes = store.book.bookmarks.includes(l.id); bookMark.textContent = yes ? '저장됨 ✓' : '나중에 읽기 +'; bookMark.setAttribute('aria-pressed', String(yes)); }
         updateBookmark();
         top.append(bookMark);
         main.append(top);
@@ -270,7 +312,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             const pre = el('div', 'prerequisite-strip');
             pre.append(el('span', '', '먼저 알아두면 좋아요'));
             for (const id of l.prerequisites) {
-                const m = repo.meta(id);
+                const m = catalog.resolveLesson(bookId(),id)?.meta;
                 if (m)
                     pre.append(linkLesson(id, m.title, 'prerequisite-link'));
             }
@@ -301,13 +343,13 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         }
         const sources = el('section', 'lesson-sources');
         sources.append(el('h2', '', '더 깊게 읽기'));
-        sources.append(el('p', 'muted', l.kind === 'original' ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
+        sources.append(el('p', 'muted', (l.kind === 'original' || l.kind === 'guide') ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
         for (const s of l.references)
             sources.append(externalLink(s.title, s.url));
         article.append(sources);
         const complete = el('div', 'complete-panel');
         const done = button('', () => { store.toggle('completed', l.id); updateDone(); updateSidebarProgress(); saveFeedback(); }, 'button primary');
-        function updateDone() { const yes = store.value.completed.includes(l.id); done.textContent = yes ? '읽음 표시 취소' : '이 수업 읽음으로 표시 ✓'; done.setAttribute('aria-pressed', String(yes)); }
+        function updateDone() { const yes = store.book.completed.includes(l.id); done.textContent = yes ? '읽음 표시 취소' : '이 수업 읽음으로 표시 ✓'; done.setAttribute('aria-pressed', String(yes)); }
         updateDone();
         complete.append(el('p', '', '읽었다는 기록은 직접 남깁니다. 이해가 부족한 부분은 메모하고 다시 돌아오세요.'), done);
         article.append(complete);
@@ -354,7 +396,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
     }
     function updateSidebarProgress() { view.querySelectorAll('.sidebar-progress').forEach(x => x.textContent = progressText()); const a = view.querySelector<HTMLAnchorElement>('a.toc-lesson.active'); if (a && current) {
         a.querySelector('.toc-done')?.remove();
-        if (store.value.completed.includes(current.id))
+        if (store.book.completed.includes(current.id))
             a.append(el('span', 'toc-done', '✓'));
     } }
     function jump(id: string) { const target = document.getElementById(id); if (!target)
@@ -445,7 +487,8 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
                     caption.append(d);
                 }
                 figure.append(image, caption);
-                container.append(figure);
+                if(b.verified)container.append(figure);
+                else {const disclosure=el('details','unreviewed-figure');disclosure.append(el('summary','','보존된 그림 열기 · 번호와 내용 대조 필요'),el('p','muted','이 그림이 해당 문단에 맞는지는 검수되지 않았습니다. 정확한 대응은 수업 아래 원문에서 확인하세요.'),figure);container.append(disclosure);}
                 break;
             }
             case 'quiz': {
@@ -454,7 +497,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
                 const form = el('form');
                 const fs = el('fieldset');
                 fs.append(el('legend', 'sr-only', b.question));
-                b.options.forEach((option, i) => { const label = el('label', 'quiz-option'); const input = el('input'); input.type = 'radio'; input.name = b.id; input.value = String(i); input.checked = store.value.answers[b.id] === i; label.append(input, el('span', '', option)); fs.append(label); });
+                b.options.forEach((option, i) => { const label = el('label', 'quiz-option'); const input = el('input'); input.type = 'radio'; input.name = b.id; input.value = String(i); input.checked = (store.book.answers[`${l.id}:${b.id}`] ?? store.book.answers[b.id]) === i; label.append(input, el('span', '', option)); fs.append(label); });
                 form.append(fs);
                 const submit = el('button', 'button secondary', '선택한 답 확인');
                 submit.type = 'submit';
@@ -464,7 +507,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
                 form.addEventListener('submit', event => { event.preventDefault(); const checked = form.querySelector<HTMLInputElement>('input:checked'); feedback.hidden = false; if (!checked) {
                     feedback.textContent = '답 하나를 먼저 선택해 주세요.';
                     return;
-                } const answer = Number(checked.value); store.value.answers[b.id] = answer; store.save(); feedback.classList.toggle('correct', answer === b.answer); feedback.replaceChildren(el('strong', '', answer === b.answer ? '맞았습니다.' : '다시 생각해 봅시다.'), prose(b.feedback)); saveFeedback(); });
+                } const answer = Number(checked.value); store.answer(`${l.id}:${b.id}`,answer,answer === b.answer); feedback.classList.toggle('correct', answer === b.answer); feedback.replaceChildren(el('strong', '', answer === b.answer ? '맞았습니다.' : '다시 생각해 봅시다.'), prose(b.feedback)); saveFeedback(); });
                 form.append(submit, feedback);
                 container.append(form);
                 break;
@@ -485,54 +528,28 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         return container;
     }
     async function renderRoute() {
-        const token = ++routeToken;
-        observer?.disconnect();
-        const params = new URLSearchParams(location.search);
-        const book = params.get('book');
-        if (book && book !== SOURCE_BOOK) {
-            current = null;
-            view.replaceChildren(errorView('아직 연결되지 않은 책입니다.', '다른 책의 이름 아래 PBRT 내용을 표시하지 않습니다.'));
-            return;
-        }
-        let id = params.get('sec');
-        if (!id && params.get('view') !== 'library' && store.value.lastLesson && repo.has(store.value.lastLesson)) {
-            id = store.value.lastLesson;
-            const u = new URL(location.href);
-            u.searchParams.set('book', SOURCE_BOOK);
-            u.searchParams.set('sec', id);
-            history.replaceState({}, '', u);
-        }
-        if (!id) {
-            library();
-            return;
-        }
-        view.replaceChildren(el('main', 'loading-page', '수업을 불러오고 있습니다…'));
-        current = null;
+        const token=++routeToken;observer?.disconnect();
+        const params=new URLSearchParams(location.search);let owner=params.get('book'),id=params.get('sec');
+        if(params.get('view')==='library'||(!owner&&!id)){library();return;}
+        // Backward compatibility only for the previously shipped PBRT URL format.
+        if(!owner&&id) owner='pbrt-4ed';
+        let entry=owner?catalog.get(owner):undefined;
+        if(!entry){current=null;view.replaceChildren(errorView('등록되지 않은 책입니다.','주소의 책 ID를 확인하세요. 다른 책을 대신 열지 않습니다.'));return;}
+        if(id){const resolved=catalog.resolveLesson(entry.definition.id,id);if(resolved&&resolved.bookId!==entry.definition.id){entry=catalog.get(resolved.bookId)!;id=resolved.meta.id;const u=new URL(location.href);u.searchParams.set('book',entry.definition.id);u.searchParams.set('sec',id);history.replaceState({},'',u);}}
+        activeEntry=entry;repo=entry.repository;store.selectBook(entry.definition.id);
+        if(!id){bookOverview();return;}
+        current=null;
+        if(entry.definition.status==='planned'){view.replaceChildren(errorView('이 책의 본문은 준비 중입니다.','아직 등록된 수업이 없습니다.'));return;}
+        view.replaceChildren(el('main','loading-page','수업을 불러오고 있습니다…'));
         try {
-            const l = await repo.get(id);
-            if (destroyed || token !== routeToken)
-                return;
-            if (!l) {
-                view.replaceChildren(errorView('이 수업을 찾을 수 없습니다.', '주소를 확인하거나 목차에서 다른 수업을 선택하세요.'));
-                return;
-            }
-            reader(l);
-            let anchor: string | undefined;
-            try {
-                anchor = location.hash ? decodeURIComponent(location.hash.slice(1)) : undefined;
-            }
-            catch { }
-            restorePosition(l.id, anchor);
-        }
-        catch (e) {
-            if (token !== routeToken || destroyed)
-                return;
-            view.replaceChildren(errorView('기존 수업을 불러오지 못했습니다.', '네트워크 또는 콘텐츠 파일을 확인해 주세요. 새 기초 강의는 계속 읽을 수 있습니다.'));
-            const retry = button('다시 불러오기', () => void renderRoute(), 'button secondary');
-            view.querySelector('main')?.append(retry);
-        }
+            const lesson=await repo.get(id);if(destroyed||token!==routeToken)return;
+            if(!lesson){view.replaceChildren(errorView('이 수업을 찾을 수 없습니다.','주소를 확인하거나 책 목차에서 다른 수업을 선택하세요.'));return;}
+            reader(lesson);let anchor:string|undefined;try{anchor=location.hash?decodeURIComponent(location.hash.slice(1)):undefined;}catch{}
+            restorePosition(lesson.id,anchor);
+        }catch {if(destroyed||token!==routeToken)return;view.replaceChildren(errorView('기존 수업을 불러오지 못했습니다.','콘텐츠 파일 또는 네트워크를 확인하세요. 독자 길잡이와 공통 기초는 계속 읽을 수 있습니다.'));
+            view.querySelector('main')?.append(button('다시 불러오기',()=>void renderRoute(),'button secondary'));}
     }
-    function errorView(title: string, message: string): HTMLElement { const m = el('main', 'error-page'); m.id = 'main-content'; m.append(el('p', 'eyebrow', 'READING DESK'), el('h1', '', title), el('p', '', message), button('서재로 돌아가기', () => goLibrary(), 'button primary'), linkLesson('math-01', '기초 수업 읽기', 'button secondary')); return m; }
+    function errorView(title: string, message: string): HTMLElement { const m = el('main', 'error-page'); m.id = 'main-content'; m.append(el('p', 'eyebrow', 'READING DESK'), el('h1', '', title), el('p', '', message), button('서재로 돌아가기', () => goLibrary(), 'button primary'), linkLesson('math-01', '기초 수업 읽기', 'button secondary',undefined,'foundations')); return m; }
     function openSearch() {
         const { body, dialog, close } = modal('본문 검색', 'search-dialog');
         const label = el('label', 'sr-only', '찾을 단어나 코드');
@@ -545,7 +562,9 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const results = el('div', 'search-results');
         const status = el('p', 'search-status');
         status.setAttribute('role', 'status');
-        body.append(label, input, hint, status, results);
+        const scope=el('select','search-scope');scope.setAttribute('aria-label','검색 범위');
+        const allOption=el('option','','전체 학습 자료');allOption.value='';const bookOption=el('option','',activeEntry!.definition.title+' 안에서');bookOption.value=bookId();scope.append(allOption,bookOption);
+        body.append(label, input, scope, hint, status, results);
         let seq = 0;
         let selected = -1;
         input.addEventListener('input', () => { window.clearTimeout(searchTimer); const request = ++seq; const q = input.value.trim(); selected = -1; if (!q) {
@@ -553,14 +572,15 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             results.replaceChildren();
             return;
         } status.textContent = '본문을 찾는 중입니다…'; searchTimer = window.setTimeout(async () => { try {
-            const hits = await repo.search(q);
+            const {hits,warnings} = await catalog.search(q,scope.value||undefined);
             if (!dialog.open || seq !== request)
                 return;
             results.replaceChildren();
             status.textContent = hits.length ? `${hits.length}개 결과 · 선택하면 해당 문단으로 이동합니다.` : '일치하는 내용을 찾지 못했습니다.';
+            if(warnings.length)status.append(el('span','search-warning',' 일부 자료 제외: '+warnings.join(' ')));
             for (const hit of hits) {
-                const a = linkLesson(hit.lesson.id, '', 'search-result', hit.blockId);
-                a.append(el('small', '', hit.lesson.chapter === '0' ? '기초' : `${hit.lesson.chapter}장 · ${modeLabel(hit.lesson.kind)}`), el('strong', '', hit.lesson.title), el('span', '', hit.excerpt));
+                const a = linkLesson(hit.lesson.id, '', 'search-result', hit.blockId,hit.bookId);
+                a.append(el('small', '', `${hit.bookTitle} · ${modeLabel(hit.lesson.kind)}`), el('strong', '', hit.lesson.title), el('span', '', hit.excerpt));
                 results.append(a);
             }
         }
@@ -568,6 +588,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             if (seq === request)
                 status.textContent = '기존 콘텐츠 검색에 실패했습니다. 연결 상태를 확인한 뒤 다시 검색하세요.';
         } }, 160); });
+        scope.addEventListener('change',()=>input.dispatchEvent(new Event('input')));
         input.addEventListener('keydown', e => { const links = Array.from(results.querySelectorAll<HTMLAnchorElement>('a')); if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();
             if (!links.length)
@@ -589,50 +610,44 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         input.placeholder = '한국어 또는 영어 용어';
         input.setAttribute('aria-label', '용어 검색');
         const list = el('div', 'glossary-list');
-        body.append(el('p', 'muted', '기존 사전 원본은 보존하고, 새 화면에서는 초보자용 핵심 용어 25개를 제공합니다.'), input, list);
-        function draw() { const query = input.value.toLowerCase(); const found = glossary.filter(g => (g.term + ' ' + g.english + ' ' + g.text).toLowerCase().includes(query)); list.replaceChildren(); if (!found.length)
+        const terms=[...glossary,...(activeEntry!.definition.glossary||[])];
+        body.append(el('p', 'muted', `공통 기초와 현재 책의 용어 ${terms.length}개를 함께 찾습니다. 기존 사전 데이터는 삭제하지 않았습니다.`), input, list);
+        function draw() { const query = input.value.toLowerCase(); const found = terms.filter(g => (g.term + ' ' + g.english + ' ' + g.text).toLowerCase().includes(query)); list.replaceChildren(); if (!found.length)
             list.append(el('p', 'empty-state', '일치하는 용어가 없습니다.')); for (const g of found) {
             const item = el('section', 'glossary-entry');
-            item.append(el('h3', '', g.term), el('small', 'muted', g.english), prose(g.text), linkLesson(g.lesson, '관련 기초 설명으로 →', 'text-link'));
+            item.append(el('h3', '', g.term), el('small', 'muted', g.english), prose(g.text));
+            if(g.lesson&&catalog.resolveLesson(bookId(),g.lesson))item.append(linkLesson(g.lesson, '관련 설명으로 →', 'text-link'));
             list.append(item);
         } }
         input.addEventListener('input', draw);
         draw();
         input.focus();
     }
-    function openNote(lessonId: string, blockId: string) { const { body, close } = modal('읽으며 남긴 생각', 'note-dialog'); const key = `${lessonId}:${blockId}`, existing = store.value.notes[key]; body.append(el('p', 'muted', repo.meta(lessonId)?.title || lessonId)); const label = el('label', '', '어디까지 이해했고, 무엇이 궁금한가요?'); const textarea = el('textarea', 'note-input'); textarea.value = existing?.text || ''; textarea.maxLength = 20000; textarea.rows = 8; label.append(textarea); const save = button('메모 저장', () => { store.note({ lessonId, blockId, text: textarea.value, updated: new Date().toISOString() }); close(); inform(textarea.value.trim() ? '이 문단에 메모를 저장했습니다.' : '메모를 비웠습니다.'); saveFeedback(); }, 'button primary'); body.append(label, el('p', 'muted', '이 브라우저에 저장됩니다. 다른 기기로 옮기려면 학습 기록을 내보내세요.'), save); textarea.focus(); }
+    function openNote(lessonId:string,blockId:string,owner=bookId()) {
+        const {body,close}=modal('읽으며 남긴 생각','note-dialog');const key=`${lessonId}:${blockId}`,existing=store.forBook(owner).notes[key];
+        body.append(el('p','muted',(catalog.get(owner)?.definition.title||owner)+' · '+(catalog.get(owner)?.repository.meta(lessonId)?.title||lessonId)));
+        const label=el('label','','어디까지 이해했고, 무엇이 궁금한가요?'),textarea=el('textarea','note-input');textarea.value=existing?.text||'';textarea.maxLength=20000;textarea.rows=8;label.append(textarea);
+        const save=button('메모 저장',()=>{store.note({lessonId,blockId,text:textarea.value,updated:new Date().toISOString()},owner);close();inform('메모를 저장했습니다.');saveFeedback();},'button primary');
+        body.append(label,el('p','muted','책별로 이 브라우저에 저장합니다. 다른 기기로 옮기려면 전체 기록을 내보내세요.'),save);textarea.focus();
+    }
     function openHistory() {
-        const { body, close } = modal('학습 기록', 'history-dialog');
-        body.append(el('p', 'record-total', progressText()));
-        const saved = el('section', 'record-section');
-        saved.append(el('h3', '', '나중에 읽기'));
-        const favorites = store.value.bookmarks.map(id => repo.meta(id)).filter(Boolean);
-        if (!favorites.length)
-            saved.append(el('p', 'empty-state', '수업 상단에서 ‘나중에 읽기’를 눌러 보관하세요.'));
-        for (const m of favorites)
-            if (m)
-                saved.append(linkLesson(m.id, m.title, 'saved-lesson'));
-        body.append(saved);
-        const completed = el('section', 'record-section');
-        completed.append(el('h3', '', '읽은 수업'));
-        const read = store.value.completed.map(id => repo.meta(id)).filter(Boolean);
-        if (!read.length)
-            completed.append(el('p', 'empty-state', '수업 마지막의 읽음 버튼으로 기록을 남깁니다.'));
-        for (const m of read)
-            if (m)
-                completed.append(linkLesson(m.id, '✓ ' + m.title, 'saved-lesson'));
-        body.append(completed);
-        const notes = el('section', 'record-section');
-        notes.append(el('h3', '', '메모'));
-        const all = Object.values(store.value.notes).sort((a, b) => b.updated.localeCompare(a.updated));
-        if (!all.length)
-            notes.append(el('p', 'empty-state', '본문 문단 옆의 + 버튼으로 생각을 남겨 보세요.'));
-        for (const n of all) {
-            const card = el('article', 'note-card');
-            card.append(linkLesson(n.lessonId, repo.meta(n.lessonId)?.title || n.lessonId, 'text-link', n.blockId), el('p', 'note-plain', n.text), button('편집', () => openNote(n.lessonId, n.blockId), 'text-button'));
-            notes.append(card);
+        const {body}=modal('책별 학습 기록','history-dialog');body.append(el('p','muted','읽음 표시와 원문 읽기, 퀴즈 시도는 다른 기록입니다. 번역 검수 완료를 의미하지 않습니다.'));
+        let any=false;
+        for(const [owner,progress] of Object.entries(store.value.books)) {
+            if(!progress.completed.length&&!progress.bookmarks.length&&!Object.keys(progress.notes).length&&!progress.sourceRead.length&&!Object.keys(progress.quizAttempts).length)continue;
+            any=true;const entry=catalog.get(owner),group=el('section','record-section');
+            group.append(el('h3','',entry?.definition.title||`등록되지 않은 책 (${owner})`),el('p','muted',`수업 읽음 ${progress.completed.length} · 원문 읽음 ${progress.sourceRead.length} · 답안 제출 ${Object.values(progress.quizAttempts).reduce((n,q)=>n+q.attempts,0)}회`));
+            for(const [title,ids] of [['나중에 읽기',progress.bookmarks],['읽은 수업',progress.completed]] as const) {
+                if(!ids.length)continue;group.append(el('h4','',title));
+                for(const id of ids){const meta=entry?.repository.meta(id);group.append(meta?linkLesson(id,meta.title,'saved-lesson',undefined,owner):el('p','muted',`${id} · 자료 미등록, 기록은 보존됨`));}
+            }
+            for(const note of Object.values(progress.notes).sort((a,b)=>b.updated.localeCompare(a.updated))) {
+                const card=el('article','note-card'),meta=entry?.repository.meta(note.lessonId);
+                card.append(meta?linkLesson(note.lessonId,meta.title,'text-link',note.blockId,owner):el('span','muted',note.lessonId),el('p','note-plain',note.text),button('편집',()=>openNote(note.lessonId,note.blockId,owner),'text-button'));group.append(card);
+            }body.append(group);
         }
-        body.append(notes, button('기록 내보내기', exportProgress, 'button secondary'));
+        if(!any)body.append(el('p','empty-state','아직 남긴 기록이 없습니다. 수업 마지막에서 읽음 표시를 하거나 메모를 남겨보세요.'));
+        body.append(button('모든 책 기록 내보내기',exportProgress,'button secondary'));
     }
     function exportProgress() { const blob = new Blob([store.export()], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = el('a'); a.href = url; a.download = `gyeol-progress-${new Date().toISOString().slice(0, 10)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); inform('학습 기록 파일을 만들었습니다.'); }
     function openSettings() {
@@ -685,14 +700,14 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         data.append(label, status);
         file.addEventListener('change', async () => { data.querySelector('.confirm-import')?.remove(); const f = file.files?.[0]; if (!f)
             return; try {
-            if (f.size > 2000000)
-                throw new Error('2MB 이하의 기록만 불러올 수 있습니다.');
+            if (f.size > 5000000)
+                throw new Error('5MB 이하의 기록만 불러올 수 있습니다.');
             const text = await f.text();
             const trial = new Store();
             trial.restore(text);
-            status.textContent = `${trial.value.completed.length}개 읽기 기록 · ${Object.keys(trial.value.notes).length}개 메모. 현재 기록을 대체할지 선택하세요.`;
+            status.textContent = `${Object.keys(trial.value.books).length}개 자료의 기록 · ${Object.values(trial.value.books).reduce((n,b)=>n+b.completed.length,0)}개 읽기 표시. 기존 전체 기록은 백업 후 대체됩니다.`;
             data.querySelector('.confirm-import')?.remove();
-            const confirm = button('현재 기록을 대체하여 불러오기', () => { store.restore(text); applySettings(); close(); void renderRoute(); inform('기록을 불러왔습니다.'); saveFeedback(); }, 'button primary confirm-import');
+            const confirm = button('현재 기록을 대체하여 불러오기', () => { try { recordPosition(); store.restore(text); current=null; applySettings(); close(); goLibrary(); inform('기록을 불러왔습니다.'); saveFeedback(); } catch(e){status.textContent=e instanceof Error?e.message:'백업을 만들지 못해 복원을 중단했습니다.';} }, 'button primary confirm-import');
             data.append(confirm);
         }
         catch (e) {

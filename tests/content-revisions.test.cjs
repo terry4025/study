@@ -107,3 +107,29 @@ test('known mismapped triangle figures are quarantined, not reintroduced as evid
  assert(lesson.blocks.some(b=>b.id==='ch06-05-legacy-fig-6-19'&&b.type==='aside'&&b.tone==='warning'));
  assert.equal(s.blocks[0].type,'figure');
 });
+
+test('multi-book Repository keeps explicitly supplied lessons and custom adapter', async()=>{
+ const {Repository}=require(path.join(build,'reader/repository.js'));
+ const own={id:'own',chapter:'B',chapterTitle:'Other book',title:'Custom',deck:'Original',kind:'original',minutes:1,goals:[],prerequisites:[],blocks:[],references:[]};
+ const supplied=source('ch06-05',[paragraph('다른 책 본문')]);supplied.bookId='other-book';
+ const toc=[{id:'ch06',number:'6',title:'Test',titleKo:'Test',sections:[{id:'ch06-05',number:'6.5',title:'Topic',titleKo:'Topic',isAvailable:true}]}];
+ const repository=new Repository(toc,async()=>({'ch06-05':supplied}),[own],(id)=>({...own,id}));
+ assert.equal(await repository.get('own'),own);
+ assert.equal(repository.has('math-01'),false);
+ assert.equal((await repository.get('ch06-05')).title,'Custom');
+});
+test('default adapter does not apply PBRT-only corrections to another book',()=>{
+ for(const id of ['ch04-01','ch06-05']){
+  const s=source(id,[{...paragraph('휘도(Radiance): 다른 책 원본'),id:'keep-id'}]);s.bookId='other-book';
+  const l=adaptLegacy(id,s);
+  assert.equal(l.kind,'legacy');assert.equal(l.blocks.length,1);
+  assert.equal(l.blocks[0].text,'휘도(Radiance): 다른 책 원본');assert.equal(l.blocks[0].id,'keep-id');
+ }
+});
+test('multi-book search retains supplied lessons after a legacy-load failure',async()=>{
+ const {Repository}=require(path.join(build,'reader/repository.js'));
+ const own={id:'own',chapter:'B',chapterTitle:'Other book',title:'Needle',deck:'Original',kind:'original',minutes:1,goals:[],prerequisites:[],blocks:[{type:'paragraph',id:'p',text:'needle'}],references:[]};
+ const toc=[{id:'ch01',number:'1',title:'Test',titleKo:'Test',sections:[{id:'old',number:'1.1',title:'Old',titleKo:'Old',isAvailable:true}]}];
+ const repository=new Repository(toc,async()=>{throw new Error('intentional fixture');},[own]);
+ const hits=await repository.search('needle');assert(hits.some(hit=>hit.lesson.id==='own'));assert.equal(repository.warnings.length,1);
+});
