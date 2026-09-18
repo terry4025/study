@@ -1,5 +1,7 @@
 import type { Block, Chapter, Lesson, LessonMeta } from './types.js';
 import { curriculum } from './curriculum.js';
+import { normalizeLegacyText } from './legacy-text.js';
+import { reviseLegacyContent } from './content-revisions.js';
 import type { SectionContent, ChapterMeta } from '../types/book.js';
 export interface SearchHit {
     lesson: LessonMeta;
@@ -16,7 +18,7 @@ const notices: Record<string, string> = {
     'ch07-03': '정정: 일반적인 물체 분할 이진 BVH에서 N개 프리미티브의 노드 수는 최대 2N−1입니다. 리프에 여러 프리미티브가 들어가면 더 적습니다. 가장 긴 축 분할이 겹침을 언제나 최소화하거나 배열 배치가 캐시 미스를 제거하지는 않습니다. 설명용 코드와 실제 4판 구현은 별도 확인이 필요합니다.',
     'ch08-01': '정정: 그림 번호·파일·캡션의 매핑에 불일치가 발견되어 기존 캡션을 기본적으로 숨겼습니다. 독립 무작위 샘플링이 자동으로 청색 잡음을 만드는 것은 아닙니다. 샘플링 정리의 경계 조건과 대역 제한을 함께 확인해야 합니다.'
 };
-const cleanText = (s: string) => s.replace(/\\n/g, '\n');
+const cleanText = normalizeLegacyText;
 function revisedText(id: string, value: string): string {
     let s = cleanText(value);
     if (id === 'ch04-01') {
@@ -48,11 +50,13 @@ function triangleCorrection(): Lesson {
     return { id, chapter: '6', chapterTitle: '형상과 교차 검사', title: '삼각 메시 · 정정 해설', deck: '공유 모서리와 수치 안정성부터 다시 이해합니다.', kind: 'correction', minutes: 10, goals: ['원문의 핵심 구현과 관련 알고리즘 구분', '무게중심 좌표의 의미 이해'], prerequisites: ['math-05', 'math-08'], blocks, references: [{ title: 'PBRT 4판 · Triangle Meshes 원문', url: 'https://pbr-book.org/4ed/Shapes/Triangle_Meshes', role: 'further-reading' }], notice: '이 화면은 발견된 알고리즘 불일치를 바로잡는 독자 해설입니다. 기존 번역 파일은 삭제하거나 덮어쓰지 않았습니다.' };
 }
 export function adaptLegacy(id: string, source: SectionContent): Lesson {
-    if (id === 'ch06-05')
-        return triangleCorrection();
+    const isPbrt = source.bookId === 'pbrt-4ed';
+    const revision = reviseLegacyContent(id, source);
+    source = revision.source;
     const blocks: Block[] = source.blocks.map((block, index) => {
-        const key = ('id' in block && block.id) || `${id}-b${index + 1}`;
-        const text = (s: string) => revisedText(id, s);
+        const originalKey = ('id' in block && block.id) || `b${index + 1}`;
+        const key = isPbrt && id === 'ch06-05' ? `${id}-legacy-${originalKey}` : (('id' in block && block.id) || `${id}-b${index + 1}`);
+        const text = (s: string) => isPbrt ? revisedText(id, s) : cleanText(s);
         switch (block.type) {
             case 'paragraph': return { type: 'paragraph', id: key, text: text(block.textKo), english: cleanText(block.textEn) };
             case 'subheading': return { type: 'heading', id: key, text: text(block.titleKo), level: block.level };
@@ -65,12 +69,22 @@ export function adaptLegacy(id: string, source: SectionContent): Lesson {
                 }).type || '이름 없는 블록') };
         }
     });
-    let goals = source.summary.keyTakeaways.map(x => revisedText(id, x));
-    if (id === 'ch02-01')
+    if (isPbrt && id === 'ch06-05') {
+        const correction = triangleCorrection();
+        return { ...correction, blocks: [...correction.blocks,
+            { type: 'heading', id: `${id}-legacy-notes`, text: '보존한 관련 기초 설명 · 원문 전체 번역 아님' },
+            { type: 'aside', id: `${id}-legacy-goals`, title: '관련 기초 설명의 요점', text: source.summary.keyTakeaways.join('\n\n') },
+            ...blocks.map((block): Block => block.type === 'figure'
+                ? { type: 'aside', id: block.id, title: '도판 대조 필요', text: '이전 6.5 노트의 그림 번호·파일·설명 대응에 오류가 확인되었습니다. 원본 파일은 보존하되, 대응 관계를 확인하기 전에는 이 그림을 학습용 근거로 표시하지 않습니다.', tone: 'warning' }
+                : block)],
+            notice: '핵심 구현의 차이를 설명한 뒤 기존 관련 노트를 보존했습니다. 축약 코드·묄러–트룸보어 설명은 별도 기초 자료이며, 본 절의 전체 번역·그림 대조는 미완료입니다.' };
+    }
+    let goals = source.summary.keyTakeaways.map(x => isPbrt ? revisedText(id, x) : cleanText(x));
+    if (isPbrt && id === 'ch02-01')
         goals = goals.map(x => x.includes('차원의 저주') ? '독립 표본과 유한 분산을 전제로 몬테카를로 표준오차는 표본 수의 제곱근에 반비례합니다. 수렴 지수가 차원에 직접 의존하지 않아도 분산과 계산 비용은 달라질 수 있습니다.' : x);
-    if (id === 'ch08-01')
+    if (isPbrt && id === 'ch08-01')
         goals = goals.map(x => x.includes('청색 잡음') ? '날카로운 경계의 고주파 성분은 앨리어싱을 유발합니다. 무작위 표본과 청색 잡음 표본은 같지 않으며 적절한 필터와 표본 배치를 함께 고려합니다.' : x);
-    return { id, chapter: source.chapterNumber, chapterTitle: chapterNames[source.chapterNumber] || tidy(source.chapterTitleKo), title: tidy(source.sectionTitleKo), deck: `${source.sectionNumber} · 보존한 한국어 학습 노트`, kind: 'legacy', minutes: Math.max(5, Math.ceil(JSON.stringify(source.blocks).length / 1900)), goals, prerequisites: [], blocks, references: [{ title: '출처에서 실제 원문 읽기', url: source.originalUrl, role: 'further-reading' }], notice: notices[id] || '기존 한국어 학습 노트를 보존했습니다. 전체 원문 대조가 완료된 자료는 아니며, 영어 필드·코드·그림 캡션의 원문 일치 여부는 별도 검수가 필요합니다.' };
+    return { id, chapter: source.chapterNumber, chapterTitle: (isPbrt ? chapterNames[source.chapterNumber] : undefined) || tidy(source.chapterTitleKo), title: tidy(source.sectionTitleKo), deck: `${source.sectionNumber} · 보존한 한국어 학습 노트`, kind: 'legacy', minutes: Math.max(5, Math.ceil(JSON.stringify(source.blocks).length / 1900)), goals, prerequisites: [], blocks, references: [{ title: '출처에서 실제 원문 읽기', url: source.originalUrl, role: 'further-reading' }], notice: (revision.changes.length ? `확인된 ${revision.changes.length}개 문구를 교정했습니다. 전체 원문 대조 완료를 뜻하지 않습니다. ` : '') + ((isPbrt ? notices[id] : undefined) || '기존 한국어 학습 노트를 보존했습니다. 전체 원문 대조가 완료된 자료는 아니며, 영어 필드·코드·그림 캡션의 원문 일치 여부는 별도 검수가 필요합니다.') };
 }
 export class Repository {
     readonly originals: Map<string, Lesson>;
