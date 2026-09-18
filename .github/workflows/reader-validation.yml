@@ -10,27 +10,63 @@ concurrency:
   group: reader-validation-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  check:
+  migrate:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/multibook-pbrt-companion'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Base-checked one-time migration
+        run: |
+          if test -f _platform_seed/apply.py; then
+            python3 _platform_seed/apply.py
+            git add src
+            git rm -r _platform_seed
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'feat: materialize book-scoped reader and independently authored reading guides'
+            git push origin HEAD:feat/multibook-pbrt-companion
+          fi
+  check:
+    needs: migrate
+    if: always() && !cancelled() && needs.migrate.result != 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.ref || 'feat/multibook-pbrt-companion' }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: node scripts/check-reader.mjs
-      - name: Platform checks when present
+      - run: mkdir -p validation && node scripts/check-reader.mjs > validation/reader-report.json
+      - run: node scripts/check-platform.mjs > validation/platform-report.json
+      - name: Install browser test tools
         run: |
-          if test -f scripts/check-platform.mjs; then node scripts/check-platform.mjs; fi
-      - name: Assemble review workspace
-        if: success() && github.event_name == 'push'
-        run: tar -czf reader-review-workspace.tar.gz src public scripts docs package.json package-lock.json tsconfig.json vite.config.ts index.html node_modules dist
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Real browser tests
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > validation/server.log 2>&1 &
+          for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173/ > /dev/null && break || sleep 1; done
+          python3 scripts/check-browser.py
+      - name: Official source TOC mapping
+        if: always()
+        run: node scripts/check-source-outline.mjs > validation/source-report.json
+      - name: Source snapshot for review
+        if: always()
+        run: |
+          git rev-parse HEAD > validation/tested-commit.txt
+          tar -czf validation/changed-source.tar.gz src scripts docs README.md
       - uses: actions/upload-artifact@v4
-        if: success() && github.event_name == 'push'
+        if: always()
         with:
-          name: reader-review-workspace
-          path: reader-review-workspace.tar.gz
-          retention-days: 2
+          name: reader-validation
+          path: validation
+          retention-days: 7

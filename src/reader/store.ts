@@ -33,14 +33,27 @@ export class Store {
     value: Progress = emptyProgress();
     warning = '';
     private blocked = false;
-    constructor(private storage?: Storage) {
+    private key: string;
+    constructor(private storage?: Storage, readonly bookId = 'pbrt-4ed') {
+        if (!/^[a-z0-9][a-z0-9-]{0,63}$/.test(bookId)) throw new Error('유효하지 않은 책 ID');
+        this.key = `${STORAGE_KEY}.book.${bookId}`;
         let raw: string | null = null;
         try {
-            raw = storage?.getItem(STORAGE_KEY) || null;
+            raw = storage?.getItem(this.key) || null;
+            if (!raw && bookId === 'pbrt-4ed') {
+                const legacy = storage?.getItem(STORAGE_KEY);
+                if (legacy) {
+                    this.value = validateProgress(JSON.parse(legacy));
+                    // Destination is written first. The old key is never removed.
+                    storage?.setItem(this.key, JSON.stringify(this.value));
+                    return;
+                }
+            }
             if (raw) {
                 this.value = validateProgress(JSON.parse(raw));
                 return;
             }
+            if (bookId !== 'pbrt-4ed') return;
             const theme = storage?.getItem('cs_theme');
             if (theme === 'dark' || theme === 'sepia')
                 this.value.settings.theme = theme;
@@ -57,7 +70,7 @@ export class Store {
             this.warning = '저장된 기록을 읽지 못해 기본 설정으로 열었습니다.';
             if (raw && storage) {
                 try {
-                    storage.setItem(STORAGE_KEY + '.recovery.' + Date.now(), raw);
+                    storage.setItem(this.key + '.recovery.' + Date.now(), raw);
                     this.warning += ' 기존 저장값을 복구용 별도 키에 보관했습니다.';
                 }
                 catch {
@@ -69,7 +82,7 @@ export class Store {
     }
     save(): void { if (this.blocked)
         return; try {
-        this.storage?.setItem(STORAGE_KEY, JSON.stringify(this.value));
+        this.storage?.setItem(this.key, JSON.stringify(this.value));
     }
     catch {
         this.warning = '브라우저 저장 공간에 기록하지 못했습니다. 설정에서 기록 파일을 내보내 보관하세요.';
@@ -83,6 +96,11 @@ export class Store {
     else
         delete this.value.notes[id]; this.save(); }
     restore(text: string): void { if (text.length > 2000000)
-        throw new Error('기록 파일은 2MB 이하만 불러올 수 있습니다.'); this.value = validateProgress(JSON.parse(text)); this.blocked = false; this.save(); }
-    export(): string { return JSON.stringify(this.value, null, 2); }
+        throw new Error('기록 파일은 2MB 이하만 불러올 수 있습니다.');
+        const parsed: unknown = JSON.parse(text);
+        if (!plain(parsed)) throw new Error('기록 파일 형식이 올바르지 않습니다.');
+        if (parsed.bookId !== this.bookId && !(parsed.bookId === undefined && this.bookId === 'pbrt-4ed'))
+            throw new Error('다른 책의 기록입니다. 해당 책에서 불러오세요.');
+        this.value = validateProgress(parsed); this.blocked = false; this.save(); }
+    export(): string { return JSON.stringify({ ...this.value, bookId: this.bookId }, null, 2); }
 }
