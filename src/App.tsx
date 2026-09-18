@@ -1,19 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { PBRT_TOC } from './data/books/pbrt-4ed/toc';
-import { Repository } from './reader/repository';
-import { createReader } from './reader/app';
-// React owns the host. The reader owns only the isolated subtree inside it.
-// Every listener/observer is disposed, including the StrictMode setup/cleanup cycle.
+import { createPlatform } from './platform/app';
+import { installReaderEnvironment } from './platform/environment';
+import './platform/platform.css';
 export default function App() {
     const host = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        if (!host.current)
-            return;
-        const repository = new Repository(PBRT_TOC, async () => {
-            const { SECTIONS_MAP } = await import('./data/sections');
-            return SECTIONS_MAP;
-        });
-        return createReader(host.current, repository);
+        if (!host.current) return;
+        const releaseEnvironment = installReaderEnvironment(host.current);
+        const disposePlatform = createPlatform(host.current);
+        return () => { disposePlatform(); releaseEnvironment(); };
     }, []);
-    return <div ref={host}/>;
+    return <div ref={host} />;
 }

@@ -1,0 +1,53 @@
+name: Reader validation
+on:
+  push:
+    branches: [main, feat/multibook-pbrt-companion]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: reader-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: mkdir -p validation
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/check-reader.mjs > validation/reader-report.json
+      - run: node scripts/check-platform.mjs > validation/platform-report.json
+      - name: Install browser test tools
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Real browser tests
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > validation/server.log 2>&1 &
+          for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173/ > /dev/null && break || sleep 1; done
+          python3 scripts/check-browser.py
+          python3 scripts/check-renderer.py
+      - name: Official source TOC mapping
+        if: always()
+        run: node scripts/check-source-outline.mjs > validation/source-report.json
+      - name: Source snapshot for review
+        if: always()
+        run: |
+          git rev-parse HEAD > validation/tested-commit.txt
+          tar -czf validation/changed-source.tar.gz src scripts docs README.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reader-validation
+          path: validation
+          retention-days: 7
