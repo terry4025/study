@@ -1,0 +1,36 @@
+name: Reader validation
+on:
+  push:
+    branches: [feat/multibook-pbrt-companion]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: reader-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/check-reader.mjs
+      - name: Platform checks when present
+        run: |
+          if test -f scripts/check-platform.mjs; then node scripts/check-platform.mjs; fi
+      - name: Assemble review workspace
+        if: success() && github.event_name == 'push'
+        run: tar -czf reader-review-workspace.tar.gz src public scripts docs package.json package-lock.json tsconfig.json vite.config.ts index.html node_modules dist
+      - uses: actions/upload-artifact@v4
+        if: success() && github.event_name == 'push'
+        with:
+          name: reader-review-workspace
+          path: reader-review-workspace.tar.gz
+          retention-days: 2
