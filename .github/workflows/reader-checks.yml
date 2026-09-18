@@ -13,15 +13,16 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install dependencies and resolve lockfile
-        run: npm install --no-fund --no-audit
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-fund --no-audit
       - name: Validate learning content
         run: npm run check:content
       - name: Type check and production build
@@ -30,14 +31,6 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Browser regression tests and screenshots
         run: npm run test:e2e
-      - name: Preserve the resolved lockfile on the feature branch
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/feat/reader-rebuild-beginner-course'
-        run: |
-          git add package-lock.json
-          if ! git diff --cached --quiet; then
-            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'build: lock verified reader dependencies'
-            git push origin HEAD:feat/reader-rebuild-beginner-course
-          fi
       - name: Upload check report and screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -47,5 +40,4 @@ jobs:
             artifacts/
             playwright-report/
             test-results/
-            package-lock.json
           retention-days: 14
