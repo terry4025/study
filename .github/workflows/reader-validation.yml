@@ -36,6 +36,7 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4173 > validation/server.log 2>&1 &
           for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173/ > /dev/null && break || sleep 1; done
           python3 scripts/check-browser.py
+          python3 scripts/check-renderer.py
       - name: Official source TOC mapping
         if: always()
         run: node scripts/check-source-outline.mjs > validation/source-report.json
