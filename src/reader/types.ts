@@ -68,7 +68,7 @@ export interface Lesson {
     chapterTitle: string;
     title: string;
     deck: string;
-    kind: 'original' | 'legacy' | 'correction';
+    kind: 'original' | 'legacy' | 'correction' | 'reading-guide';
     minutes: number;
     goals: string[];
     prerequisites: string[];

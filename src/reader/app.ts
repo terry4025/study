@@ -3,11 +3,11 @@ import { Repository } from './repository.js';
 import { Store } from './store.js';
 import { element as el, button, prose, inline, math, externalLink } from './text.js';
 import { createLab } from './labs.js';
-import { glossary } from './glossary.js';
-const SOURCE_BOOK = 'pbrt-4ed';
-const modeLabel = (kind: Lesson['kind']) => kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : '독자 입문 강의';
+const modeLabel = (kind: Lesson['kind']) => kind === 'reading-guide' ? '원문 읽기 안내' : kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : '독자 입문 강의';
 const cleanTitle = (s: string) => s.replace(/^\d+\.\d+\s*/, '').replace(/\s*\([^)]*\)$/, '');
-export function createReader(host: HTMLElement, repo: Repository): () => void {
+export function createReader(host: HTMLElement, repo: Repository, navigation?: { shelf: () => void; outline: () => void }): () => void {
+    const SOURCE_BOOK = repo.book.id;
+    const glossary = repo.book.glossary || [];
     const abort = new AbortController();
     const signal = abort.signal;
     let storage: Storage | undefined;
@@ -15,7 +15,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         storage = window.localStorage;
     }
     catch { }
-    const store = new Store(storage);
+    const store = new Store(storage, SOURCE_BOOK);
     let current: Lesson | null = null, routeToken = 0, observer: IntersectionObserver | null = null;
     let scrollTimer: number | undefined, searchTimer: number | undefined, toastTimer: number | undefined, destroyed = false;
     const shell = el('div', 'reader-app');
@@ -40,12 +40,12 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         shell.classList.toggle('show-english', s.englishNotes);
     }
     applySettings();
-    const brand = button('결', () => goLibrary(), 'brand');
+    const brand = button('결', () => navigation ? navigation.shelf() : goLibrary(), 'brand');
     brand.setAttribute('aria-label', '결 스터디 서재로');
     brand.append(el('span', 'brand-en', 'STUDY'));
     const nav = el('nav', 'header-nav');
     nav.setAttribute('aria-label', '주요 메뉴');
-    nav.append(button('서재', () => goLibrary(), 'nav-button'), button('학습 기록', () => openHistory(), 'nav-button'));
+    nav.append(button('전체 서재', () => navigation ? navigation.shelf() : goLibrary(), 'nav-button'), button('원문 목차', () => navigation?.outline(), 'nav-button'), button('학습 기록', () => openHistory(), 'nav-button'));
     const tools = el('div', 'header-tools');
     const searchButton = button('검색', () => openSearch(), 'search-trigger');
     searchButton.append(el('kbd', '', 'Ctrl K'));
@@ -121,7 +121,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         }));
     }
     function navigate(id: string, anchor?: string) { recordPosition(); const url = new URL(window.location.href); url.search = ''; url.searchParams.set('book', SOURCE_BOOK); url.searchParams.set('sec', id); url.hash = anchor || ''; history.pushState({}, '', url); void renderRoute(); }
-    function goLibrary() { recordPosition(); const url = new URL(window.location.href); url.search = '?view=library'; url.hash = ''; history.pushState({}, '', url); void renderRoute(); }
+    function goLibrary() { recordPosition(); const url = new URL(window.location.href); url.search = ''; url.searchParams.set('book', SOURCE_BOOK); url.searchParams.set('view', 'book'); url.hash = ''; history.pushState({}, '', url); void renderRoute(); }
     function linkLesson(id: string, title: string, className = '', anchor?: string): HTMLAnchorElement {
         const a = el('a', className, title);
         a.href = `?book=${SOURCE_BOOK}&sec=${encodeURIComponent(id)}${anchor ? '#' + encodeURIComponent(anchor) : ''}`;
@@ -143,7 +143,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         main.tabIndex = -1;
         const top = el('section', 'library-intro');
         const intro = el('div', 'intro-copy');
-        intro.append(el('p', 'eyebrow', 'A PERSONAL FIELD GUIDE'), el('h1', '', '이해하며,\n한 장씩.'), el('p', 'intro-description', '모르는 기호 앞에서 멈춰도 괜찮습니다.\n작은 계산부터 시작해, 빛이 만드는 세계를 읽습니다.'));
+        intro.append(el('p', 'eyebrow', 'A PERSONAL FIELD GUIDE'), el('h1', '', '이해하며,\n한 장씩.'), el('p', 'intro-description', '모르는 기호 앞에서 멈춰도 괜찮습니다.\n기초 개념부터 시작해, 읽은 내용을 나만의 언어로 정리합니다.'));
         const info = el('div', 'intro-index');
         info.append(el('span', 'eyebrow', 'YOUR READING DESK'), el('p', 'progress-counter', progressText()));
         const note = el('p', 'muted', '수업의 준비 여부가 아닌, 직접 표시한 읽기 기록입니다.');
@@ -153,22 +153,23 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const book = el('section', 'book-feature');
         const cover = el('div', 'book-cover');
         cover.setAttribute('aria-hidden', 'true');
-        cover.append(el('span', 'cover-small', 'RENDERING / FIELD NOTES'), el('strong', 'cover-title', '빛을\n이해하는\n시간'), el('div', 'cover-orbit'), el('span', 'cover-foot', '수학에서 한 픽셀까지\nA STUDY COMPANION'));
+        cover.append(el('span', 'cover-small', repo.book.id.toUpperCase()), el('strong', 'cover-title', repo.book.coverLines.join('\n')), el('div', 'cover-orbit'), el('span', 'cover-foot', '수학에서 한 픽셀까지\nA STUDY COMPANION'));
         const detail = el('div', 'book-detail');
-        detail.append(el('p', 'eyebrow', '01 / 현재의 책'), el('h2', '', '물리 기반 렌더링'), el('p', 'book-subtitle', 'Physically Based Rendering · 제4판 학습 동반자'), el('p', 'book-description', '기존 한국어 노트와 새로 작성한 입문 강의를 한곳에서 읽습니다. 수식의 뜻, 작은 계산, 확인 문제를 연결해 차근차근 공부하세요.'));
+        detail.append(el('p', 'eyebrow', 'CURRENT BOOK'), el('h2', '', repo.book.title), el('p', 'book-subtitle', repo.book.subtitle), el('p', 'book-description', repo.book.description));
         const facts = el('div', 'book-facts');
-        facts.append(el('span', '', `${repo.metas.filter(x => x.chapter === '0').length}개 기초 수업`), el('span', '', '9–16장 주제 입문'), el('span', '', '기기 안에 기록 저장'));
+        facts.append(el('span', '', `${repo.metas.filter(x => x.chapter === '0').length}개 기초 수업`), el('span', '', `${repo.book.outline.length}개 원문 절 연결`), el('span', '', '기기 안에 기록 저장'));
         detail.append(facts);
         const actions = el('div', 'book-actions');
         const last = store.value.lastLesson && repo.meta(store.value.lastLesson);
-        actions.append(linkLesson(last ? last.id : 'math-01', last ? '이어 읽기 →' : '기초부터 시작하기 →', 'button primary'), button('목차 살펴보기', () => document.getElementById('course-contents')?.scrollIntoView({ behavior: 'smooth' }), 'button secondary'));
+        actions.append(linkLesson(last ? last.id : repo.metas[0]?.id || '', last ? '이어 읽기 →' : '기초부터 시작하기 →', 'button primary'), button('목차 살펴보기', () => document.getElementById('course-contents')?.scrollIntoView({ behavior: 'smooth' }), 'button secondary'));
         detail.append(actions);
         if (last)
             detail.append(el('p', 'resume-caption', `마지막 수업 · ${last.title}`));
         const disclosure = el('details', 'scope-note');
         disclosure.append(el('summary', '', '자료의 범위와 출처'));
-        disclosure.append(prose('1~8장: 저장소에 이미 있던 학습 노트이며 전체 원문 대조가 끝난 자료는 아닙니다.\n\n기초 및 9~16장 주제 수업: 수학·컴공 입문자를 위한 독자 강의입니다. PBRT의 전체 번역, 모든 절의 완역, 원문 구현의 대체물이 아닙니다. 부록의 전체 강의는 포함하지 않습니다.'));
-        disclosure.append(externalLink('PBRT 공식 목차', 'https://pbr-book.org/4ed/contents'));
+        disclosure.append(prose(repo.book.scope));
+        disclosure.append(externalLink('공식 원문 목차', repo.book.sourceUrl));
+        if (navigation) detail.append(button('원문 목차와 검수 상태 →', navigation.outline, 'button secondary'));
         detail.append(disclosure);
         book.append(cover, detail);
         main.append(book);
@@ -177,7 +178,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const head = el('div', 'section-heading');
         head.append(el('h2', '', '학습 목차'), el('span', 'muted', `${repo.metas.length}개 수업 · ${repo.chapters.length}개 묶음`));
         section.append(head);
-        if (!repo.metas.some(x => x.kind === 'legacy')) {
+        if (repo.book.legacy && !repo.metas.some(x => x.kind === 'legacy')) {
             const p = el('p', 'preview-notice', '독립 실행 미리보기입니다. 기존 1~8장 50개 노트는 저장소에 변경 파일을 적용하면 자동 연결됩니다.');
             section.append(p);
         }
@@ -200,7 +201,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         }
         main.append(section);
         const foot = el('footer', 'library-footer');
-        foot.append(el('span', '', '결 스터디 · 읽고, 이해하고, 남기기'), externalLink('PBRT 원문', 'https://pbr-book.org/4ed/contents'));
+        foot.append(el('span', '', '결 스터디 · 읽고, 이해하고, 남기기'), externalLink('공식 원문', repo.book.sourceUrl));
         main.append(foot);
         view.replaceChildren(main);
         window.scrollTo({ top: 0, behavior: 'instant' });
@@ -236,7 +237,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const sidebar = el('aside', 'reader-sidebar');
         sidebar.setAttribute('aria-label', '책 전체 목차');
         const sh = el('div', 'sidebar-head');
-        sh.append(el('span', 'eyebrow', 'READING / 01'), el('h2', '', '물리 기반 렌더링'), button('← 서재로', () => goLibrary(), 'text-button'));
+        sh.append(el('span', 'eyebrow', 'READING DESK'), el('h2', '', repo.book.title), button('← 서재로', () => goLibrary(), 'text-button'));
         sidebar.append(sh, tocContent(l.id), el('p', 'sidebar-progress', progressText()));
         const main = el('main', 'reader-main');
         main.id = 'main-content';
@@ -301,7 +302,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         }
         const sources = el('section', 'lesson-sources');
         sources.append(el('h2', '', '더 깊게 읽기'));
-        sources.append(el('p', 'muted', l.kind === 'original' ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
+        sources.append(el('p', 'muted', l.kind !== 'legacy' ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
         for (const s of l.references)
             sources.append(externalLink(s.title, s.url));
         article.append(sources);
@@ -491,11 +492,11 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         const book = params.get('book');
         if (book && book !== SOURCE_BOOK) {
             current = null;
-            view.replaceChildren(errorView('아직 연결되지 않은 책입니다.', '다른 책의 이름 아래 PBRT 내용을 표시하지 않습니다.'));
+            view.replaceChildren(errorView('아직 연결되지 않은 책입니다.', '선택한 책과 주소에 지정된 책이 다릅니다.'));
             return;
         }
         let id = params.get('sec');
-        if (!id && params.get('view') !== 'library' && store.value.lastLesson && repo.has(store.value.lastLesson)) {
+        if (!id && !['library', 'book'].includes(params.get('view') || '') && store.value.lastLesson && repo.has(store.value.lastLesson)) {
             id = store.value.lastLesson;
             const u = new URL(location.href);
             u.searchParams.set('book', SOURCE_BOOK);
@@ -532,7 +533,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             view.querySelector('main')?.append(retry);
         }
     }
-    function errorView(title: string, message: string): HTMLElement { const m = el('main', 'error-page'); m.id = 'main-content'; m.append(el('p', 'eyebrow', 'READING DESK'), el('h1', '', title), el('p', '', message), button('서재로 돌아가기', () => goLibrary(), 'button primary'), linkLesson('math-01', '기초 수업 읽기', 'button secondary')); return m; }
+    function errorView(title: string, message: string): HTMLElement { const m = el('main', 'error-page'); m.id = 'main-content'; m.append(el('p', 'eyebrow', 'READING DESK'), el('h1', '', title), el('p', '', message), button('서재로 돌아가기', () => goLibrary(), 'button primary'), linkLesson(repo.metas[0]?.id || '', '첫 수업 읽기', 'button secondary')); return m; }
     function openSearch() {
         const { body, dialog, close } = modal('본문 검색', 'search-dialog');
         const label = el('label', 'sr-only', '찾을 단어나 코드');
@@ -634,7 +635,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
         }
         body.append(notes, button('기록 내보내기', exportProgress, 'button secondary'));
     }
-    function exportProgress() { const blob = new Blob([store.export()], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = el('a'); a.href = url; a.download = `gyeol-progress-${new Date().toISOString().slice(0, 10)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); inform('학습 기록 파일을 만들었습니다.'); }
+    function exportProgress() { const blob = new Blob([store.export()], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = el('a'); a.href = url; a.download = `gyeol-${SOURCE_BOOK}-progress-${new Date().toISOString().slice(0, 10)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); inform('학습 기록 파일을 만들었습니다.'); }
     function openSettings() {
         const { body, close } = modal('읽기 설정', 'settings-dialog');
         const theme = el('fieldset', 'settings-group');
@@ -688,7 +689,7 @@ export function createReader(host: HTMLElement, repo: Repository): () => void {
             if (f.size > 2000000)
                 throw new Error('2MB 이하의 기록만 불러올 수 있습니다.');
             const text = await f.text();
-            const trial = new Store();
+            const trial = new Store(undefined, SOURCE_BOOK);
             trial.restore(text);
             status.textContent = `${trial.value.completed.length}개 읽기 기록 · ${Object.keys(trial.value.notes).length}개 메모. 현재 기록을 대체할지 선택하세요.`;
             data.querySelector('.confirm-import')?.remove();

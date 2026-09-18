@@ -1,0 +1,1052 @@
+[
+  {
+    "number": "1.1",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "Literate Programming",
+    "url": "https://pbr-book.org/4ed/Introduction/Literate_Programming.html",
+    "lessonId": "ch01-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "1.2",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "Photorealistic Rendering and the Ray-Tracing Algorithm",
+    "url": "https://pbr-book.org/4ed/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm.html",
+    "lessonId": "ch01-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "1.3",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "pbrt: System Overview",
+    "url": "https://pbr-book.org/4ed/Introduction/pbrt_System_Overview.html",
+    "lessonId": "ch01-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "1.4",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "How to Proceed through This Book",
+    "url": "https://pbr-book.org/4ed/Introduction/How_to_Proceed_through_This_Book.html",
+    "lessonId": "ch01-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "1.5",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "Using and Understanding the Code",
+    "url": "https://pbr-book.org/4ed/Introduction/Using_and_Understanding_the_Code.html",
+    "lessonId": "ch01-05",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "1.6",
+    "chapter": "1",
+    "chapterTitle": "제1장 소개 (Introduction)",
+    "title": "A Brief History of Physically Based Rendering",
+    "url": "https://pbr-book.org/4ed/Introduction/A_Brief_History_of_Physically_Based_Rendering.html",
+    "lessonId": "ch01-06",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "2.1",
+    "chapter": "2",
+    "chapterTitle": "제2장 몬테카를로 적분 (Monte Carlo Integration)",
+    "title": "Monte Carlo: Basics",
+    "url": "https://pbr-book.org/4ed/Monte_Carlo_Integration/Monte_Carlo_Basics.html",
+    "lessonId": "ch02-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "2.2",
+    "chapter": "2",
+    "chapterTitle": "제2장 몬테카를로 적분 (Monte Carlo Integration)",
+    "title": "Improving Efficiency",
+    "url": "https://pbr-book.org/4ed/Monte_Carlo_Integration/Improving_Efficiency.html",
+    "lessonId": "ch02-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "2.3",
+    "chapter": "2",
+    "chapterTitle": "제2장 몬테카를로 적분 (Monte Carlo Integration)",
+    "title": "Sampling Using the Inversion Method",
+    "url": "https://pbr-book.org/4ed/Monte_Carlo_Integration/Sampling_Using_the_Inversion_Method.html",
+    "lessonId": "ch02-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "2.4",
+    "chapter": "2",
+    "chapterTitle": "제2장 몬테카를로 적분 (Monte Carlo Integration)",
+    "title": "Transforming between Distributions",
+    "url": "https://pbr-book.org/4ed/Monte_Carlo_Integration/Transforming_between_Distributions.html",
+    "lessonId": "ch02-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.1",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Coordinate Systems",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Coordinate_Systems.html",
+    "lessonId": "ch03-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.2",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "n-Tuple Base Classes",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/n-Tuple_Base_Classes.html",
+    "lessonId": "ch03-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.3",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Vectors",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Vectors.html",
+    "lessonId": "ch03-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.4",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Points",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Points.html",
+    "lessonId": "ch03-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.5",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Normals",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Normals.html",
+    "lessonId": "ch03-05",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.6",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Rays",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Rays.html",
+    "lessonId": "ch03-06",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.7",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Bounding Boxes",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Bounding_Boxes.html",
+    "lessonId": "ch03-07",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.8",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Spherical Geometry",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Spherical_Geometry.html",
+    "lessonId": "ch03-08",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.9",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Transformations",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Transformations.html",
+    "lessonId": "ch03-09",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.10",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Applying Transformations",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Applying_Transformations.html",
+    "lessonId": "ch03-10",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "3.11",
+    "chapter": "3",
+    "chapterTitle": "제3장 기하학과 3차원 변환 (Geometry & Transformations)",
+    "title": "Interactions",
+    "url": "https://pbr-book.org/4ed/Geometry_and_Transformations/Interactions.html",
+    "lessonId": "ch03-11",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.1",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Radiometry",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Radiometry.html",
+    "lessonId": "ch04-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.2",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Working with Radiometric Integrals",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Working_with_Radiometric_Integrals.html",
+    "lessonId": "ch04-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.3",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Surface Reflection",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Surface_Reflection.html",
+    "lessonId": "ch04-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.4",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Light Emission",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Light_Emission.html",
+    "lessonId": "ch04-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.5",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Representing Spectral Distributions",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Representing_Spectral_Distributions.html",
+    "lessonId": "ch04-05",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "4.6",
+    "chapter": "4",
+    "chapterTitle": "제4장 방사측정학, 스펙트럼, 색상 (Radiometry, Spectra, and Color)",
+    "title": "Color",
+    "url": "https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Color.html",
+    "lessonId": "ch04-06",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "5.1",
+    "chapter": "5",
+    "chapterTitle": "제5장 가상 카메라와 필름 (Cameras and Film)",
+    "title": "Camera Interface",
+    "url": "https://pbr-book.org/4ed/Cameras_and_Film/Camera_Interface.html",
+    "lessonId": "ch05-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "5.2",
+    "chapter": "5",
+    "chapterTitle": "제5장 가상 카메라와 필름 (Cameras and Film)",
+    "title": "Projective Camera Models",
+    "url": "https://pbr-book.org/4ed/Cameras_and_Film/Projective_Camera_Models.html",
+    "lessonId": "ch05-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "5.3",
+    "chapter": "5",
+    "chapterTitle": "제5장 가상 카메라와 필름 (Cameras and Film)",
+    "title": "Spherical Camera",
+    "url": "https://pbr-book.org/4ed/Cameras_and_Film/Spherical_Camera.html",
+    "lessonId": "ch05-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "5.4",
+    "chapter": "5",
+    "chapterTitle": "제5장 가상 카메라와 필름 (Cameras and Film)",
+    "title": "Film and Imaging",
+    "url": "https://pbr-book.org/4ed/Cameras_and_Film/Film_and_Imaging.html",
+    "lessonId": "ch05-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.1",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Basic Shape Interface",
+    "url": "https://pbr-book.org/4ed/Shapes/Basic_Shape_Interface.html",
+    "lessonId": "ch06-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.2",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Spheres",
+    "url": "https://pbr-book.org/4ed/Shapes/Spheres.html",
+    "lessonId": "ch06-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.3",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Cylinders",
+    "url": "https://pbr-book.org/4ed/Shapes/Cylinders.html",
+    "lessonId": "ch06-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.4",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Disks",
+    "url": "https://pbr-book.org/4ed/Shapes/Disks.html",
+    "lessonId": "ch06-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.5",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Triangle Meshes",
+    "url": "https://pbr-book.org/4ed/Shapes/Triangle_Meshes.html",
+    "lessonId": "ch06-05",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.6",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Bilinear Patches",
+    "url": "https://pbr-book.org/4ed/Shapes/Bilinear_Patches.html",
+    "lessonId": "ch06-06",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.7",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Curves",
+    "url": "https://pbr-book.org/4ed/Shapes/Curves.html",
+    "lessonId": "ch06-07",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "6.8",
+    "chapter": "6",
+    "chapterTitle": "제6장 3차원 형상과 교차 검사 (Shapes)",
+    "title": "Managing Rounding Error",
+    "url": "https://pbr-book.org/4ed/Shapes/Managing_Rounding_Error.html",
+    "lessonId": "ch06-08",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "7.1",
+    "chapter": "7",
+    "chapterTitle": "제7장 가속 구조 BVH (Intersection Acceleration)",
+    "title": "Primitive Interface and Geometric Primitives",
+    "url": "https://pbr-book.org/4ed/Primitives_and_Intersection_Acceleration/Primitive_Interface_and_Geometric_Primitives.html",
+    "lessonId": "ch07-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "7.2",
+    "chapter": "7",
+    "chapterTitle": "제7장 가속 구조 BVH (Intersection Acceleration)",
+    "title": "Aggregates",
+    "url": "https://pbr-book.org/4ed/Primitives_and_Intersection_Acceleration/Aggregates.html",
+    "lessonId": "ch07-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "7.3",
+    "chapter": "7",
+    "chapterTitle": "제7장 가속 구조 BVH (Intersection Acceleration)",
+    "title": "Bounding Volume Hierarchies",
+    "url": "https://pbr-book.org/4ed/Primitives_and_Intersection_Acceleration/Bounding_Volume_Hierarchies.html",
+    "lessonId": "ch07-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.1",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Sampling Theory",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Sampling_Theory.html",
+    "lessonId": "ch08-01",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.2",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Sampling and Integration",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Sampling_and_Integration.html",
+    "lessonId": "ch08-02",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.3",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Sampling Interface",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Sampling_Interface.html",
+    "lessonId": "ch08-03",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.4",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Independent Sampler",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Independent_Sampler.html",
+    "lessonId": "ch08-04",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.5",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Stratified Sampler",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Stratified_Sampler.html",
+    "lessonId": "ch08-05",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.6",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Halton Sampler",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Halton_Sampler.html",
+    "lessonId": "ch08-06",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.7",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Sobol’ Samplers",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Sobol_Samplers.html",
+    "lessonId": "ch08-07",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "8.8",
+    "chapter": "8",
+    "chapterTitle": "제8장 샘플링과 이미지 복원 (Sampling & Reconstruction)",
+    "title": "Image Reconstruction",
+    "url": "https://pbr-book.org/4ed/Sampling_and_Reconstruction/Image_Reconstruction.html",
+    "lessonId": "ch08-08",
+    "coverage": "legacy-note",
+    "review": "pending"
+  },
+  {
+    "number": "9.1",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "BSDF Representation · BSDF는 무엇을 약속할까",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/BSDF_Representation",
+    "lessonId": "read-09-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.2",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Diffuse Reflection · 무광 반사율을 분배하기",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Diffuse_Reflection",
+    "lessonId": "read-09-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.3",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Specular Reflection and Transmission · 반사와 굴절을 나누어 보기",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Specular_Reflection_and_Transmission",
+    "lessonId": "read-09-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.4",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Conductor BRDF · 금속의 반사는 색을 가집니다",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Conductor_BRDF",
+    "lessonId": "read-09-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.5",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Dielectric BSDF · 유리에서는 선택 확률도 계산합니다",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Dielectric_BSDF",
+    "lessonId": "read-09-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.6",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Roughness Using Microfacet Theory · 거칠기는 작은 면들의 방향 분포입니다",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Roughness_Using_Microfacet_Theory",
+    "lessonId": "read-09-06",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.7",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Rough Dielectric BSDF · 거친 유리가 뿌옇게 보이는 이유",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Rough_Dielectric_BSDF",
+    "lessonId": "read-09-07",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.8",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Measured BSDFs · 측정 데이터도 모델입니다",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Measured_BSDFs",
+    "lessonId": "read-09-08",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "9.9",
+    "chapter": "9",
+    "chapterTitle": "반사 모델",
+    "title": "Scattering from Hair · 머리카락을 표면 색 하나로 설명할 수 있을까",
+    "url": "https://pbr-book.org/4ed/Reflection_Models/Scattering_from_Hair",
+    "lessonId": "read-09-09",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "10.1",
+    "chapter": "10",
+    "chapterTitle": "텍스처와 재질",
+    "title": "Texture Sampling and Antialiasing · 한 픽셀이 덮는 무늬의 범위",
+    "url": "https://pbr-book.org/4ed/Textures_and_Materials/Texture_Sampling_and_Antialiasing",
+    "lessonId": "read-10-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "10.2",
+    "chapter": "10",
+    "chapterTitle": "텍스처와 재질",
+    "title": "Texture Coordinate Generation · UV는 표면에 붙인 주소입니다",
+    "url": "https://pbr-book.org/4ed/Textures_and_Materials/Texture_Coordinate_Generation",
+    "lessonId": "read-10-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "10.3",
+    "chapter": "10",
+    "chapterTitle": "텍스처와 재질",
+    "title": "Texture Interface and Basic Textures · 텍스처는 그림 파일만 뜻하지 않습니다",
+    "url": "https://pbr-book.org/4ed/Textures_and_Materials/Texture_Interface_and_Basic_Textures",
+    "lessonId": "read-10-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "10.4",
+    "chapter": "10",
+    "chapterTitle": "텍스처와 재질",
+    "title": "Image Texture · 이미지 텍스처를 멀리서 읽기",
+    "url": "https://pbr-book.org/4ed/Textures_and_Materials/Image_Texture",
+    "lessonId": "read-10-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "10.5",
+    "chapter": "10",
+    "chapterTitle": "텍스처와 재질",
+    "title": "Material Interface and Implementations · 재질은 값들을 산란 규칙으로 연결합니다",
+    "url": "https://pbr-book.org/4ed/Textures_and_Materials/Material_Interface_and_Implementations",
+    "lessonId": "read-10-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "11.1",
+    "chapter": "11",
+    "chapterTitle": "볼륨 산란",
+    "title": "Volume Scattering Processes · 안개는 빛을 없애기만 할까요",
+    "url": "https://pbr-book.org/4ed/Volume_Scattering/Volume_Scattering_Processes",
+    "lessonId": "read-11-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "11.2",
+    "chapter": "11",
+    "chapterTitle": "볼륨 산란",
+    "title": "Transmittance · 연속된 두 구간의 통과율",
+    "url": "https://pbr-book.org/4ed/Volume_Scattering/Transmittance",
+    "lessonId": "read-11-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "11.3",
+    "chapter": "11",
+    "chapterTitle": "볼륨 산란",
+    "title": "Phase Functions · 산란 위치와 산란 방향은 다른 질문",
+    "url": "https://pbr-book.org/4ed/Volume_Scattering/Phase_Functions",
+    "lessonId": "read-11-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "11.4",
+    "chapter": "11",
+    "chapterTitle": "볼륨 산란",
+    "title": "Media · 매질은 공간마다 다른 값을 줄 수 있습니다",
+    "url": "https://pbr-book.org/4ed/Volume_Scattering/Media",
+    "lessonId": "read-11-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.1",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Light Interface · 광원이 반환해야 할 정보",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Light_Interface",
+    "lessonId": "read-12-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.2",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Point Lights · 점광원과 거리의 제곱",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Point_Lights",
+    "lessonId": "read-12-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.3",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Distant Lights · 아주 먼 광원을 평행하게 근사하기",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Distant_Lights",
+    "lessonId": "read-12-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.4",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Area Lights · 면광원은 빛나는 면 위에서 고릅니다",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Area_Lights",
+    "lessonId": "read-12-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.5",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Infinite Area Lights · 배경도 광원이 될 수 있습니다",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Infinite_Area_Lights",
+    "lessonId": "read-12-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "12.6",
+    "chapter": "12",
+    "chapterTitle": "광원",
+    "title": "Light Sampling · 여러 광원 중 하나만 계산해 보기",
+    "url": "https://pbr-book.org/4ed/Light_Sources/Light_Sampling",
+    "lessonId": "read-12-06",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "13.1",
+    "chapter": "13",
+    "chapterTitle": "표면에서의 빛 전달",
+    "title": "The Light Transport Equation · 출사광을 계산하는 장부",
+    "url": "https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation",
+    "lessonId": "read-13-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "13.2",
+    "chapter": "13",
+    "chapterTitle": "표면에서의 빛 전달",
+    "title": "Path Tracing · 한 경로가 한 표본입니다",
+    "url": "https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/Path_Tracing",
+    "lessonId": "read-13-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "13.3",
+    "chapter": "13",
+    "chapterTitle": "표면에서의 빛 전달",
+    "title": "A Simple Path Tracer · 먼저 작은 경로 추적기를 읽기",
+    "url": "https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer",
+    "lessonId": "read-13-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "13.4",
+    "chapter": "13",
+    "chapterTitle": "표면에서의 빛 전달",
+    "title": "A Better Path Tracer · 좋은 표본을 여러 방식으로 찾기",
+    "url": "https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer",
+    "lessonId": "read-13-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "14.1",
+    "chapter": "14",
+    "chapterTitle": "볼륨 렌더링",
+    "title": "The Equation of Transfer · 구간에서 빛을 잃고 더하기",
+    "url": "https://pbr-book.org/4ed/Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer",
+    "lessonId": "read-14-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "14.2",
+    "chapter": "14",
+    "chapterTitle": "볼륨 렌더링",
+    "title": "Volume Scattering Integrators · 가상 충돌을 왜 넣을까",
+    "url": "https://pbr-book.org/4ed/Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators",
+    "lessonId": "read-14-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "14.3",
+    "chapter": "14",
+    "chapterTitle": "볼륨 렌더링",
+    "title": "Scattering from Layered Materials · 겹친 재질의 내부 경로",
+    "url": "https://pbr-book.org/4ed/Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials",
+    "lessonId": "read-14-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "15.1",
+    "chapter": "15",
+    "chapterTitle": "GPU 웨이브프론트 렌더링",
+    "title": "Mapping Path Tracing to the GPU · GPU에서는 비슷한 일을 모읍니다",
+    "url": "https://pbr-book.org/4ed/Wavefront_Rendering_on_GPUs/Mapping_Path_Tracing_to_the_GPU",
+    "lessonId": "read-15-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "15.2",
+    "chapter": "15",
+    "chapterTitle": "GPU 웨이브프론트 렌더링",
+    "title": "Implementation Foundations · 큐와 메모리에 필요한 약속",
+    "url": "https://pbr-book.org/4ed/Wavefront_Rendering_on_GPUs/Implementation_Foundations",
+    "lessonId": "read-15-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "15.3",
+    "chapter": "15",
+    "chapterTitle": "GPU 웨이브프론트 렌더링",
+    "title": "Path Tracer Implementation · 경로 상태가 다음 단계로 넘어갑니다",
+    "url": "https://pbr-book.org/4ed/Wavefront_Rendering_on_GPUs/Path_Tracer_Implementation",
+    "lessonId": "read-15-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "16.1",
+    "chapter": "16",
+    "chapterTitle": "회고와 앞으로의 질문",
+    "title": "pbrt over the Years · 책의 구현도 시간에 따라 바뀝니다",
+    "url": "https://pbr-book.org/4ed/Retrospective_and_the_Future/pbrt_over_the_Years",
+    "lessonId": "read-16-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "16.2",
+    "chapter": "16",
+    "chapterTitle": "회고와 앞으로의 질문",
+    "title": "Design Alternatives · 설계에는 맞바꾸는 비용이 있습니다",
+    "url": "https://pbr-book.org/4ed/Retrospective_and_the_Future/Design_Alternatives",
+    "lessonId": "read-16-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "16.3",
+    "chapter": "16",
+    "chapterTitle": "회고와 앞으로의 질문",
+    "title": "Emerging Topics · 새 연구 주제를 읽는 질문",
+    "url": "https://pbr-book.org/4ed/Retrospective_and_the_Future/Emerging_Topics",
+    "lessonId": "read-16-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "16.4",
+    "chapter": "16",
+    "chapterTitle": "회고와 앞으로의 질문",
+    "title": "The Future · 미래 전망과 확인된 사실을 구분하기",
+    "url": "https://pbr-book.org/4ed/Retrospective_and_the_Future/The_Future",
+    "lessonId": "read-16-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "16.5",
+    "chapter": "16",
+    "chapterTitle": "회고와 앞으로의 질문",
+    "title": "Conclusion · 책을 닫기 전 한 픽셀을 설명하기",
+    "url": "https://pbr-book.org/4ed/Retrospective_and_the_Future/Conclusion",
+    "lessonId": "read-16-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "A.1",
+    "chapter": "A",
+    "chapterTitle": "샘플링 알고리즘",
+    "title": "The Alias Method · 별칭 표로 빠르게 선택하기",
+    "url": "https://pbr-book.org/4ed/Sampling_Algorithms/The_Alias_Method",
+    "lessonId": "read-0A-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "A.2",
+    "chapter": "A",
+    "chapterTitle": "샘플링 알고리즘",
+    "title": "Reservoir Sampling · 길이를 모르는 목록에서 하나 남기기",
+    "url": "https://pbr-book.org/4ed/Sampling_Algorithms/Reservoir_Sampling",
+    "lessonId": "read-0A-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "A.3",
+    "chapter": "A",
+    "chapterTitle": "샘플링 알고리즘",
+    "title": "The Rejection Method · 후보를 뽑고 일부를 거절하기",
+    "url": "https://pbr-book.org/4ed/Sampling_Algorithms/The_Rejection_Method",
+    "lessonId": "read-0A-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "A.4",
+    "chapter": "A",
+    "chapterTitle": "샘플링 알고리즘",
+    "title": "Sampling 1D Functions · 누적 확률에서 거꾸로 위치 찾기",
+    "url": "https://pbr-book.org/4ed/Sampling_Algorithms/Sampling_1D_Functions",
+    "lessonId": "read-0A-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "A.5",
+    "chapter": "A",
+    "chapterTitle": "샘플링 알고리즘",
+    "title": "Sampling Multidimensional Functions · 여러 좌표를 순서대로 고르기",
+    "url": "https://pbr-book.org/4ed/Sampling_Algorithms/Sampling_Multidimensional_Functions",
+    "lessonId": "read-0A-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.1",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "System Startup, Cleanup, and Options · 프로그램의 시작과 끝도 설계입니다",
+    "url": "https://pbr-book.org/4ed/Utilities/System_Startup,_Cleanup,_and_Options",
+    "lessonId": "read-0B-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.2",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "Mathematical Infrastructure · 수학 유틸리티의 작은 경계 조건",
+    "url": "https://pbr-book.org/4ed/Utilities/Mathematical_Infrastructure",
+    "lessonId": "read-0B-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.3",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "User Interaction · 사용자에게 계산 상태를 알려주기",
+    "url": "https://pbr-book.org/4ed/Utilities/User_Interaction",
+    "lessonId": "read-0B-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.4",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "Containers and Memory Management · 컨테이너와 수명",
+    "url": "https://pbr-book.org/4ed/Utilities/Containers_and_Memory_Management",
+    "lessonId": "read-0B-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.5",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "Images · 이미지의 숫자와 색의 의미",
+    "url": "https://pbr-book.org/4ed/Utilities/Images",
+    "lessonId": "read-0B-05",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.6",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "Parallelism · 같은 변수에 동시에 더할 때",
+    "url": "https://pbr-book.org/4ed/Utilities/Parallelism",
+    "lessonId": "read-0B-06",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "B.7",
+    "chapter": "B",
+    "chapterTitle": "기반 유틸리티",
+    "title": "Statistics · 측정값을 해석하는 기준",
+    "url": "https://pbr-book.org/4ed/Utilities/Statistics",
+    "lessonId": "read-0B-07",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "C.1",
+    "chapter": "C",
+    "chapterTitle": "장면 설명 처리",
+    "title": "Tokenizing and Parsing · 문자를 토큰으로, 토큰을 구조로",
+    "url": "https://pbr-book.org/4ed/Processing_the_Scene_Description/Tokenizing_and_Parsing",
+    "lessonId": "read-0C-01",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "C.2",
+    "chapter": "C",
+    "chapterTitle": "장면 설명 처리",
+    "title": "Managing the Scene Description · 장면 설명에는 현재 상태가 있습니다",
+    "url": "https://pbr-book.org/4ed/Processing_the_Scene_Description/Managing_the_Scene_Description",
+    "lessonId": "read-0C-02",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "C.3",
+    "chapter": "C",
+    "chapterTitle": "장면 설명 처리",
+    "title": "BasicScene and Final Object Creation · 설명을 읽는 것과 객체 생성은 다릅니다",
+    "url": "https://pbr-book.org/4ed/Processing_the_Scene_Description/BasicScene_and_Final_Object_Creation",
+    "lessonId": "read-0C-03",
+    "coverage": "reading-guide",
+    "review": "pending"
+  },
+  {
+    "number": "C.4",
+    "chapter": "C",
+    "chapterTitle": "장면 설명 처리",
+    "title": "Adding New Object Implementations · 새 기능을 공통 약속에 연결하기",
+    "url": "https://pbr-book.org/4ed/Processing_the_Scene_Description/Adding_New_Object_Implementations",
+    "lessonId": "read-0C-04",
+    "coverage": "reading-guide",
+    "review": "pending"
+  }
+]
