@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant sepia (&:where(.sepia, .sepia *));
+@import "katex/dist/katex.min.css";
+
+/* High-Readability Web Fonts for Korean Technical Reading */
+.font-pretendard {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Apple SD Gothic Neo", sans-serif !important;
+}
+
+.font-noto-sans {
+  font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+}
+
+.font-ibm-plex {
+  font-family: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, monospace, sans-serif !important;
+}
+
+.font-noto-serif {
+  font-family: "Noto Serif KR", "KoPubWorld Batang", Batang, Georgia, serif !important;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Default Light Mode */
+  html:not(.dark):not(.sepia) {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  /* Warm Paper / Sepia (아이보리 서재) Mode */
+  html.sepia {
+    background-color: #f7f4ed !important;
+    color: #2b2621 !important;
+  }
+
+  html.sepia body {
+    background-color: #f7f4ed !important;
+    color: #2b2621 !important;
+  }
+
+  /* Dark Mode */
+  html.dark {
+    background-color: #0b0f19 !important;
+    color: #f1f5f9 !important;
+    color-scheme: dark;
+  }
+
+  html.dark body {
+    background-color: #0b0f19 !important;
+    color: #f1f5f9 !important;
+  }
+
+  code, pre, kbd, samp {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+/* Polish KaTeX math rendering in Korean sentences */
+.katex {
+  font-size: 1.04em !important;
+  line-height: 1.2;
+}
+
+.inline-math {
+  display: inline-block;
+  vertical-align: -0.08em;
+  padding: 0 0.15em;
+}
+
+.katex-display {
+  margin: 1.25em 0 !important;
+  padding: 0.75em 1em !important;
+  border-radius: 0.75rem;
+}
+
+/* Sepia color overrides for cards & elements */
+.sepia .bg-white {
+  background-color: #fcfbfa !important;
+}
+
+.sepia .bg-slate-50 {
+  background-color: #f0ebe1 !important;
+}
+
+.sepia .bg-slate-100 {
+  background-color: #eae3d5 !important;
+}
+
+.sepia .border-slate-200 {
+  border-color: #ded6c5 !important;
+}
+
+.sepia .text-slate-800 {
+  color: #2b2621 !important;
+}
+
+.sepia .text-slate-900 {
+  color: #1a1714 !important;
+}
+
+.sepia .text-slate-700 {
+  color: #3f3933 !important;
+}
+
+.sepia .text-slate-600 {
+  color: #575047 !important;
+}
+
+.sepia .text-slate-500 {
+  color: #797166 !important;
+}
