@@ -31,21 +31,12 @@ export function createLibrary(toc: ChapterMeta[] = [], loader?: LegacyLoader, ca
         authors:['결 스터디 독자 집필'],edition:'공통 기초',role:'foundation',status:'available',
         rights:{status:'original',label:'독자적으로 작성한 기초 해설과 수치 예제입니다. 특정 책의 번역본이 아닙니다.'}
     },new Repository([],undefined,curriculum.filter(x=>x.chapter==='0')));
-    const fallback = [
-        {id:'ostep',title:'운영체제: 아주 쉬운 세 가지 이야기',subtitle:'OSTEP',authors:['Remzi H. Arpaci-Dusseau','Andrea C. Arpaci-Dusseau'],edition:'선택한 판본 확인 예정',sourceUrl:'https://pages.cs.wisc.edu/~remzi/OSTEP/'},
-        {id:'csapp',title:'컴퓨터 시스템: 프로그래머의 관점',subtitle:'CS:APP',authors:['Randal E. Bryant',"David R. O’Hallaron"],edition:'3판',sourceUrl:'https://csapp.cs.cmu.edu/'},
-        {id:'ddia',title:'데이터 중심 애플리케이션 설계',subtitle:'DDIA',authors:['Martin Kleppmann'],edition:'1판 · 기존 저장소에 선택된 판본',sourceUrl:'https://dataintensive.net/'}
-    ];
-    // Honor the saved catalog: do not silently upgrade editions or invent titles.
-    for (const base of fallback) {
-        const saved=catalog.find(x=>x.id===base.id);
-        library.register({...base,...plannedDefaults,
-            title:saved?.titleKo||base.title,subtitle:saved?.title||base.subtitle,
-            description:'아직 본문은 추가하지 않았습니다. 책별 목차·용어·기록을 독립적으로 연결할 준비가 되어 있습니다.',
-            authors:saved?.authors||base.authors,edition:saved?.edition||base.edition,sourceUrl:saved?.originalUrl||base.sourceUrl});
-    }
-    for (const [i,id] of ['planned-05','planned-06'].entries())
-        library.register({id,title:`추가할 책 ${i+5}`,subtitle:'도서 선정 전',description:'제목과 원문 출처가 정해지면 등록합니다. 샘플 본문이나 가짜 진도를 표시하지 않습니다.',authors:[],edition:'미정',...plannedDefaults});
+    // The user will choose the remaining five books later. Keep stable slot IDs
+    // but do not present the former sample catalog as the selected curriculum.
+    for(const [i,id] of ['ostep','csapp','ddia','planned-05','planned-06'].entries())
+        library.register({id,title:`추가 예정 도서 ${i+2}`,subtitle:'사용자 자료 선택 예정',
+            description:'다음 책의 링크를 받은 뒤 목차·본문을 연결합니다. 임의로 책을 선정하지 않습니다.',
+            authors:[],edition:'미정',...plannedDefaults});
     for(const addition of bookAdditions)library.replace(addition.slotId,addition.definition,addition.repository);
     return library;
 }

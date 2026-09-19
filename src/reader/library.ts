@@ -55,6 +55,7 @@ export class Library {
         return {
             sections: sections.length,
             legacyNotes: count(s => s.coverage === 'legacy-note' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
+            translatedDrafts: count(s => s.coverage === 'translated-draft' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
             guides: count(s => s.coverage === 'companion-guide' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
             sourceOnly: count(s => !s.lessonId || !entry?.repository.has(s.lessonId)),
             sourceReviewed: count(s => s.review === 'source-reviewed'),
