@@ -1,0 +1,25 @@
+name: PBRT translation integrity
+on:
+  push:
+    paths:
+      - 'translations/pbrt/ch10/**'
+      - 'tools/pbrt/**'
+      - '.github/workflows/pbrt-translation-check.yml'
+  pull_request:
+    paths:
+      - 'translations/pbrt/ch10/**'
+      - 'tools/pbrt/**'
+      - '.github/workflows/pbrt-translation-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  translation-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate unit coverage and checked payload hashes
+        run: python3 tools/pbrt/check_ch10.py
+      - name: Validate Python syntax
+        run: python3 -m compileall -q tools/pbrt
