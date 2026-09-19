@@ -1,0 +1,230 @@
+diff --git a/src/App.tsx b/src/App.tsx
+index 0367fe9..3d0e5af 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -5,2 +5,3 @@ import { createLibrary } from './reader/books/index';
+ import { createReader } from './reader/app';
++import { attachNativeTranslations } from './reader/native';
+ 
+@@ -15,3 +16,16 @@ export default function App() {
+         }, BOOKS);
+-        return createReader(host.current, library);
++        const node=host.current, controller=new AbortController();
++        let dispose:(()=>void)|undefined,closed=false;
++        node.textContent='학습 자료를 준비하고 있습니다…';
++        void attachNativeTranslations(library,controller.signal).then(result=>{
++            if(closed)return;
++            dispose=createReader(node,library);
++            if(result.warning){const warning=document.createElement('p');warning.className='native-import-warning';warning.textContent=result.warning;node.prepend(warning);}
++        }).catch(error=>{
++            if(closed)return;
++            dispose=createReader(node,library);
++            const warning=document.createElement('p');warning.className='native-import-warning';warning.setAttribute('role','alert');
++            warning.textContent='번역 자료를 연결하지 못했습니다. 기존 자료는 계속 사용할 수 있습니다. '+String(error instanceof Error?error.message:error);node.prepend(warning);
++        });
++        return ()=>{closed=true;controller.abort();dispose?.();};
+     }, []);
+diff --git a/src/index.css b/src/index.css
+index ae7f3e1..2d706f1 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -2563 +2563,46 @@ kbd {
+ @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
++
++/* Imported source-aligned translations share the common reader and its records. */
++.native-import-warning{margin:0;padding:12px 24px;background:var(--warning-bg,#f8f0e1);color:var(--ink,#222);font:13px/1.7 system-ui}
++.native-block{position:relative;min-width:0;max-width:100%;margin-block:12px}
++.native-rich{font:inherit;color:inherit;line-height:var(--reader-leading,1.9);min-width:0;max-width:100%;overflow-wrap:anywhere}
++.native-rich p{margin:1em 0;word-break:keep-all;overflow-wrap:anywhere}
++.native-rich .lang-en{display:none}
++.show-english .native-rich .lang-en{display:block;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:.91em;color:var(--muted);line-height:1.8}
++.native-rich h1,.native-rich h2{font-size:1.55em;line-height:1.5;margin:1.1em 0 .6em;letter-spacing:-.04em}
++.native-rich h3{font-size:1.25em;line-height:1.5;margin:1.2em 0 .6em}
++.native-rich h4{font-size:1.1em;line-height:1.6}
++.native-rich figure{margin:1.5em 0}
++.native-rich img{display:block;max-width:100%;height:auto;margin:auto;background:white;border:1px solid var(--line)}
++.native-rich figcaption{font-size:.8em;line-height:1.8;color:var(--muted);margin-top:14px;overflow-wrap:anywhere}
++.native-rich .figure-credit{font-size:11px;color:var(--muted);line-height:1.7}
++.native-rich svg{display:inline-block;fill:currentColor;max-width:100%;height:auto;vertical-align:middle}
++.native-rich .displaymath{max-width:100%;overflow:auto;white-space:nowrap;padding:18px 8px;margin:16px 0;border-block:1px solid var(--line);text-align:center}
++.native-rich .displaymath svg{max-width:none}
++.native-rich .displaymath span{white-space:normal}
++.native-rich .fragmentname{padding:10px 14px;background:var(--soft);border:1px solid var(--line);font:12px/1.7 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
++.native-rich .fragmentcode{padding:16px;max-width:100%;overflow:auto;white-space:pre;tab-size:4;background:var(--code);color:var(--code-ink);font:13px/1.8 ui-monospace,Consolas,monospace}
++.native-rich .fragmentcode .fragmentcode{margin:8px 0 8px 12px;padding:6px 10px;border-left:2px solid var(--accent);overflow:visible}
++.native-rich .fragmentcode a{color:var(--code-ink);text-decoration:underline;text-underline-offset:4px}
++.native-rich tt,.native-rich code{font-family:ui-monospace,Consolas,monospace;font-size:.87em;overflow-wrap:anywhere}
++.native-rich .fragmentcode tt,.native-rich .fragmentcode code{font-size:inherit;overflow-wrap:normal}
++.native-rich .collapse:not(.show){display:none}
++.native-rich .codecarat{display:inline-block;min-width:28px;text-decoration:none}
++.native-rich .codecarat:before{content:'＋';font-size:16px}
++.native-rich .codecarat[aria-expanded=true]:before{content:'−'}
++.native-rich .translator-note{margin:18px 0;padding:20px 24px;border-left:3px solid var(--accent);background:var(--wash);font-size:.88em}
++.native-rich .translator-note h4{font-size:1.05em;margin:0 0 8px}
++.native-rich .translator-note p{margin:0}
++.native-rich .source-correction,.native-rich .figure-warning{background:var(--warning-bg);border-left-color:var(--warning)}
++.native-rich .translation-footnote{padding:14px 18px;border:1px solid var(--line);font-size:.82em;line-height:1.8;color:var(--muted)}
++.native-rich .translation-footnote strong{display:block;margin-bottom:8px}
++.native-rich .note-label{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px}
++.native-rich .source-reference{font-size:.85em;color:var(--muted)}
++.native-rich ul,.native-rich ol{padding-left:1.35em}.native-rich li{margin:1em 0}
++.native-rich dl{font-size:.87em}.native-rich dd{margin:0 0 1.5em 1em}
++.native-rich table{display:block;max-width:100%;overflow:auto;border-collapse:collapse}
++.native-rich td,.native-rich th{padding:8px;border:1px solid var(--line)}
++.native-rich .unit-anchor,.native-rich [id]{scroll-margin-top:90px}
++.native-asset-error{font-size:13px;color:var(--warning)}
++.hide-hints .native-rich .translator-note.beginner{display:none}
++@media(max-width:600px){.native-rich .fragmentcode{font-size:12px;padding:12px}.native-rich .translator-note{padding:15px 18px}.native-rich h2{font-size:1.3em}}
+diff --git a/src/reader/app.ts b/src/reader/app.ts
+index ee8fa3e..62f76d1 100644
+--- a/src/reader/app.ts
++++ b/src/reader/app.ts
+@@ -1 +1,2 @@
++import { renderTranslationBlock } from './native.js';
+ import type { Lesson, Block, Settings, Note } from './types.js';
+@@ -7,3 +8,3 @@ import { createLab } from './labs.js';
+ import { glossary } from './glossary.js';
+-const modeLabel = (kind: Lesson['kind']) => kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : kind === 'guide' ? '원문 읽기 길잡이' : '독자 입문 강의';
++const modeLabel = (kind: Lesson['kind']) => kind === 'translation' ? '번역 본문 · 초안' : kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : kind === 'guide' ? '원문 읽기 길잡이' : '독자 입문 강의';
+ const cleanTitle = (s: string) => s.replace(/^\d+\.\d+\s*/, '').replace(/\s*\([^)]*\)$/, '');
+@@ -229,3 +230,3 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+         for(const [value,label] of [[cov.sections,'번호가 붙은 원문 절'],[cov.legacyNotes,'기존 노트 연결'],[cov.guides,'독자 길잡이 연결'],[cov.sourceReviewed,'원문 대조 검수 완료']] as const){const item=el('div');item.append(el('strong','',String(value)),el('span','',label));stats.append(item);}panel.append(stats);
+-        panel.append(el('p','preview-notice','원문 전체의 완역본이 아닙니다. 길잡이는 원문을 읽기 위한 준비 설명이며 모든 수식 유도·코드 구현을 대신하지 않습니다. 기존 노트는 미검수 상태를 유지합니다.'));
++        panel.append(el('p','preview-notice',`한국어 번역 초안 ${cov.translatedDrafts}개 절이 연결되어 있습니다. 길잡이·기존 노트와 구분하며, 책 전체 완료나 독립 감수 완료를 뜻하지 않습니다.`));
+         if(cov.sourceOnly)panel.append(el('p','muted',`${cov.sourceOnly}개 절은 이 실행 환경에 로컬 자료가 연결되지 않았습니다. 공식 원문으로 열 수 있습니다.`));
+@@ -239,4 +240,4 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+                 const name=el('div','source-name');name.append(el('strong','',section.number+' '+section.titleKo),el('small','muted',section.title));
+-                const status=section.review==='source-reviewed'?'원문 대조 검수 완료':section.coverage==='legacy-note'?'기존 노트 · 대조 필요':'독자 길잡이 · 완역 아님';name.append(el('span','kind-label',status));row.append(name);
+-                const controls=el('div','source-actions');if(section.lessonId&&repo.has(section.lessonId))controls.append(linkLesson(section.lessonId,section.coverage==='legacy-note'?'노트 열기':'길잡이 열기','text-link'));
++                const status=section.coverage==='translated-draft'?'원문 대응 번역 · 독립 감수 전':section.review==='source-reviewed'?'원문 대조 검수 완료':section.coverage==='legacy-note'?'기존 노트 · 대조 필요':'독자 길잡이 · 완역 아님';name.append(el('span','kind-label',status));row.append(name);
++                const controls=el('div','source-actions');if(section.lessonId&&repo.has(section.lessonId))controls.append(linkLesson(section.lessonId,section.coverage==='translated-draft'?'번역 본문 열기':section.coverage==='legacy-note'?'노트 열기':'길잡이 열기','text-link'));
+                 controls.append(externalLink('원문 ↗',section.url));
+@@ -340,4 +341,4 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+             article.append(n);
+-            if (b.type === 'heading')
+-                headings.push({ id, text: b.text });
++            if (b.type === 'heading') headings.push({ id, text: b.text });
++            if (b.type === 'rich' && b.heading) headings.push({id,text:b.heading});
+         }
+@@ -345,3 +346,3 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+         sources.append(el('h2', '', '더 깊게 읽기'));
+-        sources.append(el('p', 'muted', (l.kind === 'original' || l.kind === 'guide') ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
++        sources.append(el('p', 'muted', l.kind === 'translation' ? '첨부 원문에 대응하는 번역 본문입니다. 번역과 별도 해설·정정 역주를 구분하며, 원문 출처는 아래에서 확인할 수 있습니다.' : (l.kind === 'original' || l.kind === 'guide') ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
+         for (const s of l.references)
+@@ -406,2 +407,8 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+         switch (b.type) {
++            case 'rich': {
++                container.classList.add('native-block');
++                container.append(renderTranslationBlock(b,(id,anchor)=>navigate(id,anchor)));
++                if(b.text.trim() && !b.heading){const nb=button('+',()=>openNote(l.id,b.id),'paragraph-note');nb.setAttribute('aria-label','이 번역 문단에 메모');container.append(nb);}
++                break;
++            }
+             case 'heading': {
+@@ -677,3 +684,3 @@ export function createReader(host: HTMLElement, catalog: Library, environment?:
+         body.append(width);
+-        for (const [key, title, desc] of [['hints', '쉬운 보충 설명', '비유와 기초 설명을 펼칠 수 있게 합니다. 주의 사항은 숨기지 않습니다.'], ['englishNotes', '기존 영어 노트 표시', '실제 원문과의 일치가 검수된 영어가 아닙니다. 정확한 원문은 출처에서 확인하세요.']] as const) {
++        for (const [key, title, desc] of [['hints', '쉬운 보충 설명', '비유와 기초 설명을 펼칠 수 있게 합니다. 주의 사항은 숨기지 않습니다.'], ['englishNotes', '영문 함께 보기', '번역 본문에서는 첨부 영문을, 기존 노트에서는 원문 일치 미검수 영어 노트를 표시합니다.']] as const) {
+             const label = el('label', 'settings-check');
+diff --git a/src/reader/books/index.ts b/src/reader/books/index.ts
+index 9267d94..90d3c88 100644
+--- a/src/reader/books/index.ts
++++ b/src/reader/books/index.ts
+@@ -33,17 +33,8 @@ export function createLibrary(toc: ChapterMeta[] = [], loader?: LegacyLoader, ca
+     },new Repository([],undefined,curriculum.filter(x=>x.chapter==='0')));
+-    const fallback = [
+-        {id:'ostep',title:'운영체제: 아주 쉬운 세 가지 이야기',subtitle:'OSTEP',authors:['Remzi H. Arpaci-Dusseau','Andrea C. Arpaci-Dusseau'],edition:'선택한 판본 확인 예정',sourceUrl:'https://pages.cs.wisc.edu/~remzi/OSTEP/'},
+-        {id:'csapp',title:'컴퓨터 시스템: 프로그래머의 관점',subtitle:'CS:APP',authors:['Randal E. Bryant',"David R. O’Hallaron"],edition:'3판',sourceUrl:'https://csapp.cs.cmu.edu/'},
+-        {id:'ddia',title:'데이터 중심 애플리케이션 설계',subtitle:'DDIA',authors:['Martin Kleppmann'],edition:'1판 · 기존 저장소에 선택된 판본',sourceUrl:'https://dataintensive.net/'}
+-    ];
+-    // Honor the saved catalog: do not silently upgrade editions or invent titles.
+-    for (const base of fallback) {
+-        const saved=catalog.find(x=>x.id===base.id);
+-        library.register({...base,...plannedDefaults,
+-            title:saved?.titleKo||base.title,subtitle:saved?.title||base.subtitle,
+-            description:'아직 본문은 추가하지 않았습니다. 책별 목차·용어·기록을 독립적으로 연결할 준비가 되어 있습니다.',
+-            authors:saved?.authors||base.authors,edition:saved?.edition||base.edition,sourceUrl:saved?.originalUrl||base.sourceUrl});
+-    }
+-    for (const [i,id] of ['planned-05','planned-06'].entries())
+-        library.register({id,title:`추가할 책 ${i+5}`,subtitle:'도서 선정 전',description:'제목과 원문 출처가 정해지면 등록합니다. 샘플 본문이나 가짜 진도를 표시하지 않습니다.',authors:[],edition:'미정',...plannedDefaults});
++    // The user will choose the remaining five books later. Keep stable slot IDs
++    // but do not present the former sample catalog as the selected curriculum.
++    for(const [i,id] of ['ostep','csapp','ddia','planned-05','planned-06'].entries())
++        library.register({id,title:`추가 예정 도서 ${i+2}`,subtitle:'사용자 자료 선택 예정',
++            description:'다음 책의 링크를 받은 뒤 목차·본문을 연결합니다. 임의로 책을 선정하지 않습니다.',
++            authors:[],edition:'미정',...plannedDefaults});
+     for(const addition of bookAdditions)library.replace(addition.slotId,addition.definition,addition.repository);
+diff --git a/src/reader/library.ts b/src/reader/library.ts
+index 9144534..673ab89 100644
+--- a/src/reader/library.ts
++++ b/src/reader/library.ts
+@@ -57,2 +57,3 @@ export class Library {
+             legacyNotes: count(s => s.coverage === 'legacy-note' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
++            translatedDrafts: count(s => s.coverage === 'translated-draft' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
+             guides: count(s => s.coverage === 'companion-guide' && !!s.lessonId && !!entry?.repository.has(s.lessonId)),
+diff --git a/src/reader/repository.ts b/src/reader/repository.ts
+index 432e051..e5fcf5b 100644
+--- a/src/reader/repository.ts
++++ b/src/reader/repository.ts
+@@ -78,2 +78,4 @@ export class Repository {
+     readonly chapters: Chapter[];
++    private lazy = new Map<string, { load: () => Promise<Lesson>; search: {id: string; text: string}[] }>();
++    private pending = new Map<string, Promise<Lesson>>();
+     private legacyPromise?: Promise<Record<string, SectionContent>>;
+@@ -102,2 +104,12 @@ export class Repository {
+     }
++    registerLazy(meta: LessonMeta, load: () => Promise<Lesson>, search: {id: string; text: string}[]): void {
++        if(this.has(meta.id)) throw new Error(`Duplicate lesson ID: ${meta.id}`);
++        this.lazy.set(meta.id,{load,search}); this.metas.push(meta);
++        this.metas.sort((a,b)=>chapterOrder(a.chapter)-chapterOrder(b.chapter) ||
++            (a.kind==='translation'?0:1)-(b.kind==='translation'?0:1));
++        const chapters=[...new Set(this.metas.map(x=>x.chapter))].map(id=>({id,
++            title:this.metas.find(x=>x.chapter===id)!.chapterTitle,
++            subtitle:'번역 본문·학습 노트·길잡이를 구분하여 읽습니다.',lessons:this.metas.filter(x=>x.chapter===id)}));
++        this.chapters.splice(0,this.chapters.length,...chapters);
++    }
+     has(id: string): boolean { return this.metas.some(x => x.id === id); }
+@@ -113,2 +125,8 @@ export class Repository {
+         if (!this.has(id)) return null;
++        const lazy=this.lazy.get(id);
++        if(lazy){
++            let promise=this.pending.get(id);
++            if(!promise){promise=lazy.load().then(l=>{if(l.id!==id)throw new Error('Lesson ID mismatch');this.lessonCache.set(id,l);return l;}).finally(()=>this.pending.delete(id));this.pending.set(id,promise);}
++            return promise;
++        }
+         const all = await this.legacy();
+@@ -126,2 +144,12 @@ export class Repository {
+         for (const meta of this.metas) {
++            const lazy=this.lazy.get(meta.id);
++            if(lazy){
++                const title=meta.title.toLocaleLowerCase();
++                if(terms.every(q=>title.includes(q)))hits.push({lesson:meta,blockId:'lesson-title',excerpt:meta.deck});
++                for(const b of lazy.search.filter(b=>terms.every(q=>b.text.toLocaleLowerCase().includes(q)||title.includes(q))).slice(0,3)){
++                    const at=b.text.toLocaleLowerCase().indexOf(terms[0]),start=Math.max(0,at-32);
++                    hits.push({lesson:meta,blockId:b.id,excerpt:(start?'…':'')+b.text.slice(start,start+170)});
++                }
++                continue;
++            }
+             if (legacyFailed && !this.originals.has(meta.id)) continue;
+@@ -146,2 +174,3 @@ export function blockText(b: Block): string {
+     switch (b.type) {
++        case 'rich': return b.text;
+         case 'paragraph': return b.text + ' ' + (b.english || '');
+diff --git a/src/reader/types.ts b/src/reader/types.ts
+index bc0035c..13b5e57 100644
+--- a/src/reader/types.ts
++++ b/src/reader/types.ts
+@@ -3,2 +3,4 @@ export type LabKind = 'derivative' | 'integral' | 'diffuse' | 'transmittance' | 'sa
+ export type Block = {
++    type: 'rich'; id: string; html: string; text: string; role?: 'body' | 'note'; heading?: string;
++} | {
+     type: 'paragraph';
+@@ -70,3 +72,3 @@ export interface Lesson {
+     deck: string;
+-    kind: 'original' | 'legacy' | 'correction' | 'guide';
++    kind: 'original' | 'legacy' | 'correction' | 'guide' | 'translation';
+     sourceSection?: string;
+@@ -127,3 +129,3 @@ export interface SourceSection {
+     lessonId?: string;
+-    coverage: 'legacy-note' | 'companion-guide' | 'source-only';
++    coverage: 'legacy-note' | 'companion-guide' | 'source-only' | 'translated-draft';
+     review: 'unreviewed' | 'editorial-check' | 'source-reviewed';
