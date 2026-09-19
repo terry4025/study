@@ -22,7 +22,12 @@ jobs:
         run: |
           python3 tools/pbrt/check_ch10.py
           python3 tools/pbrt/check_ch11.py
+          python3 tools/pbrt/check_ch12.py
           python3 -m compileall -q tools/pbrt
+      - name: Exercise chapter 12 import with source fixtures
+        run: |
+          python3 -m pip install -r tools/pbrt/requirements-native.txt
+          python3 tools/pbrt/test_ch12.py -v
       - name: Install exact project dependencies and build
         run: |
           npm ci
