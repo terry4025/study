@@ -1,68 +1,41 @@
-name: PBRT native reader integration
+name: PBRT native reader checks
 on:
   push:
-    branches: [feat/pbrt-native-reader-ch11-20260919]
-    paths:
-      - '.github/workflows/pbrt-native-integration.yml'
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: pbrt-native-integration
-  cancel-in-progress: false
+  group: pbrt-native-check-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  integrate-and-test:
-    if: github.repository == 'terry4025/study' && github.ref == 'refs/heads/feat/pbrt-native-reader-ch11-20260919'
+  build-and-test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: feat/pbrt-native-reader-ch11-20260919
       - uses: actions/setup-node@v6
         with:
           node-version: '22'
-      - name: Apply reviewed integration and validate translations
+      - name: Validate checked translations and Python tools
         run: |
-          python3 tools/pbrt/finalize_native.py
           python3 tools/pbrt/check_ch10.py
           python3 tools/pbrt/check_ch11.py
           python3 -m compileall -q tools/pbrt
-      - name: Install exact project dependencies and build real app
+      - name: Install exact project dependencies and build
         run: |
           npm ci
           npm run build
-      - name: Install isolated browser test runtime
+      - name: Install browser test runtime without changing lockfile
         run: |
           npm install --no-save --package-lock=false playwright@1.55.0
           npx playwright install --with-deps chromium
-      - name: Test real local browser storage and navigation with fixtures
+      - name: Check real local browser storage and navigation with fixtures
         run: node tools/pbrt/browser_smoke.mjs
-      - name: Commit only reviewed source changes to the feature branch
-        run: |
-          git config user.name 'study-integration-bot'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/App.tsx src/index.css src/reader/app.ts src/reader/books/index.ts src/reader/library.ts src/reader/repository.ts src/reader/types.ts translations/pbrt/ch11/11-02.ko.json translations/pbrt/ch11/11-04.ko.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'feat(reader): integrate checked translations into common local app'
-            git push origin HEAD:feat/pbrt-native-reader-ch11-20260919
-          fi
       - uses: actions/upload-artifact@v5
         if: always()
         with:
-          name: native-integration-test-results
+          name: native-browser-check-results
           path: native-browser-smoke-result.json
           if-no-files-found: ignore
-      - uses: actions/upload-artifact@v5
-        if: failure()
-        with:
-          name: native-integration-source-diagnostic
-          path: |
-            translations/pbrt/ch11
-            src
-            package.json
-            package-lock.json
-            tsconfig.json
-            vite.config.ts
-            index.html
-          retention-days: 2
