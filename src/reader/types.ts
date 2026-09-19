@@ -1,6 +1,8 @@
 export type Theme = 'light' | 'dark' | 'sepia';
 export type LabKind = 'derivative' | 'integral' | 'diffuse' | 'transmittance' | 'sampling' | 'lights' | 'roulette' | 'queues' | 'texture';
 export type Block = {
+    type: 'rich'; id: string; html: string; text: string; role?: 'body' | 'note'; heading?: string;
+} | {
     type: 'paragraph';
     id: string;
     text: string;
@@ -68,7 +70,7 @@ export interface Lesson {
     chapterTitle: string;
     title: string;
     deck: string;
-    kind: 'original' | 'legacy' | 'correction' | 'guide';
+    kind: 'original' | 'legacy' | 'correction' | 'guide' | 'translation';
     sourceSection?: string;
     review?: 'draft' | 'editorial-check' | 'source-reviewed';
     minutes: number;
@@ -125,7 +127,7 @@ export interface SourceSection {
     titleKo: string;
     url: string;
     lessonId?: string;
-    coverage: 'legacy-note' | 'companion-guide' | 'source-only';
+    coverage: 'legacy-note' | 'companion-guide' | 'source-only' | 'translated-draft';
     review: 'unreviewed' | 'editorial-check' | 'source-reviewed';
 }
 export interface SourceChapter {

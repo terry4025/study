@@ -76,6 +76,8 @@ export class Repository {
     readonly originals: Map<string, Lesson>;
     readonly metas: LessonMeta[];
     readonly chapters: Chapter[];
+    private lazy = new Map<string, { load: () => Promise<Lesson>; search: {id: string; text: string}[] }>();
+    private pending = new Map<string, Promise<Lesson>>();
     private legacyPromise?: Promise<Record<string, SectionContent>>;
     private lessonCache = new Map<string, Lesson>();
     readonly warnings: string[] = [];
@@ -100,6 +102,16 @@ export class Repository {
             subtitle: id === '0' ? '공통 준비 코스' : '학습 노트·독자 해설 · 완역 여부와 구분',
             lessons: this.metas.filter(x => x.chapter === id) }));
     }
+    registerLazy(meta: LessonMeta, load: () => Promise<Lesson>, search: {id: string; text: string}[]): void {
+        if(this.has(meta.id)) throw new Error(`Duplicate lesson ID: ${meta.id}`);
+        this.lazy.set(meta.id,{load,search}); this.metas.push(meta);
+        this.metas.sort((a,b)=>chapterOrder(a.chapter)-chapterOrder(b.chapter) ||
+            (a.kind==='translation'?0:1)-(b.kind==='translation'?0:1));
+        const chapters=[...new Set(this.metas.map(x=>x.chapter))].map(id=>({id,
+            title:this.metas.find(x=>x.chapter===id)!.chapterTitle,
+            subtitle:'번역 본문·학습 노트·길잡이를 구분하여 읽습니다.',lessons:this.metas.filter(x=>x.chapter===id)}));
+        this.chapters.splice(0,this.chapters.length,...chapters);
+    }
     has(id: string): boolean { return this.metas.some(x => x.id === id); }
     meta(id: string): LessonMeta | undefined { return this.metas.find(x => x.id === id); }
     private legacy(): Promise<Record<string, SectionContent>> {
@@ -111,6 +123,12 @@ export class Repository {
         if (this.originals.has(id)) return this.originals.get(id)!;
         if (this.lessonCache.has(id)) return this.lessonCache.get(id)!;
         if (!this.has(id)) return null;
+        const lazy=this.lazy.get(id);
+        if(lazy){
+            let promise=this.pending.get(id);
+            if(!promise){promise=lazy.load().then(l=>{if(l.id!==id)throw new Error('Lesson ID mismatch');this.lessonCache.set(id,l);return l;}).finally(()=>this.pending.delete(id));this.pending.set(id,promise);}
+            return promise;
+        }
         const all = await this.legacy();
         if (!all[id]) return null;
         const lesson = this.adapter(id, all[id]);
@@ -124,6 +142,16 @@ export class Repository {
         this.warnings.length = 0;
         let legacyFailed = false;
         for (const meta of this.metas) {
+            const lazy=this.lazy.get(meta.id);
+            if(lazy){
+                const title=meta.title.toLocaleLowerCase();
+                if(terms.every(q=>title.includes(q)))hits.push({lesson:meta,blockId:'lesson-title',excerpt:meta.deck});
+                for(const b of lazy.search.filter(b=>terms.every(q=>b.text.toLocaleLowerCase().includes(q)||title.includes(q))).slice(0,3)){
+                    const at=b.text.toLocaleLowerCase().indexOf(terms[0]),start=Math.max(0,at-32);
+                    hits.push({lesson:meta,blockId:b.id,excerpt:(start?'…':'')+b.text.slice(start,start+170)});
+                }
+                continue;
+            }
             if (legacyFailed && !this.originals.has(meta.id)) continue;
             let l: Lesson | null;
             try { l = await this.get(meta.id); }
@@ -144,6 +172,7 @@ export function chapterOrder(id: string): number {
 }
 export function blockText(b: Block): string {
     switch (b.type) {
+        case 'rich': return b.text;
         case 'paragraph': return b.text + ' ' + (b.english || '');
         case 'heading': return b.text;
         case 'aside': return b.title + ' ' + b.text;

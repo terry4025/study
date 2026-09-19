@@ -1,0 +1,13 @@
+/* A referenced fragment name is inline code, not another block header. */
+.native-rich .fragmentcode .fragmentname,
+.native-rich .fragmentname .fragmentname {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+.native-rich .fragmentcode a .fragmentname { color: inherit; }

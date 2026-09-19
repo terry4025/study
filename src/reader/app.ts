@@ -1,3 +1,4 @@
+import { renderTranslationBlock } from './native.js';
 import type { Lesson, Block, Settings, Note } from './types.js';
 import { Repository } from './repository.js';
 import { Library, type BookEntry } from './library.js';
@@ -5,7 +6,7 @@ import { Store } from './store.js';
 import { element as el, button, prose, inline, math, externalLink } from './text.js';
 import { createLab } from './labs.js';
 import { glossary } from './glossary.js';
-const modeLabel = (kind: Lesson['kind']) => kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : kind === 'guide' ? '원문 읽기 길잡이' : '독자 입문 강의';
+const modeLabel = (kind: Lesson['kind']) => kind === 'translation' ? '번역 본문 · 초안' : kind === 'legacy' ? '기존 학습 노트' : kind === 'correction' ? '정정 해설' : kind === 'guide' ? '원문 읽기 길잡이' : '독자 입문 강의';
 const cleanTitle = (s: string) => s.replace(/^\d+\.\d+\s*/, '').replace(/\s*\([^)]*\)$/, '');
 /** Injectable browser boundary for isolated rendering tests. Production callers
  * omit this argument and use native URL, History and LocalStorage. */
@@ -227,7 +228,7 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
         panel.append(el('div','eyebrow','THE SOURCE / READING MAP'),el('h2','','원문 목차와 학습 현황'));
         const stats=el('div','coverage-stats');
         for(const [value,label] of [[cov.sections,'번호가 붙은 원문 절'],[cov.legacyNotes,'기존 노트 연결'],[cov.guides,'독자 길잡이 연결'],[cov.sourceReviewed,'원문 대조 검수 완료']] as const){const item=el('div');item.append(el('strong','',String(value)),el('span','',label));stats.append(item);}panel.append(stats);
-        panel.append(el('p','preview-notice','원문 전체의 완역본이 아닙니다. 길잡이는 원문을 읽기 위한 준비 설명이며 모든 수식 유도·코드 구현을 대신하지 않습니다. 기존 노트는 미검수 상태를 유지합니다.'));
+        panel.append(el('p','preview-notice',`한국어 번역 초안 ${cov.translatedDrafts}개 절이 연결되어 있습니다. 길잡이·기존 노트와 구분하며, 책 전체 완료나 독립 감수 완료를 뜻하지 않습니다.`));
         if(cov.sourceOnly)panel.append(el('p','muted',`${cov.sourceOnly}개 절은 이 실행 환경에 로컬 자료가 연결되지 않았습니다. 공식 원문으로 열 수 있습니다.`));
         const readStatus=el('p','source-read-count');const refresh=()=>readStatus.textContent=`직접 표시한 원문 읽기: ${store.book.sourceRead.filter(id=>b.outline!.some(ch=>ch.sections.some(s=>s.id===id))).length} / ${cov.sections}절`;
         refresh();panel.append(readStatus);
@@ -237,8 +238,8 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
             details.append(el('summary','',`${ch.id} · ${ch.titleKo} (${ch.sections.length})`));
             for(const section of ch.sections){const row=el('div','source-row');row.dataset.sourceSection=section.id;
                 const name=el('div','source-name');name.append(el('strong','',section.number+' '+section.titleKo),el('small','muted',section.title));
-                const status=section.review==='source-reviewed'?'원문 대조 검수 완료':section.coverage==='legacy-note'?'기존 노트 · 대조 필요':'독자 길잡이 · 완역 아님';name.append(el('span','kind-label',status));row.append(name);
-                const controls=el('div','source-actions');if(section.lessonId&&repo.has(section.lessonId))controls.append(linkLesson(section.lessonId,section.coverage==='legacy-note'?'노트 열기':'길잡이 열기','text-link'));
+                const status=section.coverage==='translated-draft'?'원문 대응 번역 · 독립 감수 전':section.review==='source-reviewed'?'원문 대조 검수 완료':section.coverage==='legacy-note'?'기존 노트 · 대조 필요':'독자 길잡이 · 완역 아님';name.append(el('span','kind-label',status));row.append(name);
+                const controls=el('div','source-actions');if(section.lessonId&&repo.has(section.lessonId))controls.append(linkLesson(section.lessonId,section.coverage==='translated-draft'?'번역 본문 열기':section.coverage==='legacy-note'?'노트 열기':'길잡이 열기','text-link'));
                 controls.append(externalLink('원문 ↗',section.url));
                 const read=button('',()=>{store.toggle('sourceRead',section.id);update();refresh();saveFeedback();},'source-read-button');
                 function update(){const yes=store.book.sourceRead.includes(section.id);read.textContent=yes?'원문 읽음 ✓':'원문 읽음 표시';read.setAttribute('aria-pressed',String(yes));read.setAttribute('aria-label',section.number+' '+read.textContent);}update();controls.append(read);row.append(controls);details.append(row);
@@ -338,12 +339,12 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
             n.id = id;
             n.dataset.blockId = id;
             article.append(n);
-            if (b.type === 'heading')
-                headings.push({ id, text: b.text });
+            if (b.type === 'heading') headings.push({ id, text: b.text });
+            if (b.type === 'rich' && b.heading) headings.push({id,text:b.heading});
         }
         const sources = el('section', 'lesson-sources');
         sources.append(el('h2', '', '더 깊게 읽기'));
-        sources.append(el('p', 'muted', (l.kind === 'original' || l.kind === 'guide') ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
+        sources.append(el('p', 'muted', l.kind === 'translation' ? '첨부 원문에 대응하는 번역 본문입니다. 번역과 별도 해설·정정 역주를 구분하며, 원문 출처는 아래에서 확인할 수 있습니다.' : (l.kind === 'original' || l.kind === 'guide') ? '이 수업은 독자적인 입문 해설입니다. 아래 자료는 배경 학습과 원문 접근을 위한 링크이며, 문단별 번역 대응을 의미하지 않습니다.' : '보존한 노트의 참고 출처입니다. 영어 노트가 실제 원문과 일치하는지 이 링크에서 대조하세요.'));
         for (const s of l.references)
             sources.append(externalLink(s.title, s.url));
         article.append(sources);
@@ -404,6 +405,12 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
     function renderBlock(b: Block, l: Lesson): HTMLElement {
         const container = el('section', 'content-block');
         switch (b.type) {
+            case 'rich': {
+                container.classList.add('native-block');
+                container.append(renderTranslationBlock(b,(id,anchor)=>navigate(id,anchor)));
+                if(b.text.trim() && !b.heading){const nb=button('+',()=>openNote(l.id,b.id),'paragraph-note');nb.setAttribute('aria-label','이 번역 문단에 메모');container.append(nb);}
+                break;
+            }
             case 'heading': {
                 container.classList.add('heading-block');
                 container.append(el(b.level === 3 ? 'h3' : b.level === 4 ? 'h4' : 'h2', '', b.text));
@@ -675,7 +682,7 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
         sel.addEventListener('change', () => { store.setSettings({ measure: sel.value === 'wide' ? 'wide' : 'normal' }); applySettings(); });
         width.append(el('span', '', '본문 너비'), sel);
         body.append(width);
-        for (const [key, title, desc] of [['hints', '쉬운 보충 설명', '비유와 기초 설명을 펼칠 수 있게 합니다. 주의 사항은 숨기지 않습니다.'], ['englishNotes', '기존 영어 노트 표시', '실제 원문과의 일치가 검수된 영어가 아닙니다. 정확한 원문은 출처에서 확인하세요.']] as const) {
+        for (const [key, title, desc] of [['hints', '쉬운 보충 설명', '비유와 기초 설명을 펼칠 수 있게 합니다. 주의 사항은 숨기지 않습니다.'], ['englishNotes', '영문 함께 보기', '번역 본문에서는 첨부 영문을, 기존 노트에서는 원문 일치 미검수 영어 노트를 표시합니다.']] as const) {
             const label = el('label', 'settings-check');
             const c = el('input');
             c.type = 'checkbox';
