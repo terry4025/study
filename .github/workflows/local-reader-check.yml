@@ -1,0 +1,42 @@
+name: Local study reader
+on:
+  push:
+    branches: [feat/native-reader-ch11-20260919]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  app-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Snapshot tracked source for reproducible inspection
+        run: git archive --format=tar.gz --output=source-snapshot.tgz HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-snapshot
+          path: source-snapshot.tgz
+          retention-days: 3
+      - run: npm ci
+      - run: npm run build
+      - name: Platform invariants
+        run: node scripts/check-platform.mjs
+      - name: Translation payload integrity
+        run: python3 tools/pbrt/check_ch10.py
+      - name: Native checks when present
+        run: |
+          if [ -f tools/pbrt/check_native.py ]; then python3 tools/pbrt/check_native.py; fi
+          if [ -f scripts/check-native.mjs ]; then node scripts/check-native.mjs; fi
+      - name: Package locally built application
+        run: tar -czf verified-workspace.tgz src public package.json package-lock.json tsconfig.json vite.config.ts index.html node_modules
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-workspace
+          path: verified-workspace.tgz
+          retention-days: 3
