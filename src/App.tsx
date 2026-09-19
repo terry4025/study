@@ -4,6 +4,7 @@ import { BOOKS } from './data/books';
 import { createLibrary } from './reader/books/index';
 import { createReader } from './reader/app';
 import { attachNativeTranslations } from './reader/native';
+import './reader/native.css';
 
 // React owns the host; the reader owns and disposes its isolated subtree.
 export default function App() {
