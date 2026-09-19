@@ -1,0 +1,82 @@
+{
+  "10-00": {
+    "path": "Textures_and_Materials.html",
+    "archive_html": "html/Textures_and_Materials.html",
+    "source_sha256": "8a9c4864d75aa1f1eb66399e1fd1bfc023a4e9b319c8c0e88cfcfe6d8ca78fa8",
+    "units": 7,
+    "translated": 7,
+    "canonical_translation_sha256": "496600a0507ba675ec45a8a335758aaf56b2b4715efb27d904d6d8c9e5266804",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Textures_and_Materials.pdf",
+    "pdf_sha256": "e7673c96a3b2de0dc16e507b4b4d6302266b81b077f2a4972c122b1cca011de0"
+  },
+  "10-01": {
+    "path": "Textures_and_Materials/Texture_Sampling_and_Antialiasing.html",
+    "archive_html": "html/Textures_and_Materials/Texture_Sampling_and_Antialiasing.html",
+    "source_sha256": "118696d8f63ff8a584ff6213130ae96b3585cc24474a26a5d795c0bcbbf1f3a8",
+    "units": 93,
+    "translated": 93,
+    "canonical_translation_sha256": "e1e4a940a5d1ed25ec42a8bf26471cca53f19df7df30c99a2e6cbf1c52c9b397",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Texture_Sampling_and_Antialiasing.pdf",
+    "pdf_sha256": "a3734a27db660caf67406eac0189b61a0ea8a4710a9b37e369ab7d4ccf5b86ec"
+  },
+  "10-02": {
+    "path": "Textures_and_Materials/Texture_Coordinate_Generation.html",
+    "archive_html": "html/Textures_and_Materials/Texture_Coordinate_Generation.html",
+    "source_sha256": "dda8259b651e6096ea4b543a10a275a1e85d7713ddacd555f5a269d6cc43a383",
+    "units": 44,
+    "translated": 44,
+    "canonical_translation_sha256": "96553bc2e547453487c2fdf4758714b323be6846cbb55ff579e1aa08d96f0760",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Texture_Coordinate_Generation.pdf",
+    "pdf_sha256": "de6171f505a8b4c135be6348ef4dbe99efcdb62ad00bd164ade7dadfa9523701"
+  },
+  "10-03": {
+    "path": "Textures_and_Materials/Texture_Interface_and_Basic_Textures.html",
+    "archive_html": "html/Textures_and_Materials/Texture_Interface_and_Basic_Textures.html",
+    "source_sha256": "3d87a7503c7fe224ae321b3133cb61b59a82dd0295d43beb17688cd8bdbc890d",
+    "units": 25,
+    "translated": 25,
+    "canonical_translation_sha256": "c8e45ce58b47b86b8096d224ebe6b975b3fa22429c2918618da4d72110906baf",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Texture_Interface_and_Basic_Textures.pdf",
+    "pdf_sha256": "ad3b889de319f6d2968fa5cb6385e660649a7241c10e0df4b25e22bfb62e79b2"
+  },
+  "10-04": {
+    "path": "Textures_and_Materials/Image_Texture.html",
+    "archive_html": "html/Textures_and_Materials/Image_Texture.html",
+    "source_sha256": "5099f81719eb5768428772210350e3f4312cbd23a246f6aa812ae75eac4335e2",
+    "units": 64,
+    "translated": 64,
+    "canonical_translation_sha256": "68170530361542ff3416b4a95d35f5975c4ae8c6ff5a04d20a9ce04f05f92136",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Image_Texture.pdf",
+    "pdf_sha256": "aa2ef0186e64b0dd85c5a8d6f790a9ac048e1741b82dfe2d339ae20b725fffca"
+  },
+  "10-05": {
+    "path": "Textures_and_Materials/Material_Interface_and_Implementations.html",
+    "archive_html": "html/Textures_and_Materials/Material_Interface_and_Implementations.html",
+    "source_sha256": "7206b7f18de8cf29fbc57048fd04d227daeee1067c4f5f9e6c7b216391af8195",
+    "units": 96,
+    "translated": 96,
+    "canonical_translation_sha256": "b1814e0db7c2e8317b909fee0cd3adf415b72b7b240f21b9dd7968a6892b720d",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Material_Interface_and_Implementations.pdf",
+    "pdf_sha256": "727c75d66739df97c2628564de4b78faa87c2a1047d520920d88ca47053f2dcb"
+  },
+  "10-exercises": {
+    "path": "Textures_and_Materials/Exercises.html",
+    "archive_html": "html/Textures_and_Materials/Exercises.html",
+    "source_sha256": "4289581a9e1e274242c26a09cc85e68897f0a3b68da29c0239f0c08bc4c891c5",
+    "units": 6,
+    "translated": 6,
+    "canonical_translation_sha256": "c70ba413be15a59163c5b336b1bc5417a824ba17f9450abdce1b826409121c80",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Exercises.pdf",
+    "pdf_sha256": "d1ea0015c53f6cfa512b1cb30ebeb43513dbf06dadcbdf9e9d1ef63228d4f344"
+  },
+  "10-reading": {
+    "path": "Textures_and_Materials/Further_Reading.html",
+    "archive_html": "html/Textures_and_Materials/Further_Reading.html",
+    "source_sha256": "fed19ca9219ff6d9b65cd4c29b384a9abdbcc08819c206b244044d06828bbee5",
+    "units": 141,
+    "translated": 38,
+    "canonical_translation_sha256": "b530bfd19db21f96f29e9ba5f38c80f4d37d9544a35411281eb003dee2441a1c",
+    "archive_pdf": "pdf/10_Textures_and_Materials/Further_Reading.pdf",
+    "pdf_sha256": "5806d3274e4379abbae3772a0dd0a3339aafdf0619a39d3ac60ab808f40118ec"
+  }
+}
