@@ -1,0 +1,55 @@
+name: PBRT native reader integration
+on:
+  push:
+    branches: [feat/pbrt-native-reader-ch11-20260919]
+    paths:
+      - '.github/workflows/pbrt-native-integration.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pbrt-native-integration
+  cancel-in-progress: false
+jobs:
+  integrate-and-test:
+    if: github.repository == 'terry4025/study' && github.ref == 'refs/heads/feat/pbrt-native-reader-ch11-20260919'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/pbrt-native-reader-ch11-20260919
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Apply reviewed integration and validate translations
+        run: |
+          python3 tools/pbrt/finalize_native.py
+          python3 tools/pbrt/check_ch10.py
+          python3 tools/pbrt/check_ch11.py
+          python3 -m compileall -q tools/pbrt
+      - name: Install exact project dependencies and build real app
+        run: |
+          npm ci
+          npm run build
+      - name: Install isolated browser test runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Test real local browser storage and navigation with fixtures
+        run: node tools/pbrt/browser_smoke.mjs
+      - name: Commit only reviewed source changes to the feature branch
+        run: |
+          git config user.name 'study-integration-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/App.tsx src/index.css src/reader/app.ts src/reader/books/index.ts src/reader/library.ts src/reader/repository.ts src/reader/types.ts translations/pbrt/ch11/11-02.ko.json translations/pbrt/ch11/11-04.ko.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(reader): integrate checked translations into common local app'
+            git push origin HEAD:feat/pbrt-native-reader-ch11-20260919
+          fi
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: native-integration-test-results
+          path: native-browser-smoke-result.json
+          if-no-files-found: ignore
