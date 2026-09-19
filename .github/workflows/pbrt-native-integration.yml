@@ -53,3 +53,16 @@ jobs:
           name: native-integration-test-results
           path: native-browser-smoke-result.json
           if-no-files-found: ignore
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: native-integration-source-diagnostic
+          path: |
+            translations/pbrt/ch11
+            src
+            package.json
+            package-lock.json
+            tsconfig.json
+            vite.config.ts
+            index.html
+          retention-days: 2
