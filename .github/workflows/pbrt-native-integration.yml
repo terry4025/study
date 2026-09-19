@@ -22,7 +22,12 @@ jobs:
         run: |
           python3 tools/pbrt/check_ch10.py
           python3 tools/pbrt/check_ch11.py
+          python3 tools/pbrt/check_ch12.py
           python3 -m compileall -q tools/pbrt
+      - name: Exercise chapter 12 import with source fixtures
+        run: |
+          python3 -m pip install -r tools/pbrt/requirements-native.txt
+          python3 tools/pbrt/test_ch12.py -v
       - name: Install exact project dependencies and build
         run: |
           npm ci
@@ -39,3 +44,13 @@ jobs:
           name: native-browser-check-results
           path: native-browser-smoke-result.json
           if-no-files-found: ignore
+      - name: Archive tracked review inputs only
+        if: always()
+        run: git archive --format=zip --output=native-review-source.zip HEAD src tools translations package.json package-lock.json vite.config.ts tsconfig.json index.html .github/workflows
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: native-review-source
+          path: native-review-source.zip
+          retention-days: 7
+          if-no-files-found: error
