@@ -41,6 +41,7 @@ export type ContentBlock =
     }
   | {
       type: 'subheading';
+      id?: string;
       level: 2 | 3 | 4;
       titleKo: string;
       titleEn?: string;
@@ -54,6 +55,9 @@ export type ContentBlock =
       src: string;
       captionKo: string;
       captionEn: string;
+      reviewed?: boolean;
+      sourceUrl?: string;
+      captionKind?: string;
       width?: number;
       height?: number;
     }
@@ -62,6 +66,7 @@ export type ContentBlock =
       id?: string;
       chunkName: string; // e.g. "<<Bounds3 Inline Functions>>+="
       language: string;
+      provenance?: 'teaching' | 'source-excerpt';
       code: string;
       explanationKo?: string;
       chunkUpRef?: string;
@@ -69,6 +74,7 @@ export type ContentBlock =
     }
   | {
       type: 'concept-tip';
+      id?: string;
       badge?: string;
       title: string;
       summary: string;
@@ -77,6 +83,7 @@ export type ContentBlock =
     }
   | {
       type: 'equation';
+      id?: string;
       tex: string;
       explanationKo?: string;
     };
@@ -95,5 +102,6 @@ export interface SectionContent {
     keyTakeaways: string[];
     prerequisites?: string[];
   };
+  audit?: { checkedSourceSha256: string; scope: string; status: string; originalHeadings: string[]; sourceFigures: string[]; captionPolicy: string; fullTranslation: boolean; independentExpertReview: boolean; notice?: string };
   blocks: ContentBlock[];
 }

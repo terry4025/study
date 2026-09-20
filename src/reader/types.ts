@@ -34,7 +34,7 @@ export type Block = {
     language: string;
     title: string;
     explanation?: string;
-    provenance: 'teaching' | 'legacy-unverified';
+    provenance: 'teaching' | 'legacy-unverified' | 'source-excerpt';
 } | {
     type: 'figure';
     id: string;
@@ -42,6 +42,9 @@ export type Block = {
     title: string;
     caption: string;
     verified: boolean;
+    originalCaption?: string;
+    width?: number;
+    height?: number;
 } | {
     type: 'quiz';
     id: string;

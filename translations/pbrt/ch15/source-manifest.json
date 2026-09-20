@@ -1,0 +1,62 @@
+{
+  "15-00": {
+    "path": "Wavefront_Rendering_on_GPUs.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs.html",
+    "source_sha256": "42b2d7aecd657e6824e222206d965e6add267663ab90b84ad8d3096acc137e9f",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Wavefront_Rendering_on_GPUs.pdf",
+    "pdf_sha256": "42d8639ba75e0690b58aef18dfe91c76e0f4fe5d806fcaa465422d26ba447e26",
+    "units": 12,
+    "translated": 12,
+    "canonical_translation_sha256": "916f61cbf0d1fc0ec1e238783951f5b068943c2d4444232abb385e5417d23f0c"
+  },
+  "15-exercises": {
+    "path": "Wavefront_Rendering_on_GPUs/Exercises.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs/Exercises.html",
+    "source_sha256": "4a24a1aec426cf85472323a56f1b7ddaff66a6ad55ab5e40364c49471f0d74be",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Exercises.pdf",
+    "pdf_sha256": "a6bacd2227ddb0cc0b97d58da9cb571ed46876a2d8c320fef4a13205fac504a0",
+    "units": 9,
+    "translated": 9,
+    "canonical_translation_sha256": "d1a2bb6153ff8a495f43da1e18da3fbdc8b3b2a05289928de4766912858e3986"
+  },
+  "15-reading": {
+    "path": "Wavefront_Rendering_on_GPUs/Further_Reading.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs/Further_Reading.html",
+    "source_sha256": "3fec0d40867924bf879f56e063e01b8c3de3843fc36f1b3be769608e694f3ebe",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Further_Reading.pdf",
+    "pdf_sha256": "5ac6cf865b575dd8521ac6288f412ba8cd29c7798e83af4a6db2c3365285fac9",
+    "units": 61,
+    "translated": 17,
+    "canonical_translation_sha256": "afe84fca3282bfcab91c87bdf868d913953460c38a7490d680c08029ec244c66"
+  },
+  "15-02": {
+    "path": "Wavefront_Rendering_on_GPUs/Implementation_Foundations.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs/Implementation_Foundations.html",
+    "source_sha256": "24a95cd4334ac8576eaf917548acfbd13e5c7f830cf3dabe7bd23949f6c40a07",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Implementation_Foundations.pdf",
+    "pdf_sha256": "ee1b388d8699cceae1aac22df720236a33266ee87e9d14822efa3d3bb868c6e8",
+    "units": 66,
+    "translated": 66,
+    "canonical_translation_sha256": "85a0db670a4bd5c812ae646803f36e74167ac8b8919c1245cc8a7eac304daa5f"
+  },
+  "15-01": {
+    "path": "Wavefront_Rendering_on_GPUs/Mapping_Path_Tracing_to_the_GPU.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs/Mapping_Path_Tracing_to_the_GPU.html",
+    "source_sha256": "337122b4d6a8f762f52b88796ceab20b82a69e9f3a2f798a78ee7a00c5dd9805",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Mapping_Path_Tracing_to_the_GPU.pdf",
+    "pdf_sha256": "52b47ba28c57bbb8f0f9eb4a61249658421cf32e05f9a634c998a8c82810941d",
+    "units": 65,
+    "translated": 65,
+    "canonical_translation_sha256": "4628defe58c602b76f71480bea2b0909d4f7becea6167a203c4e23b03bb9bf47"
+  },
+  "15-03": {
+    "path": "Wavefront_Rendering_on_GPUs/Path_Tracer_Implementation.html",
+    "archive_html": "html/Wavefront_Rendering_on_GPUs/Path_Tracer_Implementation.html",
+    "source_sha256": "beafeae14002c04d3e4f107d886a6a1bd3aa72fd23973c27276e6f34b085f20a",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Path_Tracer_Implementation.pdf",
+    "pdf_sha256": "82e1d6827248d6148ea77a172cea857b5093a70616d18ee5532612881eeedb2f",
+    "units": 193,
+    "translated": 193,
+    "canonical_translation_sha256": "9c063fc2c62d807cea2c32ec08faf9a4930536854a4a043229b7d3a9df43bc3b"
+  }
+}

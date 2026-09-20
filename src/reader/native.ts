@@ -135,7 +135,7 @@ export async function attachNativeTranslations(library: Library, signal?: AbortS
     const entry=library.get('pbrt-4ed'); if(!entry)return {loaded:0};
     const base=new URL('books/pbrt-4ed/native/', document.baseURI);
     const response=await fetcher(new URL('catalog.json',base),{signal,cache:'no-cache'});
-    if(response.status===404)return {loaded:0,warning:'9~11장 번역 본문 파일이 아직 연결되지 않았습니다. 프로젝트의 원문 가져오기 명령을 한 번 실행해 주세요.'};
+    if(response.status===404)return {loaded:0,warning:'번역 본문 파일이 아직 연결되지 않았습니다. 통합 패키지의 public 폴더가 함께 있는지 확인해 주세요.'};
     if(!response.ok)throw new Error(`번역 목록을 읽지 못했습니다 (HTTP ${response.status}).`);
     const text=await response.text();if(text.length>6_000_000)throw new Error('번역 목록이 너무 큽니다.');
     const data:unknown=JSON.parse(text);

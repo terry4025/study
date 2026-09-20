@@ -1,0 +1,62 @@
+{
+  "14-00": {
+    "path": "Light_Transport_II_Volume_Rendering.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering.html",
+    "source_sha256": "8efc330c18a4bc3d32373bb03c60e9f72bffdcca101aa12659054d74deb5a47e",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Light_Transport_II_Volume_Rendering.pdf",
+    "pdf_sha256": "22981a5b9a56b1f4b54dbd91554fdff4131bec99a1977c077cb5194025dca8e3",
+    "units": 4,
+    "translated": 4,
+    "canonical_translation_sha256": "248666b5cf638b0f09aa821efa3869cbdc4b9cdb1f5cad7157ccbc7cd8d0ed5d"
+  },
+  "14-exercises": {
+    "path": "Light_Transport_II_Volume_Rendering/Exercises.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering/Exercises.html",
+    "source_sha256": "1dcedf51660152d9aba208c375dbe63dae21537d727846317908c34256126fc7",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Exercises.pdf",
+    "pdf_sha256": "b7ddba386963bac7f4bbe21a2099799a87979a835c4fe6dc32ad3f8230034fb7",
+    "units": 9,
+    "translated": 9,
+    "canonical_translation_sha256": "e03cb1856b302627c16d4324e5a89fb6c1fd23a7a035dde181f9dddf44b103f2"
+  },
+  "14-reading": {
+    "path": "Light_Transport_II_Volume_Rendering/Further_Reading.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering/Further_Reading.html",
+    "source_sha256": "1ae52c44f637220b6cfcaeb4d162cd6a09bd19b9771c519c10d1bd83e9cd7a77",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Further_Reading.pdf",
+    "pdf_sha256": "66bc1063435cac401faf76a3da1af9f32da2967d47d398f522181de045ea9f3e",
+    "units": 152,
+    "translated": 39,
+    "canonical_translation_sha256": "c2c37c208142ff3c6ff895299b2937b3dea5c271a48dc84913c54dab76d9dc3b"
+  },
+  "14-03": {
+    "path": "Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.html",
+    "source_sha256": "e2cdf026c086f7b37a615014b9765ffc43af9e589457ada3cc10f76defa716e2",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "units": 98,
+    "translated": 98,
+    "canonical_translation_sha256": "00f705b22ee4ce6d5f434675c4d3052f0b40226b08d8910a6221efa030772489"
+  },
+  "14-01": {
+    "path": "Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.html",
+    "source_sha256": "5d65d209889cf8d493cae801bc8235cee5308606537a76404dc5bdaec7f436d2",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "units": 109,
+    "translated": 109,
+    "canonical_translation_sha256": "c6dd91b94513c26f8b6312c7bf4984cf231a27353f8cfcaacf77c6da2e8646a3"
+  },
+  "14-02": {
+    "path": "Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.html",
+    "archive_html": "html/Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.html",
+    "source_sha256": "564353cd5e4a2209e8edef6afb73fc03cf50900ad9a0e7ff8337932b8338cbc9",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "units": 136,
+    "translated": 136,
+    "canonical_translation_sha256": "d7cb90276c46d4266ac47065b9d882e3bdf16ecc1c2e5ce868c4e1a862b78c2e"
+  }
+}

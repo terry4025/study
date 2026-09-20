@@ -1,0 +1,72 @@
+{
+  "16-00": {
+    "path": "Retrospective_and_the_Future.html",
+    "archive_html": "html/Retrospective_and_the_Future.html",
+    "source_sha256": "4eee619559b291c330f98872e8f6b5b8ca1da724bb22a00483751169ef9c9869",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Retrospective_and_the_Future.pdf",
+    "pdf_sha256": "bdcad04427e9fd494b9dbdcaa4a5a00c3e7aed7582d752196ec264ccc4fc9693",
+    "units": 2,
+    "translated": 2,
+    "canonical_translation_sha256": "57a8ada328e27281648a4beee25f6c7a26d9339956b9a927241027fa727e84ca"
+  },
+  "16-05": {
+    "path": "Retrospective_and_the_Future/Conclusion.html",
+    "archive_html": "html/Retrospective_and_the_Future/Conclusion.html",
+    "source_sha256": "4845f194ce0e2b770738f1e0d2ba19a4c98239744007d4487de61eb9fba02f2c",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Conclusion.pdf",
+    "pdf_sha256": "5da31814ea65c9b026c01085737920d541b81ea7499fef692fd2117e5172a4ee",
+    "units": 5,
+    "translated": 5,
+    "canonical_translation_sha256": "ea8a37315f1012dc47a98df1714f9e11dada967d65f7746b381719f1691ed06b"
+  },
+  "16-02": {
+    "path": "Retrospective_and_the_Future/Design_Alternatives.html",
+    "archive_html": "html/Retrospective_and_the_Future/Design_Alternatives.html",
+    "source_sha256": "ca7108af98658309e606cc280ce13772a97a194ece85d74e455c89a22ac0de0b",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Design_Alternatives.pdf",
+    "pdf_sha256": "084918037ee24eb2eea88052703477d7f97506950980d8cb0542b32e787f3929",
+    "units": 38,
+    "translated": 38,
+    "canonical_translation_sha256": "294a8313f3dcbb1c357dea831384d619a42546093f27e53c652738a55d119f6d"
+  },
+  "16-03": {
+    "path": "Retrospective_and_the_Future/Emerging_Topics.html",
+    "archive_html": "html/Retrospective_and_the_Future/Emerging_Topics.html",
+    "source_sha256": "25ec735ef4191e7aba8588f863a0b0e4f1f24423bef2f891069c28ff2baf410f",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Emerging_Topics.pdf",
+    "pdf_sha256": "0a5102397bba38313cea26d74235a0b8d172df1ca0b7edd5d8488ad2d664cc72",
+    "units": 54,
+    "translated": 54,
+    "canonical_translation_sha256": "74a5553b7307e7baa336454389fe65872198157f52294072e52074f2d861c2d1"
+  },
+  "16-reading": {
+    "path": "Retrospective_and_the_Future/Further_Reading.html",
+    "archive_html": "html/Retrospective_and_the_Future/Further_Reading.html",
+    "source_sha256": "8fa1ca8c31ccdcf271a1901b24082ddacff00bf788de94d38eee193e13bf0a07",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Further_Reading.pdf",
+    "pdf_sha256": "4b37825da092e52555eda325c36d1024ae9fb66ccfac0ee36eecc9e187ac2ade",
+    "units": 116,
+    "translated": 2,
+    "canonical_translation_sha256": "c69325bb5ffe4add3b530330c89c938eed24cfed81bdb2ca9fd9fe119dc2d0cb"
+  },
+  "16-01": {
+    "path": "Retrospective_and_the_Future/pbrt_over_the_Years.html",
+    "archive_html": "html/Retrospective_and_the_Future/pbrt_over_the_Years.html",
+    "source_sha256": "a524d1e1effae8a569356b19b317a90494b1473607eec008ee8d62799f54754b",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/pbrt_over_the_Years.pdf",
+    "pdf_sha256": "d4fa7c1facfb1f922ac8bba2d14ccf1160bb8110009b0fd953bbaf1443d0256a",
+    "units": 9,
+    "translated": 9,
+    "canonical_translation_sha256": "2e120dd89b0f4f3f05c29fd263eae1b43fcb692440af13ce0c1c9c9e7a941005"
+  },
+  "16-04": {
+    "path": "Retrospective_and_the_Future/The_Future.html",
+    "archive_html": "html/Retrospective_and_the_Future/The_Future.html",
+    "source_sha256": "fbef0cb615e9bca207e244abeb4c2f172cc4b77c148d4a0160c46fe88eb49a3e",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/The_Future.pdf",
+    "pdf_sha256": "e14dbe9ea4922b55d2ff70e824907fca12c90f9d4d925832d6e03e307166e457",
+    "units": 3,
+    "translated": 3,
+    "canonical_translation_sha256": "61a70bc484f04ccd3cfb87ecf52bc6689227a9004fb66474cf98846dcfab60cf"
+  }
+}

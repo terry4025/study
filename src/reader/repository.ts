@@ -48,17 +48,16 @@ function triangleCorrection(): Lesson {
     return { id, chapter: '6', chapterTitle: '형상과 교차 검사', title: '삼각 메시 · 정정 해설', deck: '공유 모서리와 수치 안정성부터 다시 이해합니다.', kind: 'correction', minutes: 10, goals: ['원문의 핵심 구현과 관련 알고리즘 구분', '무게중심 좌표의 의미 이해'], prerequisites: ['math-05', 'math-08'], blocks, references: [{ title: 'PBRT 4판 · Triangle Meshes 원문', url: 'https://pbr-book.org/4ed/Shapes/Triangle_Meshes', role: 'further-reading' }], notice: '이 화면은 발견된 알고리즘 불일치를 바로잡는 독자 해설입니다. 기존 번역 파일은 삭제하거나 덮어쓰지 않았습니다.' };
 }
 export function adaptLegacy(id: string, source: SectionContent): Lesson {
-    if (id === 'ch06-05')
-        return triangleCorrection();
+
     const blocks: Block[] = source.blocks.map((block, index) => {
         const key = ('id' in block && block.id) || `${id}-b${index + 1}`;
-        const text = (s: string) => revisedText(id, s);
+        const text = (s: string) => source.audit ? cleanText(s) : revisedText(id, s);
         switch (block.type) {
             case 'paragraph': return { type: 'paragraph', id: key, text: text(block.textKo), english: cleanText(block.textEn) };
             case 'subheading': return { type: 'heading', id: key, text: text(block.titleKo), level: block.level };
             case 'equation': return { type: 'equation', id: key, tex: block.tex, explanation: block.explanationKo ? text(block.explanationKo) : undefined };
-            case 'code': return { type: 'code', id: key, code: block.code, language: block.language, title: block.chunkName, explanation: block.explanationKo ? text(block.explanationKo) : undefined, provenance: 'legacy-unverified' };
-            case 'figure': return { type: 'figure', id: key, src: block.src, title: block.titleKo, caption: text(block.captionKo), verified: false };
+            case 'code': return { type: 'code', id: key, code: block.code, language: block.language, title: block.chunkName, explanation: block.explanationKo ? text(block.explanationKo) : undefined, provenance: block.provenance || 'legacy-unverified' };
+            case 'figure': return { type: 'figure', id: key, src: block.src, title: block.titleKo, caption: text(block.captionKo), verified: block.reviewed === true, originalCaption: block.captionEn, width: block.width, height: block.height };
             case 'concept-tip': return { type: 'aside', id: key, title: text(block.title.replace(/[💡🔬🎯📊]/gu, '')), text: [block.summary, ...block.points.map(p => `**${p.title}**\n\n${p.content}`)].map(text).join('\n\n') };
             default: return { type: 'unknown', id: key, label: String((block as {
                     type?: string;
@@ -70,7 +69,7 @@ export function adaptLegacy(id: string, source: SectionContent): Lesson {
         goals = goals.map(x => x.includes('차원의 저주') ? '독립 표본과 유한 분산을 전제로 몬테카를로 표준오차는 표본 수의 제곱근에 반비례합니다. 수렴 지수가 차원에 직접 의존하지 않아도 분산과 계산 비용은 달라질 수 있습니다.' : x);
     if (id === 'ch08-01')
         goals = goals.map(x => x.includes('청색 잡음') ? '날카로운 경계의 고주파 성분은 앨리어싱을 유발합니다. 무작위 표본과 청색 잡음 표본은 같지 않으며 적절한 필터와 표본 배치를 함께 고려합니다.' : x);
-    return { id, chapter: source.chapterNumber, chapterTitle: chapterNames[source.chapterNumber] || tidy(source.chapterTitleKo), title: tidy(source.sectionTitleKo), deck: `${source.sectionNumber} · 보존한 한국어 학습 노트`, kind: 'legacy', minutes: Math.max(5, Math.ceil(JSON.stringify(source.blocks).length / 1900)), goals, prerequisites: [], blocks, references: [{ title: '출처에서 실제 원문 읽기', url: source.originalUrl, role: 'further-reading' }], notice: notices[id] || '기존 한국어 학습 노트를 보존했습니다. 전체 원문 대조가 완료된 자료는 아니며, 영어 필드·코드·그림 캡션의 원문 일치 여부는 별도 검수가 필요합니다.' };
+    return { id, chapter: source.chapterNumber, chapterTitle: chapterNames[source.chapterNumber] || tidy(source.chapterTitleKo), title: tidy(source.sectionTitleKo), deck: `${source.sectionNumber} · 보존한 한국어 학습 노트`, kind: 'legacy', minutes: Math.max(5, Math.ceil(JSON.stringify(source.blocks).length / 1900)), goals, prerequisites: [], blocks, references: [{ title: '출처에서 실제 원문 읽기', url: source.originalUrl, role: 'further-reading' }], notice: source.audit?.notice || notices[id] || '기존 한국어 학습 노트를 보존했습니다. 전체 원문 대조가 완료된 자료는 아니며, 영어 필드·코드·그림 캡션의 원문 일치 여부는 별도 검수가 필요합니다.' };
 }
 export class Repository {
     readonly originals: Map<string, Lesson>;
