@@ -46,7 +46,7 @@ jobs:
           if-no-files-found: ignore
       - name: Archive tracked review inputs only
         if: always()
-        run: git archive --format=zip --output=native-review-source.zip HEAD src tools translations package.json package-lock.json vite.config.ts tsconfig.json index.html .github/workflows
+        run: git archive --format=zip --output=native-review-source.zip HEAD src tools translations docs package.json package-lock.json vite.config.ts tsconfig.json index.html .github/workflows
       - uses: actions/upload-artifact@v5
         if: always()
         with:
