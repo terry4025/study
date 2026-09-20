@@ -1,0 +1,58 @@
+name: PBRT completion snapshot
+on:
+  push:
+    branches: ['finish/pbrt-complete-source-20260920']
+    paths:
+      - '.github/workflows/pbrt-completion-snapshot.yml'
+      - 'tools/pbrt/completion-checkpoint.txt'
+permissions:
+  contents: write
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: finish/pbrt-complete-source-20260920
+      - name: Repair one reviewed serialization typo
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path('translations/pbrt/ch01/01-03.ko.json')
+          text=p.read_text(encoding='utf8')
+          bad='\",\"+\n\"\n '
+          if bad in text:
+              if text.count(bad)!=1:
+                  raise SystemExit('Unexpected serialization state')
+              text=text.replace(bad,'\",\n ',1)
+              json.loads(text)
+              p.write_text(text,encoding='utf8')
+          else:
+              json.loads(text)
+          PY
+      - name: Preserve the reviewed repair on the working branch
+        run: |
+          if ! git diff --quiet -- translations/pbrt/ch01/01-03.ko.json; then
+            git config user.name 'pbrt-completion-check'
+            git config user.email 'pbrt-completion-check@users.noreply.github.com'
+            git add -- translations/pbrt/ch01/01-03.ko.json
+            git commit -m 'fix(pbrt): remove accidental serialization delimiter in chapter 1'
+            git push origin HEAD:finish/pbrt-complete-source-20260920
+          fi
+      - name: Validate source data JSON and archive tracked inputs
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for p in Path('translations/pbrt').rglob('*.ko.json'):
+              d=json.loads(p.read_text(encoding='utf8'))
+              assert isinstance(d.get('translations'),dict),str(p)
+          PY
+          git archive --format=zip --output=completion-source.zip HEAD translations tools src docs package.json package-lock.json tsconfig.json vite.config.ts index.html
+      - uses: actions/upload-artifact@v5
+        with:
+          name: pbrt-completion-source
+          path: completion-source.zip
+          retention-days: 7
