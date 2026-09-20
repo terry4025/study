@@ -1,0 +1,28 @@
+name: PBRT completion source snapshot
+on:
+  pull_request:
+    paths:
+      - 'translations/pbrt/**'
+      - 'tools/pbrt/**'
+      - '.github/workflows/pbrt-completion-snapshot.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pbrt-completion-snapshot-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  source-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Archive versioned study source only
+        run: |
+          git archive --format=zip --output=study-completion-source.zip HEAD translations tools src docs package.json package-lock.json tsconfig.json index.html
+      - uses: actions/upload-artifact@v5
+        with:
+          name: study-completion-source
+          path: study-completion-source.zip
+          retention-days: 7
+          if-no-files-found: error

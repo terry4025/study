@@ -1,0 +1,24 @@
+name: Apply reviewed PBRT serialization corrections
+on:
+  push:
+    branches: ['feat/pbrt-complete-source-20260920']
+    paths: ['.github/workflows/pbrt-reviewed-typo-fix.yml']
+permissions:
+  contents: write
+jobs:
+  exact-corrections:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Apply reviewed literal corrections and verify JSON
+        run: python3 tools/pbrt/fix_completion_typos.py
+      - name: Commit only corrected translation files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add translations/pbrt/ch08/08-07.ko.json translations/pbrt/chA/A-05.ko.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix(pbrt): correct JSON newline and multidimensional heading'
+            git push origin HEAD:refs/heads/feat/pbrt-complete-source-20260920
+          fi
