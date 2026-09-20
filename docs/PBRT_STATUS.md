@@ -30,3 +30,15 @@ They are preserved as draft data and are **not** presented as completing all of 
 - User-machine Windows browser validation of every page.
 
 See `docs/PBRT_FINAL_REVIEW.md` and `docs/pbrt-audit/` for the detailed audit scope.
+
+
+## Rebuild reviewed figures for chapters 1–8
+
+The first-pass audited notes reference 228 reviewed figure crops under `public/books/pbrt-4ed/reviewed-images/`. These generated binary images are not duplicated in Git. Rebuild them from the user-supplied PBRT source ZIP:
+
+```powershell
+py -m pip install -r tools/pbrt/requirements-native.txt
+py tools/pbrt/build_reviewed_images.py "C:\path\to\pbrt-source.zip"
+```
+
+The builder checks each source PDF SHA-256 against `docs/pbrt-audit/figure-provenance.json` and refuses a different source snapshot. Use `--replace` only when you intentionally want a backup-and-replace rebuild.
