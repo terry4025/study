@@ -1,0 +1,465 @@
+[
+  {
+    "chapter": 14,
+    "number": 1,
+    "image": "figure-14-1.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          647.4992065429688,
+          547.679931640625,
+          775.9900512695312
+        ]
+      }
+    ],
+    "captionPage": 1
+  },
+  {
+    "chapter": 14,
+    "number": 2,
+    "image": "figure-14-2.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          248.22198486328125,
+          547.679931640625,
+          355.4747314453125
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 14,
+    "number": 3,
+    "image": "figure-14-3.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "parts": [
+      {
+        "page": 4,
+        "rect": [
+          49.11433410644531,
+          593.872802734375,
+          547.679931640625,
+          725.54931640625
+        ]
+      }
+    ],
+    "captionPage": 4
+  },
+  {
+    "chapter": 14,
+    "number": 4,
+    "image": "figure-14-4.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "parts": [
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          423.967529296875,
+          547.679931640625,
+          576.882568359375
+        ]
+      }
+    ],
+    "captionPage": 6
+  },
+  {
+    "chapter": 14,
+    "number": 5,
+    "image": "figure-14-5.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/The_Equation_of_Transfer.pdf",
+    "pdf_sha256": "647109def46e982b6ebcac15d179f164f975894852874319086d97ebb49e3c44",
+    "parts": [
+      {
+        "page": 11,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          321.49365234375
+        ]
+      }
+    ],
+    "captionPage": 11
+  },
+  {
+    "chapter": 14,
+    "number": 6,
+    "image": "figure-14-6.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          608.7396240234375
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 14,
+    "number": 7,
+    "image": "figure-14-7.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "parts": [
+      {
+        "page": 7,
+        "rect": [
+          49.11433410644531,
+          473.34619140625,
+          547.679931640625,
+          703.77978515625
+        ]
+      },
+      {
+        "page": 7,
+        "rect": [
+          49.11433410644531,
+          473.34619140625,
+          547.679931640625,
+          491.3984375
+        ]
+      }
+    ],
+    "captionPage": 7
+  },
+  {
+    "chapter": 14,
+    "number": 8,
+    "image": "figure-14-8.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "parts": [
+      {
+        "page": 8,
+        "rect": [
+          49.11433410644531,
+          335.29833984375,
+          547.679931640625,
+          432.462890625
+        ]
+      }
+    ],
+    "captionPage": 8
+  },
+  {
+    "chapter": 14,
+    "number": 9,
+    "image": "figure-14-9.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "parts": [
+      {
+        "page": 10,
+        "rect": [
+          49.11433410644531,
+          30.00048828125,
+          547.679931640625,
+          320.43212890625
+        ]
+      }
+    ],
+    "captionPage": 10
+  },
+  {
+    "chapter": 14,
+    "number": 10,
+    "image": "figure-14-10.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Volume_Scattering_Integrators.pdf",
+    "pdf_sha256": "496327256655222953d97234f96f1908049523d09562b1255ba1fa5529236d98",
+    "parts": [
+      {
+        "page": 11,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          624.13720703125
+        ]
+      }
+    ],
+    "captionPage": 11
+  },
+  {
+    "chapter": 14,
+    "number": 11,
+    "image": "figure-14-11.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          283.7958984375,
+          547.679931640625,
+          432.993896484375
+        ]
+      }
+    ],
+    "captionPage": 1
+  },
+  {
+    "chapter": 14,
+    "number": 12,
+    "image": "figure-14-12.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          174.95037841796875
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 14,
+    "number": 13,
+    "image": "figure-14-13.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          377.7747802734375,
+          547.679931640625,
+          456.3558349609375
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 14,
+    "number": 14,
+    "image": "figure-14-14.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 3,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          264.150634765625
+        ]
+      }
+    ],
+    "captionPage": 3
+  },
+  {
+    "chapter": 14,
+    "number": 15,
+    "image": "figure-14-15.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 4,
+        "rect": [
+          49.11433410644531,
+          133.535888671875,
+          547.679931640625,
+          356.536376953125
+        ]
+      }
+    ],
+    "captionPage": 4
+  },
+  {
+    "chapter": 14,
+    "number": 16,
+    "image": "figure-14-16.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 4,
+        "rect": [
+          49.11433410644531,
+          584.3154296875,
+          547.679931640625,
+          747.318359375
+        ]
+      }
+    ],
+    "captionPage": 4
+  },
+  {
+    "chapter": 14,
+    "number": 17,
+    "image": "figure-14-17.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 5,
+        "rect": [
+          49.11433410644531,
+          241.319580078125,
+          547.679931640625,
+          549.8037109375
+        ]
+      },
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          338.484130859375
+        ]
+      },
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          346.979248046875,
+          547.679931640625,
+          655.994384765625
+        ]
+      }
+    ],
+    "captionPage": 6
+  },
+  {
+    "chapter": 14,
+    "number": 18,
+    "image": "figure-14-18.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 7,
+        "rect": [
+          49.11433410644531,
+          430.86962890625,
+          547.679931640625,
+          603.4296875
+        ]
+      }
+    ],
+    "captionPage": 7
+  },
+  {
+    "chapter": 14,
+    "number": 19,
+    "image": "figure-14-19.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 10,
+        "rect": [
+          49.11433410644531,
+          30.00048828125,
+          547.679931640625,
+          155.3056640625
+        ]
+      }
+    ],
+    "captionPage": 10
+  },
+  {
+    "chapter": 14,
+    "number": 20,
+    "image": "figure-14-20.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 10,
+        "rect": [
+          49.11433410644531,
+          534.40625,
+          547.679931640625,
+          684.66650390625
+        ]
+      }
+    ],
+    "captionPage": 10
+  },
+  {
+    "chapter": 14,
+    "number": 21,
+    "image": "figure-14-21.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 14,
+        "rect": [
+          49.11433410644531,
+          220.6123046875,
+          547.679931640625,
+          420.78125
+        ]
+      }
+    ],
+    "captionPage": 14
+  },
+  {
+    "chapter": 14,
+    "number": 22,
+    "image": "figure-14-22.png",
+    "archive_pdf": "pdf/14_Light_Transport_II_Volume_Rendering/Scattering_from_Layered_Materials.pdf",
+    "pdf_sha256": "12cd7a6638a1d655164ec085bca577eb7eb5577657a36f27b2026088cf1d268a",
+    "parts": [
+      {
+        "page": 18,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          338.4833984375
+        ]
+      },
+      {
+        "page": 18,
+        "rect": [
+          49.11433410644531,
+          346.978515625,
+          547.679931640625,
+          655.994140625
+        ]
+      },
+      {
+        "page": 19,
+        "rect": [
+          49.11433410644531,
+          30.0009765625,
+          547.679931640625,
+          338.484375
+        ]
+      }
+    ],
+    "captionPage": 19
+  }
+]

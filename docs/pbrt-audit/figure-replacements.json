@@ -1,0 +1,1530 @@
+[
+  {
+    "section": "ch01-02",
+    "oldId": "fig:pinhole-inverted",
+    "oldNumber": "Figure 1.2",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f02.svg",
+    "resolvedNumber": "1.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:pinhole-front",
+    "oldNumber": "Figure 1.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f03.svg",
+    "resolvedNumber": "1.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:inverse-square",
+    "oldNumber": "Figure 1.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f05.svg",
+    "resolvedNumber": "1.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:cosine-law",
+    "oldNumber": "Figure 1.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f06.svg",
+    "resolvedNumber": "1.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:brdf-concept",
+    "oldNumber": "Figure 1.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f08.svg",
+    "resolvedNumber": "1.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:whitted-spheres",
+    "oldNumber": "Figure 1.3",
+    "oldSrc": "/books/pbrt-4ed/images/spheres-whitted.png",
+    "resolvedNumber": "1.3",
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch01-02",
+    "oldId": "fig:subsurface-head",
+    "oldNumber": "Figure 1.10",
+    "oldSrc": "/books/pbrt-4ed/images/head-subsurface.png",
+    "resolvedNumber": "1.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:competition-snow",
+    "oldNumber": "Figure 1.13",
+    "oldSrc": "/books/pbrt-4ed/images/nightsnow.png",
+    "resolvedNumber": "1.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:ice-cave",
+    "oldNumber": "Figure 1.14",
+    "oldSrc": "/books/pbrt-4ed/images/icecave.png",
+    "resolvedNumber": "1.14",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:cotton-candy",
+    "oldNumber": "Figure 1.15",
+    "oldSrc": "/books/pbrt-4ed/images/cotton_candy.png",
+    "resolvedNumber": "1.15",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:imperial-crown",
+    "oldNumber": "Figure 1.16",
+    "oldSrc": "/books/pbrt-4ed/images/crown.png",
+    "resolvedNumber": "1.16",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:task-time-distribution",
+    "oldNumber": "Figure 1.17",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f17.svg",
+    "resolvedNumber": "1.17",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-03",
+    "oldId": "fig:main-render-loop-classes",
+    "oldNumber": "Figure 1.18",
+    "oldSrc": "/books/pbrt-4ed/images/pha01f18.svg",
+    "resolvedNumber": "1.18",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-06",
+    "oldId": "fig:gravity-shot",
+    "oldNumber": "Figure 1.21",
+    "oldSrc": "/books/pbrt-4ed/images/gravity.png",
+    "resolvedNumber": "1.21",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch01-06",
+    "oldId": "fig:alita-shot",
+    "oldNumber": "Figure 1.22",
+    "oldSrc": "/books/pbrt-4ed/images/alita.png",
+    "resolvedNumber": "1.22",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch02-02",
+    "oldId": "fig:bunny-stratified-comparison",
+    "oldNumber": "Figure 2.1",
+    "oldSrc": "/books/pbrt-4ed/images/bunny-stratified.png",
+    "resolvedNumber": "2.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch02-02",
+    "oldId": "fig:importance-sampling-gaussian",
+    "oldNumber": "Figure 2.2",
+    "oldSrc": "/books/pbrt-4ed/images/piecewise-gaussian-pdf.svg",
+    "resolvedNumber": "2.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch02-03",
+    "oldId": "fig:discrete-pdf-cdf",
+    "oldNumber": "Figure 2.3 & 2.4",
+    "oldSrc": "/books/pbrt-4ed/images/discrete-cdf.svg",
+    "resolvedNumber": "2.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch02-03",
+    "oldId": "fig:discrete-inversion",
+    "oldNumber": "Figure 2.5",
+    "oldSrc": "/books/pbrt-4ed/images/discrete-inversion.svg",
+    "resolvedNumber": "2.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-01",
+    "oldId": "fig-3-1",
+    "oldNumber": "Figure 3.1",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f01.svg",
+    "resolvedNumber": "3.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-01",
+    "oldId": "fig-3-2",
+    "oldNumber": "Figure 3.2",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f02.svg",
+    "resolvedNumber": "3.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-03",
+    "oldId": "fig-3-3",
+    "oldNumber": "Figure 3.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f03.svg",
+    "resolvedNumber": "3.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-03",
+    "oldId": "fig-3-4",
+    "oldNumber": "Figure 3.4",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f04.svg",
+    "resolvedNumber": "3.4",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-03",
+    "oldId": "fig-3-5",
+    "oldNumber": "Figure 3.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f05.svg",
+    "resolvedNumber": "3.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-03",
+    "oldId": "fig-3-6",
+    "oldNumber": "Figure 3.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f06.svg",
+    "resolvedNumber": "3.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-04",
+    "oldId": "fig-3-7",
+    "oldNumber": "Figure 3.7",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f07.svg",
+    "resolvedNumber": "3.7",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-06",
+    "oldId": "fig-3-8",
+    "oldNumber": "Figure 3.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f08.svg",
+    "resolvedNumber": "3.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-07",
+    "oldId": "fig:bbox-extent",
+    "oldNumber": "Figure 3.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f09.svg",
+    "resolvedNumber": "3.9",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-07",
+    "oldId": "fig:bbox-intersection",
+    "oldNumber": "Figure 3.10",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f10.svg",
+    "resolvedNumber": "3.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-07",
+    "oldId": "fig:bbox-union",
+    "oldNumber": "Figure 3.11",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f11.svg",
+    "resolvedNumber": "3.11",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-12",
+    "oldNumber": "Figure 3.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f12.svg",
+    "resolvedNumber": "3.12",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-13",
+    "oldNumber": "Figure 3.13",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f13.svg",
+    "resolvedNumber": "3.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-14",
+    "oldNumber": "Figure 3.14",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f14.svg",
+    "resolvedNumber": "3.14",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-15",
+    "oldNumber": "Figure 3.15",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f15.svg",
+    "resolvedNumber": "3.15",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-16",
+    "oldNumber": "Figure 3.16",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f16.svg",
+    "resolvedNumber": "3.16",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-08",
+    "oldId": "fig-3-17",
+    "oldNumber": "Figure 3.17",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f17.svg",
+    "resolvedNumber": "3.17",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-09",
+    "oldId": "fig-3-25",
+    "oldNumber": "Figure 3.25",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f25.svg",
+    "resolvedNumber": "3.25",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-09",
+    "oldId": "fig-3-26",
+    "oldNumber": "Figure 3.26",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f26.svg",
+    "resolvedNumber": "3.26",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-09",
+    "oldId": "fig-3-27",
+    "oldNumber": "Figure 3.27",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f27.svg",
+    "resolvedNumber": "3.27",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-09",
+    "oldId": "fig-3-28",
+    "oldNumber": "Figure 3.28",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f28.svg",
+    "resolvedNumber": "3.28",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-10",
+    "oldId": "fig-3-29",
+    "oldNumber": "Figure 3.29",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f29.svg",
+    "resolvedNumber": "3.29",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch03-11",
+    "oldId": "fig-3-30",
+    "oldNumber": "Figure 3.30",
+    "oldSrc": "/books/pbrt-4ed/images/pha03f31.svg",
+    "resolvedNumber": "3.30",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-01",
+    "oldId": "fig-4-1",
+    "oldNumber": "Figure 4.1",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f01.svg",
+    "resolvedNumber": "4.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-01",
+    "oldId": "fig-4-2",
+    "oldNumber": "Figure 4.2",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f02.svg",
+    "resolvedNumber": "4.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-01",
+    "oldId": "fig-4-3",
+    "oldNumber": "Figure 4.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f03.svg",
+    "resolvedNumber": "4.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-01",
+    "oldId": "fig-4-4",
+    "oldNumber": "Figure 4.4",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f04.svg",
+    "resolvedNumber": "4.4",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-02",
+    "oldId": "fig-4-5",
+    "oldNumber": "Figure 4.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f05.svg",
+    "resolvedNumber": "4.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-02",
+    "oldId": "fig-4-6",
+    "oldNumber": "Figure 4.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f06.svg",
+    "resolvedNumber": "4.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-02",
+    "oldId": "fig-4-7",
+    "oldNumber": "Figure 4.7",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f07.svg",
+    "resolvedNumber": "4.7",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-02",
+    "oldId": "fig-4-8",
+    "oldNumber": "Figure 4.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f08.svg",
+    "resolvedNumber": "4.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-02",
+    "oldId": "fig-4-9",
+    "oldNumber": "Figure 4.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f09.svg",
+    "resolvedNumber": "4.9",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-03",
+    "oldId": "fig-4-10",
+    "oldNumber": "Figure 4.10",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f10.svg",
+    "resolvedNumber": "4.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-03",
+    "oldId": "fig-4-11",
+    "oldNumber": "Figure 4.11",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f11.svg",
+    "resolvedNumber": "4.11",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-04",
+    "oldId": "fig-4-12",
+    "oldNumber": "Figure 4.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f12.svg",
+    "resolvedNumber": "4.12",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-04",
+    "oldId": "fig-4-13",
+    "oldNumber": "Figure 4.13",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f13.svg",
+    "resolvedNumber": "4.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-04",
+    "oldId": "fig-4-14",
+    "oldNumber": "Figure 4.14",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f14.svg",
+    "resolvedNumber": "4.14",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-04",
+    "oldId": "fig-4-15",
+    "oldNumber": "Figure 4.15",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f15.svg",
+    "resolvedNumber": "4.15",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-05",
+    "oldId": "fig-4-16",
+    "oldNumber": "Figure 4.16",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f16.svg",
+    "resolvedNumber": "4.16",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-05",
+    "oldId": "fig-piecewise-linear",
+    "oldNumber": "Figure (Linear)",
+    "oldSrc": "/books/pbrt-4ed/images/piecewise-linear-spectrum.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch04-05",
+    "oldId": "fig-4-17",
+    "oldNumber": "Figure 4.17",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f17.svg",
+    "resolvedNumber": "4.17",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-06",
+    "oldId": "fig-4-18",
+    "oldNumber": "Figure 4.18",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f18.svg",
+    "resolvedNumber": "4.18",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-06",
+    "oldId": "fig-4-19",
+    "oldNumber": "Figure 4.19",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f19.svg",
+    "resolvedNumber": "4.19",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-06",
+    "oldId": "fig-4-20",
+    "oldNumber": "Figure 4.20",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f20.svg",
+    "resolvedNumber": "4.20",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch04-06",
+    "oldId": "fig-4-21",
+    "oldNumber": "Figure 4.21",
+    "oldSrc": "/books/pbrt-4ed/images/pha04f21.svg",
+    "resolvedNumber": "4.21",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-01",
+    "oldId": "fig-sportscar-precision",
+    "oldNumber": "Figure 5.1",
+    "oldSrc": "/books/pbrt-4ed/images/sportscar-1m-world.png",
+    "resolvedNumber": "5.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-01",
+    "oldId": "fig-sportscar-cameraworld",
+    "oldNumber": "Figure 5.2",
+    "oldSrc": "/books/pbrt-4ed/images/sportscar-1m-cameraworld.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-screen-window",
+    "oldNumber": "Figure 5.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f02.svg",
+    "resolvedNumber": "5.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-ortho-diag",
+    "oldNumber": "Figure 5.4",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f03.svg",
+    "resolvedNumber": "5.4",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-kroken-ortho",
+    "oldNumber": "Figure 5.5 (a)",
+    "oldSrc": "/books/pbrt-4ed/images/kroken-ortho.png",
+    "resolvedNumber": "5.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-kroken-persp",
+    "oldNumber": "Figure 5.5 (b)",
+    "oldSrc": "/books/pbrt-4ed/images/kroken-perspective.png",
+    "resolvedNumber": "5.5",
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-persp-lines",
+    "oldNumber": "Figure 5.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f05.svg",
+    "resolvedNumber": "5.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-persp-matrix",
+    "oldNumber": "Figure 5.7",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f06.svg",
+    "resolvedNumber": "5.7",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-thin-lens-basics",
+    "oldNumber": "Figure 5.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f08.svg",
+    "resolvedNumber": "5.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-circle-of-confusion",
+    "oldNumber": "Figure 5.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f12.svg",
+    "resolvedNumber": "5.9",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-coc-graph",
+    "oldNumber": "Figure 5.10",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f13.svg",
+    "resolvedNumber": "5.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-watercolor-dof0",
+    "oldNumber": "Figure 5.11 (a)",
+    "oldSrc": "/books/pbrt-4ed/images/watercolor-dof-0.png",
+    "resolvedNumber": "5.11",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-watercolor-dof1",
+    "oldNumber": "Figure 5.11 (b)",
+    "oldSrc": "/books/pbrt-4ed/images/watercolor-dof-1.png",
+    "resolvedNumber": "5.11",
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-watercolor-dof28",
+    "oldNumber": "Figure 5.11 (c)",
+    "oldSrc": "/books/pbrt-4ed/images/watercolor-dof-2.8.png",
+    "resolvedNumber": "5.11",
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-thin-lens-raygen",
+    "oldNumber": "Figure 5.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f14.svg",
+    "resolvedNumber": "5.12",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-02",
+    "oldId": "fig-landscape-dof",
+    "oldNumber": "Figure 5.13",
+    "oldSrc": "/books/pbrt-4ed/images/landscape-dof.png",
+    "resolvedNumber": "5.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-03",
+    "oldId": "fig-sanmiguel-equirect",
+    "oldNumber": "Figure 5.14",
+    "oldSrc": "/books/pbrt-4ed/images/sanmiguel-equirectangular.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-03",
+    "oldId": "fig-sanmiguel-equalarea",
+    "oldNumber": "Figure 5.15",
+    "oldSrc": "/books/pbrt-4ed/images/sanmiguel-equalarea.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-sensor-curves",
+    "oldNumber": "Figure 5.16",
+    "oldSrc": "/books/pbrt-4ed/images/zero-day-sensor-canon_eos_5d.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-wavelength-sampling",
+    "oldNumber": "Figure 5.17",
+    "oldSrc": "/books/pbrt-4ed/images/lte-orb-wavelength-visible.png",
+    "resolvedNumber": "5.17",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-film-filter",
+    "oldNumber": "Figure 5.18",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f18.svg",
+    "resolvedNumber": "5.18",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-film-tiles",
+    "oldNumber": "Figure 5.19",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f21.svg",
+    "resolvedNumber": "5.19",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-float-precision",
+    "oldNumber": "Figure 5.20",
+    "oldSrc": "/books/pbrt-4ed/images/float-vs-double-reference.svg",
+    "resolvedNumber": "5.20",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-film-splat",
+    "oldNumber": "Figure 5.21",
+    "oldSrc": "/books/pbrt-4ed/images/pha05f23.svg",
+    "resolvedNumber": "5.21",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch05-04",
+    "oldId": "fig-white-balance",
+    "oldNumber": "Figure 5.22",
+    "oldSrc": "/books/pbrt-4ed/images/staircase-wb.png",
+    "resolvedNumber": "5.22",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-01",
+    "oldId": "fig-6-1",
+    "oldNumber": "Figure 6.1",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f01.svg",
+    "resolvedNumber": "6.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-01",
+    "oldId": "fig-6-2",
+    "oldNumber": "Figure 6.2",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f02.svg",
+    "resolvedNumber": "6.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-01",
+    "oldId": "fig-6-3",
+    "oldNumber": "Figure 6.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f03.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-6-5",
+    "oldNumber": "Figure 6.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f05.svg",
+    "resolvedNumber": "6.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-6-6",
+    "oldNumber": "Figure 6.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f06.svg",
+    "resolvedNumber": "6.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-6-7",
+    "oldNumber": "Figure 6.7",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f07.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-6-9",
+    "oldNumber": "Figure 6.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f09.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-6-12",
+    "oldNumber": "Figure 6.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f12.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-02",
+    "oldId": "fig-spheres-render",
+    "oldNumber": "Rendering spheres",
+    "oldSrc": "/books/pbrt-4ed/images/spheres.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-03",
+    "oldId": "fig-6-13",
+    "oldNumber": "Figure 6.13",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f13.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-03",
+    "oldId": "fig-6-14",
+    "oldNumber": "Figure 6.14",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f14.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-03",
+    "oldId": "fig-6-15",
+    "oldNumber": "Figure 6.15",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f15.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-03",
+    "oldId": "fig-cylinders-render",
+    "oldNumber": "Rendering cylinders",
+    "oldSrc": "/books/pbrt-4ed/images/cylinders.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-04",
+    "oldId": "fig-6-17",
+    "oldNumber": "Figure 6.17",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f17.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-04",
+    "oldId": "fig-6-18",
+    "oldNumber": "Figure 6.18",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f18.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-04",
+    "oldId": "fig-disks-render",
+    "oldNumber": "Rendering disks",
+    "oldSrc": "/books/pbrt-4ed/images/disks.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-19",
+    "oldNumber": "Figure 6.19",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f19.svg",
+    "resolvedNumber": "6.19",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-20",
+    "oldNumber": "Figure 6.20",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f20.svg",
+    "resolvedNumber": "6.20",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-21",
+    "oldNumber": "Figure 6.21",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f21.svg",
+    "resolvedNumber": "6.21",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-23",
+    "oldNumber": "Figure 6.23",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f23.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-24",
+    "oldNumber": "Figure 6.24",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f24.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-6-25",
+    "oldNumber": "Figure 6.25",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f25.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-05",
+    "oldId": "fig-tri-render",
+    "oldNumber": "Rendering tri",
+    "oldSrc": "/books/pbrt-4ed/images/tri-sample-image.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-06",
+    "oldId": "fig-6-27",
+    "oldNumber": "Figure 6.27",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f27.svg",
+    "resolvedNumber": "6.27",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-06",
+    "oldId": "fig-6-28",
+    "oldNumber": "Figure 6.28",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f28.svg",
+    "resolvedNumber": "6.28",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-06",
+    "oldId": "fig-6-29",
+    "oldNumber": "Figure 6.29",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f29.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-06",
+    "oldId": "fig-6-30",
+    "oldNumber": "Figure 6.30",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f30.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-06",
+    "oldId": "fig-blps-render",
+    "oldNumber": "Rendering blps",
+    "oldSrc": "/books/pbrt-4ed/images/blps.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-07",
+    "oldId": "fig-6-33",
+    "oldNumber": "Figure 6.33",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f33.svg",
+    "resolvedNumber": "6.33",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-07",
+    "oldId": "fig-6-34",
+    "oldNumber": "Figure 6.34",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f34.svg",
+    "resolvedNumber": "6.34",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-07",
+    "oldId": "fig-6-35",
+    "oldNumber": "Figure 6.35",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f35.svg",
+    "resolvedNumber": "6.35",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-07",
+    "oldId": "fig-curves-render",
+    "oldNumber": "Rendering curves",
+    "oldSrc": "/books/pbrt-4ed/images/threecurves.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-36",
+    "oldNumber": "Figure 6.36",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f36.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-37",
+    "oldNumber": "Figure 6.37",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f37.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-38",
+    "oldNumber": "Figure 6.38",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f38.svg",
+    "resolvedNumber": "6.38",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-39",
+    "oldNumber": "Figure 6.39",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f39.svg",
+    "resolvedNumber": "6.39",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-40",
+    "oldNumber": "Figure 6.40",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f40.svg",
+    "resolvedNumber": "6.40",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-41",
+    "oldNumber": "Figure 6.41",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f41.svg",
+    "resolvedNumber": "6.41",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-43",
+    "oldNumber": "Figure 6.43",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f43.svg",
+    "resolvedNumber": "6.43",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-44",
+    "oldNumber": "Figure 6.44",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f44.svg",
+    "resolvedNumber": "6.44",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-45",
+    "oldNumber": "Figure 6.45",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f45.svg",
+    "resolvedNumber": "6.45",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch06-08",
+    "oldId": "fig-6-46",
+    "oldNumber": "Figure 6.46",
+    "oldSrc": "/books/pbrt-4ed/images/pha06f46.svg",
+    "resolvedNumber": "6.46",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-01",
+    "oldId": "fig-7-1",
+    "oldNumber": "Figure 7.1",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f01.svg",
+    "resolvedNumber": "7.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-01",
+    "oldId": "fig-7-2",
+    "oldNumber": "Figure 7.2",
+    "oldSrc": "/books/pbrt-4ed/images/landscape-above.png",
+    "resolvedNumber": "7.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-03",
+    "oldNumber": "Figure 7.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f03.svg",
+    "resolvedNumber": "7.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-04",
+    "oldNumber": "Figure 7.4",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f04.svg",
+    "resolvedNumber": "7.4",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-05",
+    "oldNumber": "Figure 7.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f05.svg",
+    "resolvedNumber": "7.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-06",
+    "oldNumber": "Figure 7.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f06.svg",
+    "resolvedNumber": "7.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-07",
+    "oldNumber": "Figure 7.7",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f07.svg",
+    "resolvedNumber": "7.7",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-08",
+    "oldNumber": "Figure 7.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f08.svg",
+    "resolvedNumber": "7.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-09",
+    "oldNumber": "Figure 7.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f09.svg",
+    "resolvedNumber": "7.9",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-10",
+    "oldNumber": "Figure 7.10",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f10.svg",
+    "resolvedNumber": "7.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-11",
+    "oldNumber": "Figure 7.11",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f11.svg",
+    "resolvedNumber": "7.11",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-12",
+    "oldNumber": "Figure 7.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f12.svg",
+    "resolvedNumber": "7.12",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch07-03",
+    "oldId": "fig-07-13",
+    "oldNumber": "Figure 7.13",
+    "oldSrc": "/books/pbrt-4ed/images/pha07f13.svg",
+    "resolvedNumber": "7.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-01",
+    "oldNumber": "Figure 8.1",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f01.svg",
+    "resolvedNumber": "8.1",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-02",
+    "oldNumber": "Figure 8.2",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f02.svg",
+    "resolvedNumber": "8.2",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-03",
+    "oldNumber": "Figure 8.3",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f03.svg",
+    "resolvedNumber": "8.3",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-04",
+    "oldNumber": "Figure 8.4",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f04.svg",
+    "resolvedNumber": "8.4",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-05",
+    "oldNumber": "Figure 8.5",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f05.svg",
+    "resolvedNumber": "8.5",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-06",
+    "oldNumber": "Figure 8.6",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f06.svg",
+    "resolvedNumber": "8.6",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-07",
+    "oldNumber": "Figure 7.7 in Ch8",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f07.svg",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-08",
+    "oldNumber": "Figure 8.8",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f08.svg",
+    "resolvedNumber": "8.8",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-09",
+    "oldNumber": "Figure 8.9",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f09.svg",
+    "resolvedNumber": "8.9",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-10",
+    "oldNumber": "Figure 8.10",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f10.svg",
+    "resolvedNumber": "8.10",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-11",
+    "oldNumber": "Figure 8.11",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f11.svg",
+    "resolvedNumber": "8.11",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-12",
+    "oldNumber": "Figure 8.12",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f12.svg",
+    "resolvedNumber": "8.12",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-13",
+    "oldNumber": "Figure 8.13",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f13.svg",
+    "resolvedNumber": "8.13",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-14",
+    "oldNumber": "Figure 8.14",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f14.svg",
+    "resolvedNumber": "8.14",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-white-noise",
+    "oldNumber": "Figure 8.15a",
+    "oldSrc": "/books/pbrt-4ed/images/white-noise.png",
+    "resolvedNumber": "8.15",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-01",
+    "oldId": "fig-08-blue-noise",
+    "oldNumber": "Figure 8.15b",
+    "oldSrc": "/books/pbrt-4ed/images/blue-noise.png",
+    "resolvedNumber": "8.15",
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch08-02",
+    "oldId": "fig-08-16",
+    "oldNumber": "Figure 8.16",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f16.svg",
+    "resolvedNumber": "8.16",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-02",
+    "oldId": "fig-08-17",
+    "oldNumber": "Figure 8.17",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f17.svg",
+    "resolvedNumber": "8.17",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-02",
+    "oldId": "fig-08-18",
+    "oldNumber": "Figure 8.18",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f18.svg",
+    "resolvedNumber": "8.18",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-02",
+    "oldId": "fig-08-19",
+    "oldNumber": "Figure 8.19",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f19.svg",
+    "resolvedNumber": "8.19",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-03",
+    "oldId": "fig-08-21",
+    "oldNumber": "Figure 8.21",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f21.svg",
+    "resolvedNumber": "8.21",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-05",
+    "oldId": "fig-08-22",
+    "oldNumber": "Figure 8.22",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f22.svg",
+    "resolvedNumber": "8.22",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-05",
+    "oldId": "fig-08-24",
+    "oldNumber": "Figure 8.24",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f24.svg",
+    "resolvedNumber": "8.24",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-05",
+    "oldId": "fig-08-26",
+    "oldNumber": "Figure 8.26",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f26.svg",
+    "resolvedNumber": "8.26",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-27",
+    "oldNumber": "Figure 8.27",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f27.svg",
+    "resolvedNumber": "8.27",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-28",
+    "oldNumber": "Figure 8.28",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f28.svg",
+    "resolvedNumber": "8.28",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-29",
+    "oldNumber": "Figure 8.29",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f29.svg",
+    "resolvedNumber": "8.29",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-30",
+    "oldNumber": "Figure 8.30",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f30.svg",
+    "resolvedNumber": "8.30",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-31",
+    "oldNumber": "Figure 8.31",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f31.svg",
+    "resolvedNumber": "8.31",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-dragon-mse",
+    "oldNumber": "Figure 8.32",
+    "oldSrc": "/books/pbrt-4ed/images/mse-dragon-halton.svg",
+    "resolvedNumber": "8.32",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-06",
+    "oldId": "fig-08-dragon-render",
+    "oldNumber": "Figure 8.33",
+    "oldSrc": "/books/pbrt-4ed/images/samplers-dragon-figure.png",
+    "resolvedNumber": "8.33",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-34",
+    "oldNumber": "Figure 8.34",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f34.svg",
+    "resolvedNumber": "8.34",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-35",
+    "oldNumber": "Figure 8.35",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f35.svg",
+    "resolvedNumber": "8.35",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-36",
+    "oldNumber": "Figure 8.36",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f36.svg",
+    "resolvedNumber": "8.36",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-39",
+    "oldNumber": "Figure 8.39",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f39.svg",
+    "resolvedNumber": "8.39",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-40",
+    "oldNumber": "Figure 8.40",
+    "oldSrc": "/books/pbrt-4ed/images/killeroo-sobol-checkerboard.png",
+    "resolvedNumber": "8.40",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-46",
+    "oldNumber": "Figure 8.46",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f46.png",
+    "resolvedNumber": "8.46",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-47",
+    "oldNumber": "Figure 8.47",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f47.png",
+    "resolvedNumber": "8.47",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-07",
+    "oldId": "fig-08-dragon-zsobol",
+    "oldNumber": "Figure 8.48",
+    "oldSrc": "/books/pbrt-4ed/images/samplers-dragon-zsobol-nopermute.png",
+    "resolvedNumber": null,
+    "action": "retired-invalid-or-duplicate"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-49",
+    "oldNumber": "Figure 8.49",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f49.svg",
+    "resolvedNumber": "8.49",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-50",
+    "oldNumber": "Figure 8.50",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f50.svg",
+    "resolvedNumber": "8.50",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-51",
+    "oldNumber": "Figure 8.51",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f51.svg",
+    "resolvedNumber": "8.51",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-52",
+    "oldNumber": "Figure 8.52",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f52.svg",
+    "resolvedNumber": "8.52",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-53",
+    "oldNumber": "Figure 8.53",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f53.svg",
+    "resolvedNumber": "8.53",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-54",
+    "oldNumber": "Figure 8.54",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f54.svg",
+    "resolvedNumber": "8.54",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-55",
+    "oldNumber": "Figure 8.55",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f55.svg",
+    "resolvedNumber": "8.55",
+    "action": "replaced-source-image-and-caption"
+  },
+  {
+    "section": "ch08-08",
+    "oldId": "fig-08-56",
+    "oldNumber": "Figure 8.56",
+    "oldSrc": "/books/pbrt-4ed/images/pha08f56.svg",
+    "resolvedNumber": "8.56",
+    "action": "replaced-source-image-and-caption"
+  }
+]

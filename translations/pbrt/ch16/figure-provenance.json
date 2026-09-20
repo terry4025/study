@@ -1,0 +1,58 @@
+[
+  {
+    "chapter": 16,
+    "number": 1,
+    "image": "figure-16-1.png",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/pbrt_over_the_Years.pdf",
+    "pdf_sha256": "d4fa7c1facfb1f922ac8bba2d14ccf1160bb8110009b0fd953bbaf1443d0256a",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          459.0106506347656,
+          547.679931640625,
+          749.9733276367188
+        ]
+      },
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          459.0106506347656,
+          547.679931640625,
+          477.0630798339844
+        ]
+      }
+    ],
+    "captionPage": 1
+  },
+  {
+    "chapter": 16,
+    "number": 2,
+    "image": "figure-16-2.png",
+    "archive_pdf": "pdf/16_Retrospective_and_the_Future/Emerging_Topics.pdf",
+    "pdf_sha256": "0a5102397bba38313cea26d74235a0b8d172df1ca0b7edd5d8488ad2d664cc72",
+    "parts": [
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          75.131103515625,
+          547.679931640625,
+          752.097412109375
+        ]
+      },
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          75.131103515625,
+          547.679931640625,
+          93.18359375
+        ]
+      }
+    ],
+    "captionPage": 6
+  }
+]

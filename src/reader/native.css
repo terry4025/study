@@ -11,3 +11,7 @@
   font: inherit;
 }
 .native-rich .fragmentcode a .fragmentname { color: inherit; }
+
+.native-rich table.lang-ko{display:table;max-width:100%}.native-rich table.lang-en{display:none}.show-english .native-rich table.lang-en{display:table}.source-data-table{max-width:100%;overflow:auto}
+/* Native translations must honor the same font-size control as legacy prose. */
+.native-rich{font-size:var(--reader-size,18px);line-height:var(--reader-leading,1.9)}

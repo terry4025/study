@@ -1,0 +1,285 @@
+[
+  {
+    "chapter": 13,
+    "number": 1,
+    "image": "figure-13-1.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.pdf",
+    "pdf_sha256": "f4aa0f9f89cde21b659ed6a5a6b928de33d2ee6fbce3dca9cc9d718993356646",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          645.3754272460938,
+          547.679931640625,
+          781.8305053710938
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 13,
+    "number": 2,
+    "image": "figure-13-2.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.pdf",
+    "pdf_sha256": "f4aa0f9f89cde21b659ed6a5a6b928de33d2ee6fbce3dca9cc9d718993356646",
+    "parts": [
+      {
+        "page": 4,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          200.966796875
+        ]
+      }
+    ],
+    "captionPage": 4
+  },
+  {
+    "chapter": 13,
+    "number": 3,
+    "image": "figure-13-3.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.pdf",
+    "pdf_sha256": "f4aa0f9f89cde21b659ed6a5a6b928de33d2ee6fbce3dca9cc9d718993356646",
+    "parts": [
+      {
+        "page": 5,
+        "rect": [
+          49.11433410644531,
+          345.386474609375,
+          547.679931640625,
+          671.39208984375
+        ]
+      }
+    ],
+    "captionPage": 5
+  },
+  {
+    "chapter": 13,
+    "number": 4,
+    "image": "figure-13-4.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Path_Tracing.pdf",
+    "pdf_sha256": "5e252d36736ff237835554194283fe098ca613fa201242f5f0d07a1a5671d8a1",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          146.80982971191406,
+          547.679931640625,
+          665.5516357421875
+        ]
+      },
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          146.80982971191406,
+          547.679931640625,
+          165.39320373535156
+        ]
+      }
+    ],
+    "captionPage": 1
+  },
+  {
+    "chapter": 13,
+    "number": 5,
+    "image": "figure-13-5.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Path_Tracing.pdf",
+    "pdf_sha256": "5e252d36736ff237835554194283fe098ca613fa201242f5f0d07a1a5671d8a1",
+    "parts": [
+      {
+        "page": 3,
+        "rect": [
+          49.11433410644531,
+          113.3597412109375,
+          547.679931640625,
+          430.8701171875
+        ]
+      }
+    ],
+    "captionPage": 3
+  },
+  {
+    "chapter": 13,
+    "number": 6,
+    "image": "figure-13-6.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer.pdf",
+    "pdf_sha256": "88335567518a9c2f928de1792d85b5a46d9333d00f9367c0150a5b9e92997bc0",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          700.5946044921875
+        ]
+      },
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          48.05242919921875
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 13,
+    "number": 7,
+    "image": "figure-13-7.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          293.884033203125,
+          547.679931640625,
+          615.1110229492188
+        ]
+      },
+      {
+        "page": 1,
+        "rect": [
+          49.11433410644531,
+          293.884033203125,
+          547.679931640625,
+          312.4674072265625
+        ]
+      }
+    ],
+    "captionPage": 1
+  },
+  {
+    "chapter": 13,
+    "number": 8,
+    "image": "figure-13-8.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          369.8104248046875,
+          547.679931640625,
+          517.41552734375
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 13,
+    "number": 9,
+    "image": "figure-13-9.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 5,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          135.659912109375
+        ]
+      }
+    ],
+    "captionPage": 5
+  },
+  {
+    "chapter": 13,
+    "number": 10,
+    "image": "figure-13-10.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 6,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          247.159912109375
+        ]
+      }
+    ],
+    "captionPage": 6
+  },
+  {
+    "chapter": 13,
+    "number": 11,
+    "image": "figure-13-11.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 8,
+        "rect": [
+          49.11433410644531,
+          400.60546875,
+          547.679931640625,
+          757.40673828125
+        ]
+      }
+    ],
+    "captionPage": 8
+  },
+  {
+    "chapter": 13,
+    "number": 12,
+    "image": "figure-13-12.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 10,
+        "rect": [
+          49.11433410644531,
+          30.00048828125,
+          547.679931640625,
+          305.5654296875
+        ]
+      }
+    ],
+    "captionPage": 10
+  },
+  {
+    "chapter": 13,
+    "number": 13,
+    "image": "figure-13-13.png",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "parts": [
+      {
+        "page": 11,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          394.76513671875
+        ]
+      },
+      {
+        "page": 11,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          48.052734375
+        ]
+      }
+    ],
+    "captionPage": 11
+  }
+]

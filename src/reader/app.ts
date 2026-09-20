@@ -457,7 +457,7 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
             case 'code': {
                 container.classList.add('code-block');
                 const top = el('div', 'code-caption');
-                top.append(el('span', '', b.title), el('span', 'code-provenance', b.provenance === 'teaching' ? '독립 학습용 예제' : '기존 코드 · 원문 일치 미검수'));
+                top.append(el('span', '', b.title), el('span', 'code-provenance', b.provenance === 'source-excerpt' ? '첨부 원문 코드 조각' : b.provenance === 'teaching' ? '독립 학습용 예제' : '기존 코드 · 원문 일치 미검수'));
                 const copy = button('복사', () => { if (navigator.clipboard)
                     void navigator.clipboard.writeText(b.code).then(() => inform('코드를 복사했습니다.')).catch(() => inform('복사 권한이 없습니다. 코드를 선택해 복사하세요.'));
                 else
@@ -480,10 +480,10 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
                 image.alt = b.verified ? b.title : '보존된 그림 · 원문 매핑 미검수';
                 image.loading = 'lazy';
                 image.decoding = 'async';
-                image.width = 1000;
-                image.height = 600;
+                image.width = b.width || 1000;
+                image.height = b.height || 600;
                 image.addEventListener('error', () => { image.hidden = true; figure.prepend(el('p', 'figure-failure', '그림 파일을 불러오지 못했습니다. 원본 경로와 출처를 확인해 주세요.')); });
-                const zoom = button('그림 확대 ↗', () => { const { body } = modal('그림 확대', 'figure-dialog'); const img = image.cloneNode() as HTMLImageElement; img.loading = 'eager'; body.append(img, el('p', 'muted', '기존 그림의 번호·설명 일치는 아직 검수되지 않았습니다.')); }, 'text-button');
+                const zoom = button('그림 확대 ↗', () => { const { body } = modal('그림 확대', 'figure-dialog'); const img = image.cloneNode() as HTMLImageElement; img.loading = 'eager'; body.append(img, el('p', 'muted', b.verified ? '첨부 PDF의 그림과 대응한 핵심 설명입니다. 정적 화면만 포함합니다.' : '기존 그림의 번호·설명 일치는 아직 검수되지 않았습니다.')); }, 'text-button');
                 const caption = el('figcaption');
                 caption.append(el('span', 'kind-label', b.verified ? '그림' : '그림 연결 · 대조 필요'), zoom);
                 if (b.verified)
@@ -493,6 +493,7 @@ export function createReader(host: HTMLElement, catalog: Library, environment?: 
                     d.append(el('summary', '', '기존 캡션 확인 · 내용이 맞지 않을 수 있습니다'), prose(b.caption));
                     caption.append(d);
                 }
+                if (b.originalCaption) { const original=el('details','legacy-caption'); original.append(el('summary','','원문 캡션·크레딧 확인'),el('p','muted',b.originalCaption)); caption.append(original); }
                 figure.append(image, caption);
                 if(b.verified)container.append(figure);
                 else {const disclosure=el('details','unreviewed-figure');disclosure.append(el('summary','','보존된 그림 열기 · 번호와 내용 대조 필요'),el('p','muted','이 그림이 해당 문단에 맞는지는 검수되지 않았습니다. 정확한 대응은 수업 아래 원문에서 확인하세요.'),figure);container.append(disclosure);}

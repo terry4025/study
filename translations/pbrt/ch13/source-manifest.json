@@ -1,0 +1,72 @@
+{
+  "13-00": {
+    "path": "Light_Transport_I_Surface_Reflection.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection.html",
+    "source_sha256": "021a20fe7ec07adc87abd085a0b413754a2fa9e6ace67ba37e1678be41a7fd81",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Light_Transport_I_Surface_Reflection.pdf",
+    "pdf_sha256": "5ba5aae628c1fa603a0da88734ab71b6a9579931c5052656d8aed50131f82b58",
+    "units": 4,
+    "translated": 4,
+    "canonical_translation_sha256": "1164dfad2f99b0827a250914136f65c7ea9922d2864aba0b7d9ea465ac9dd947"
+  },
+  "13-04": {
+    "path": "Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.html",
+    "source_sha256": "ea63527420cc72ab59d32d13effc576b2061fc5a2f502e284d648dba8f889cf1",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Better_Path_Tracer.pdf",
+    "pdf_sha256": "28f35df0dbb2515a922f4418d00aafe0c8382aa26e2589d32c1e1b839958ca20",
+    "units": 69,
+    "translated": 69,
+    "canonical_translation_sha256": "0f03dc2708e54e97e5b09f356e33a97e6c40aeb1d4718831ddc49c3ac0bfeba3"
+  },
+  "13-03": {
+    "path": "Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer.html",
+    "source_sha256": "fe6efa64b2eef9c7ac686e92bd69005d71eefe6ebbb853a30c128321d549cbcf",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/A_Simple_Path_Tracer.pdf",
+    "pdf_sha256": "88335567518a9c2f928de1792d85b5a46d9333d00f9367c0150a5b9e92997bc0",
+    "units": 26,
+    "translated": 26,
+    "canonical_translation_sha256": "873ed7bf79010a303bb7468c52202011b125f4faca07d4f82b9355285ff6c7fb"
+  },
+  "13-exercises": {
+    "path": "Light_Transport_I_Surface_Reflection/Exercises.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/Exercises.html",
+    "source_sha256": "805a5674d1f1307110f5cdae3f07762524c6c14f44ef396aeeed250807cfb766",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Exercises.pdf",
+    "pdf_sha256": "c19368dda32390242e0ffb08d06946afd02e5733df3e0557a605454b028c7f36",
+    "units": 9,
+    "translated": 9,
+    "canonical_translation_sha256": "d5713c44cdebac11730e51d21ffbdb30e6649d3f0207ef83d9ef8dfe2e7c69a4"
+  },
+  "13-reading": {
+    "path": "Light_Transport_I_Surface_Reflection/Further_Reading.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/Further_Reading.html",
+    "source_sha256": "780279bc3aa3d1ef1183bb7d84f67ae7f3f5ded98576a057c275b10d3139a21d",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Further_Reading.pdf",
+    "pdf_sha256": "469b17b2df4c87d86a22eaac00dd663cf2e973cdb0933a8c013d923f4aa4b447",
+    "units": 172,
+    "translated": 47,
+    "canonical_translation_sha256": "442cf91ec453bde5bf9c91966df63f26d2b256055eba29fada81689eeecb47e5"
+  },
+  "13-02": {
+    "path": "Light_Transport_I_Surface_Reflection/Path_Tracing.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/Path_Tracing.html",
+    "source_sha256": "006ae065d9fe6388f09aa349c5003ed101c903e0e11373322cf3d47bb8681e79",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/Path_Tracing.pdf",
+    "pdf_sha256": "5e252d36736ff237835554194283fe098ca613fa201242f5f0d07a1a5671d8a1",
+    "units": 34,
+    "translated": 34,
+    "canonical_translation_sha256": "58acb151bfe765fe798089baeb73bc53e02d8e91843635c2b161a95d13a494b5"
+  },
+  "13-01": {
+    "path": "Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.html",
+    "archive_html": "html/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.html",
+    "source_sha256": "9fa23e7d4f0d44c600f3df6b707e3e9c70b7f7ccb768512a184f8d3daaa8c235",
+    "archive_pdf": "pdf/13_Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation.pdf",
+    "pdf_sha256": "f4aa0f9f89cde21b659ed6a5a6b928de33d2ee6fbce3dca9cc9d718993356646",
+    "units": 62,
+    "translated": 62,
+    "canonical_translation_sha256": "705512bdb9b58c5ca468dc31b3bc8ef51d45869492a5f16e17de6bbdf2fe400d"
+  }
+}

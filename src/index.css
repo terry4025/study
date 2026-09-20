@@ -2606,3 +2606,6 @@ kbd {
 .native-asset-error{font-size:13px;color:var(--warning)}
 .hide-hints .native-rich .translator-note.beginner{display:none}
 @media(max-width:600px){.native-rich .fragmentcode{font-size:12px;padding:12px}.native-rich .translator-note{padding:15px 18px}.native-rich h2{font-size:1.3em}}
+/* Long inline formulae scroll inside the line, not the entire mobile page. */
+.inline-formula{display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle;scrollbar-width:thin}
+.inline-formula math{white-space:nowrap}

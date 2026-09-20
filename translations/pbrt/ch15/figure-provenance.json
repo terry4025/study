@@ -1,0 +1,97 @@
+[
+  {
+    "chapter": 15,
+    "number": 1,
+    "image": "figure-15-1.png",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Wavefront_Rendering_on_GPUs.pdf",
+    "pdf_sha256": "42d8639ba75e0690b58aef18dfe91c76e0f4fe5d806fcaa465422d26ba447e26",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          533.8751220703125
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 15,
+    "number": 2,
+    "image": "figure-15-2.png",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Mapping_Path_Tracing_to_the_GPU.pdf",
+    "pdf_sha256": "52b47ba28c57bbb8f0f9eb4a61249658421cf32e05f9a634c998a8c82810941d",
+    "parts": [
+      {
+        "page": 7,
+        "rect": [
+          49.11433410644531,
+          544.49365234375,
+          547.679931640625,
+          805.19189453125
+        ]
+      }
+    ],
+    "captionPage": 8
+  },
+  {
+    "chapter": 15,
+    "number": 3,
+    "image": "figure-15-3.png",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Implementation_Foundations.pdf",
+    "pdf_sha256": "ee1b388d8699cceae1aac22df720236a33266ee87e9d14822efa3d3bb868c6e8",
+    "parts": [
+      {
+        "page": 2,
+        "rect": [
+          49.11433410644531,
+          375.65087890625,
+          547.679931640625,
+          591.2181396484375
+        ]
+      }
+    ],
+    "captionPage": 2
+  },
+  {
+    "chapter": 15,
+    "number": 4,
+    "image": "figure-15-4.png",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Implementation_Foundations.pdf",
+    "pdf_sha256": "ee1b388d8699cceae1aac22df720236a33266ee87e9d14822efa3d3bb868c6e8",
+    "parts": [
+      {
+        "page": 3,
+        "rect": [
+          49.11433410644531,
+          301.3173828125,
+          547.679931640625,
+          357.5985107421875
+        ]
+      }
+    ],
+    "captionPage": 3
+  },
+  {
+    "chapter": 15,
+    "number": 5,
+    "image": "figure-15-5.png",
+    "archive_pdf": "pdf/15_Wavefront_Rendering_on_GPUs/Implementation_Foundations.pdf",
+    "pdf_sha256": "ee1b388d8699cceae1aac22df720236a33266ee87e9d14822efa3d3bb868c6e8",
+    "parts": [
+      {
+        "page": 4,
+        "rect": [
+          49.11433410644531,
+          30.0,
+          547.679931640625,
+          324.67919921875
+        ]
+      }
+    ],
+    "captionPage": 4
+  }
+]
