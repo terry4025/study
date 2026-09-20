@@ -1,0 +1,1 @@
+2026-09-20: chapters 1, 2, and 3 translated. Validate serialization and preserve the current tracked source snapshot. No claim of full-book completion.
