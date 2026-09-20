@@ -1,1 +1,1 @@
-2026-09-20: chapters 1, 2, and 3 translated. Validate serialization and preserve the current tracked source snapshot. No claim of full-book completion.
+2026-09-20: chapters 1, 2, 3 have all source pages drafted; corrected malformed JSON in 03-reading. Validate and archive tracked inputs for local source-token comparison. Whole-book work is still in progress.
