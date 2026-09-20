@@ -15,19 +15,19 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: finish/pbrt-complete-source-20260920
-      - name: Repair two reviewed serialization typos
+      - name: Repair reviewed serialization delimiters only
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import json
-          for name in ['01-03','01-06']:
-              p=Path('translations/pbrt/ch01')/(name+'.ko.json')
+          for name,maximum in [('ch01/01-03',1),('ch01/01-06',1),('ch02/02-02',2)]:
+              p=Path('translations/pbrt')/(name+'.ko.json')
               text=p.read_text(encoding='utf8')
               bad='\",\"+\n\"\n '
               if bad in text:
-                  if text.count(bad)!=1:
+                  if text.count(bad)>maximum:
                       raise SystemExit('Unexpected serialization state')
-                  text=text.replace(bad,'\",\n ',1)
+                  text=text.replace(bad,'\",\n ')
                   json.loads(text)
                   p.write_text(text,encoding='utf8')
               else:
@@ -35,11 +35,11 @@ jobs:
           PY
       - name: Preserve the reviewed repair on the working branch
         run: |
-          if ! git diff --quiet -- translations/pbrt/ch01; then
+          if ! git diff --quiet -- translations/pbrt; then
             git config user.name 'pbrt-completion-check'
             git config user.email 'pbrt-completion-check@users.noreply.github.com'
-            git add -- translations/pbrt/ch01/01-03.ko.json translations/pbrt/ch01/01-06.ko.json
-            git commit -m 'fix(pbrt): remove accidental serialization delimiters in chapter 1'
+            git add -- translations/pbrt/ch01/01-03.ko.json translations/pbrt/ch01/01-06.ko.json translations/pbrt/ch02/02-02.ko.json
+            git commit -m 'fix(pbrt): remove reviewed serialization delimiters'
             git push origin HEAD:finish/pbrt-complete-source-20260920
           fi
       - name: Validate source data JSON and archive tracked inputs
