@@ -1,0 +1,45 @@
+name: PBRT completion snapshot
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pbrt-completion-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Parse all translation files and validate new appendix records
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, re
+          root = pathlib.Path('translations/pbrt')
+          files = list(root.rglob('*.ko.json'))
+          for path in files:
+              data = json.loads(path.read_text(encoding='utf-8'))
+              assert isinstance(data.get('translations'), dict), str(path)
+              for key, text in data['translations'].items():
+                  assert re.fullmatch(r'u[0-9]{4}', key), (str(path), key)
+                  assert isinstance(text, str) and text.strip(), (str(path), key)
+              kept = data.get('preserved_reference_ids', [])
+              assert not set(kept).intersection(data['translations']), str(path)
+              for note in data.get('notes', []):
+                  assert note['after'] in data['translations'], (str(path), note)
+                  assert note['title'].strip() and note['text'].strip(), str(path)
+          print('Parsed', len(files), 'translation files. This is a data check, not semantic review.')
+          PY
+      - name: Archive tracked source for supplied-source local validation
+        if: always()
+        run: |
+          git archive --format=tar.gz -o pbrt-completion-source.tar.gz HEAD src tools translations docs package.json package-lock.json tsconfig.json index.html
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: pbrt-completion-source
+          path: pbrt-completion-source.tar.gz
+          retention-days: 30
+          if-no-files-found: error
