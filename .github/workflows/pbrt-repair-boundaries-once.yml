@@ -1,0 +1,53 @@
+name: Repair reviewed JSON boundaries once
+on:
+  push:
+    branches: ['complete/pbrt-source-translation-20260921']
+    paths: ['.github/workflows/pbrt-repair-boundaries-once.yml']
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: github.repository == 'terry4025/study' && github.ref == 'refs/heads/complete/pbrt-source-translation-20260921'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: complete/pbrt-source-translation-20260921
+      - name: Repair only the four reviewed malformed separators
+        run: |
+          python3 - <<'PY'
+          import pathlib, hashlib, json
+          expected = {
+            'chB/B-05.ko.json': ('d0760c4f9c1ad7e3d121b13a0ede9488b39a4859', 1),
+            'chB/B-reading.ko.json': ('4bc0b461f1867260ba147af7e47e9df1e23ac8dd', 1),
+            'chC/C-01.ko.json': ('fbe08cb7919fa115d721153f337b298e5574ec2f', 1),
+            'ch01/01-02.ko.json': ('e8923f0ba4b966d438ce78b755d78e7827265f8f', 3),
+          }
+          changes = []
+          for name, (sha, count) in expected.items():
+              path = pathlib.Path('translations/pbrt') / name
+              raw = path.read_bytes()
+              actual = hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+              if actual != sha:
+                  raise SystemExit('Refusing to modify changed input: '+name)
+              old = '\",\" \n\"u'
+              new = '\",\n    \"u'
+              text = raw.decode('utf-8')
+              assert text.count(old) == count, name
+              fixed = text.replace(old, new)
+              data = json.loads(fixed)
+              assert isinstance(data['translations'], dict), name
+              changes.append((path, fixed))
+          for path, fixed in changes:
+              path.write_text(fixed, encoding='utf-8')
+          print('Repaired six separators in four exact, hash-checked files.')
+          PY
+      - name: Commit only these reviewed repairs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add translations/pbrt/chB/B-05.ko.json translations/pbrt/chB/B-reading.ko.json translations/pbrt/chC/C-01.ko.json translations/pbrt/ch01/01-02.ko.json
+          git diff --cached --check
+          git commit -m 'fix(pbrt): remove six stray JSON separator quotes in supplied-source translations'
+          git push origin HEAD:complete/pbrt-source-translation-20260921
