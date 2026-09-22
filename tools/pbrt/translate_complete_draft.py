@@ -16,7 +16,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 BASE = "https://pbr-book.org/4ed/"
-MODEL = "NHNDQ/nllb-finetuned-en2ko"
+MODEL = "Helsinki-NLP/opus-mt-en-ko"
 
 GROUPS = {
 "01":[("01-00","Introduction",5),("01-01","Introduction/A_Brief_History_of_Physically_Based_Rendering",36),("01-02","Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm",65),("01-03","Introduction/pbrt_System_Overview",96),("01-04","Introduction/How_to_Proceed_through_This_Book",19),("01-05","Introduction/Using_and_Understanding_the_Code",65),("01-06","Introduction/Literate_Programming",16),("01-reading","Introduction/Further_Reading",76),("01-exercises","Introduction/Exercises",2)],
