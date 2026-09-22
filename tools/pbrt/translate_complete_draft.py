@@ -31,7 +31,7 @@ GROUPS = {
 "B":[("B-00","Utilities",2),("B-01","Utilities/Mathematical_Infrastructure",182),("B-02","Utilities/User_Interaction",60),("B-03","Utilities/Containers_and_Memory_Management",70),("B-04","Utilities/Images",102),("B-05","Utilities/Statistics",24),("B-06","Utilities/Parallelism",105),("B-07","Utilities/System_Startup,_Cleanup,_and_Options",7),("B-reading","Utilities/Further_Reading",49),("B-exercises","Utilities/Exercises",5)],
 "C":[("C-00","Processing_the_Scene_Description",7),("C-01","Processing_the_Scene_Description/Tokenizing_and_Parsing",22),("C-02","Processing_the_Scene_Description/Managing_the_Scene_Description",77),("C-03","Processing_the_Scene_Description/BasicScene_and_Final_Object_Creation",17),("C-04","Processing_the_Scene_Description/Adding_New_Object_Implementations",6),("C-reading","Processing_the_Scene_Description/Further_Reading",8),("C-exercises","Processing_the_Scene_Description/Exercises",5)]
 }
-BATCHES={"core1":["02","03"],"core2":["04","05"],"core3":["06"],"core4":["07","08"],"appendices":[]}
+BATCHES={"ch02":["02"],"ch03":["03"],"ch04":["04"],"ch05":["05"],"ch06":["06"],"ch07":["07"],"ch08":["08"]}
 
 def norm(s:str)->str: return re.sub(r"\s+"," ",s).strip()
 
@@ -88,7 +88,7 @@ def translate_batch(texts, tokenizer, model):
         batch=texts[start:start+12]
         enc=tokenizer(batch,return_tensors="pt",padding=True,truncation=True,max_length=320)
         with torch.inference_mode():
-            out=model.generate(**enc,max_new_tokens=420,num_beams=3,early_stopping=True)
+            out=model.generate(**enc,max_new_tokens=420,num_beams=1)
         translated.extend(tokenizer.batch_decode(out,skip_special_tokens=True))
     return translated
 
