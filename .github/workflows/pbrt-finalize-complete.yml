@@ -1,0 +1,62 @@
+name: PBRT finalize complete source translations
+on:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - '.github/workflows/pbrt-finalize-complete.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  import-and-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      SOURCE_RUN: '35686230327'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/pbrt-complete-book-20260922
+          fetch-depth: 0
+      - name: Wait for chapter artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(ch02 ch03 ch04 ch05 ch06 ch07 ch08)
+          for attempt in {1..240}; do
+            names="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${SOURCE_RUN}/artifacts" --paginate --jq '.artifacts[].name' || true)"
+            missing=0
+            for ch in "${required[@]}"; do
+              if ! grep -qx "pbrt-translation-${ch}" <<<"$names"; then missing=1; fi
+            done
+            if [[ "$missing" == 0 ]]; then exit 0; fi
+            sleep 15
+          done
+          echo "Timed out waiting for chapter artifacts" >&2
+          exit 1
+      - name: Download and import chapters 2-8
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p generated
+          for ch in 02 03 04 05 06 07 08; do
+            gh run download "${SOURCE_RUN}" -n "pbrt-translation-ch${ch}" -D "generated/ch${ch}"
+            python tools/pbrt/import_translation_artifacts.py --input "generated/ch${ch}" --repo . --chapters "${ch}"
+          done
+      - name: Structural no-omission and Korean prose check
+        run: python tools/pbrt/check_complete_source_translations.py
+      - name: Commit completed source-aligned drafts
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add translations/pbrt/ch02 translations/pbrt/ch03 translations/pbrt/ch04 translations/pbrt/ch05 translations/pbrt/ch06 translations/pbrt/ch07 translations/pbrt/ch08
+          if git diff --cached --quiet; then
+            echo "No generated translation changes."
+          else
+            git commit -m "feat(pbrt): complete source-aligned Korean drafts for chapters 2-8"
+            git push origin HEAD:feat/pbrt-complete-book-20260922
+          fi
