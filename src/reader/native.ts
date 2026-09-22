@@ -113,7 +113,7 @@ function parseRecord(value: unknown): ImportedMeta {
         if(!isRecord(item)||!validId(item.id)||!hasString(item.text,300000)||ids.has(item.id))throw new Error('번역 검색 색인 형식이 올바르지 않습니다.');
         ids.add(item.id);
     }
-    if(value.sourceSection!=null&&(!hasString(value.sourceSection,20)||!/^\d+\.\d+$/.test(value.sourceSection)))throw new Error('원문 절 번호가 올바르지 않습니다.');
+    if(value.sourceSection!=null&&(!hasString(value.sourceSection,20)||!^(?:\\d+|[A-C])\\.\\d+$/.test(value.sourceSection)))throw new Error('원문 절 번호가 올바르지 않습니다.');
     return value as unknown as ImportedMeta;
 }
 export function validateNativeLesson(value: unknown, meta: ImportedMeta): Lesson {
