@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix:
-        batch: [core1, core2, core3, core4, appendices]
+        batch: [core1, core2, core3, core4]
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
