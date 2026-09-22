@@ -31,7 +31,7 @@ GROUPS = {
 "B":[("B-00","Utilities",2),("B-01","Utilities/Mathematical_Infrastructure",182),("B-02","Utilities/User_Interaction",60),("B-03","Utilities/Containers_and_Memory_Management",70),("B-04","Utilities/Images",102),("B-05","Utilities/Statistics",24),("B-06","Utilities/Parallelism",105),("B-07","Utilities/System_Startup,_Cleanup,_and_Options",7),("B-reading","Utilities/Further_Reading",49),("B-exercises","Utilities/Exercises",5)],
 "C":[("C-00","Processing_the_Scene_Description",7),("C-01","Processing_the_Scene_Description/Tokenizing_and_Parsing",22),("C-02","Processing_the_Scene_Description/Managing_the_Scene_Description",77),("C-03","Processing_the_Scene_Description/BasicScene_and_Final_Object_Creation",17),("C-04","Processing_the_Scene_Description/Adding_New_Object_Implementations",6),("C-reading","Processing_the_Scene_Description/Further_Reading",8),("C-exercises","Processing_the_Scene_Description/Exercises",5)]
 }
-BATCHES={"core1":["01","02","03"],"core2":["04","05"],"core3":["06"],"core4":["07","08"],"appendices":["A","B","C"]}
+BATCHES={"core1":["03"],"core2":["04","05"],"core3":["06"],"core4":["07","08"],"appendices":[]}
 
 def norm(s:str)->str: return re.sub(r"\s+"," ",s).strip()
 
@@ -126,7 +126,7 @@ def fetch(path):
     r.raise_for_status()
 
 def existing_override(repo:Path,key:str):
-    candidates=[repo/f"translations/pbrt/ch{key[:2]}/{key}.ko.json"] if key[:2].isdigit() else []
+    chapter_dir = "ch"+key.split("-",1)[0]\n    candidates=[repo/f"translations/pbrt/{chapter_dir}/{key}.ko.json"]
     for p in candidates:
         if p.is_file():
             d=json.loads(p.read_text(encoding="utf8"))
