@@ -1,0 +1,26 @@
+name: PBRT complete source export
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - 'translations/pbrt/**'
+      - 'src/reader/native.ts'
+      - 'tools/pbrt/**'
+      - '.github/workflows/pbrt-complete-export.yml'
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/upload-artifact@v5
+        with:
+          name: pbrt-complete-source
+          path: |
+            translations/pbrt
+            src/reader/native.ts
+            src/reader/books/pbrt/outline.ts
+            tools/pbrt
+          retention-days: 7
