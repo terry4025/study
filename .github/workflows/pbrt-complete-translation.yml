@@ -11,17 +11,13 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: pbrt-complete-translation-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   translate:
     strategy:
       fail-fast: false
       max-parallel: 7
       matrix:
-        batch: [ch02, ch03, ch04, ch05, ch06, ch07, ch08]
+        batch: [ch03, ch04, ch05, ch06, ch07, ch08]
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
@@ -45,4 +41,4 @@ jobs:
           path: generated/${{ matrix.batch }}
           retention-days: 7
 
-# final-pass-20260922
+# final-pass-20260922b
