@@ -15,9 +15,9 @@ jobs:
   translate:
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 7
       matrix:
-        batch: [core1, core2, core3, core4]
+        batch: [ch02, ch03, ch04, ch05, ch06, ch07, ch08]
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
