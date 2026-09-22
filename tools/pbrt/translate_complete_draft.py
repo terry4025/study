@@ -126,7 +126,8 @@ def fetch(path):
     r.raise_for_status()
 
 def existing_override(repo:Path,key:str):
-    chapter_dir = "ch"+key.split("-",1)[0]\n    candidates=[repo/f"translations/pbrt/{chapter_dir}/{key}.ko.json"]
+    chapter_dir = "ch" + key.split("-", 1)[0]
+    candidates = [repo / f"translations/pbrt/{chapter_dir}/{key}.ko.json"]
     for p in candidates:
         if p.is_file():
             d=json.loads(p.read_text(encoding="utf8"))
