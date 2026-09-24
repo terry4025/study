@@ -1,0 +1,26 @@
+name: PBRT MT quality comparison
+on:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - 'tools/pbrt/compare_mt_quality.py'
+      - '.github/workflows/pbrt-mt-quality.yml'
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with: { python-version: '3.11' }
+      - run: |
+          python -m pip install "torch==2.5.1" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install "transformers==4.46.3" sentencepiece requests beautifulsoup4 lxml safetensors
+      - run: python tools/pbrt/compare_mt_quality.py
+      - uses: actions/upload-artifact@v5
+        with:
+          name: pbrt-mt-quality-comparison
+          path: mt-quality-comparison.json
+          retention-days: 3
