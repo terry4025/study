@@ -32,7 +32,7 @@ jobs:
             r'기술 상태',r'우리는 를',r'\{\{\d+\}\}\s+s\b',r'\ba\s+\{\{'
           ]
           hits=[]
-          for ch in range(3,9):
+          for ch in range(2,9):
             for p in pathlib.Path(f'translations/pbrt/ch{ch:02d}').glob('*.ko.json'):
               d=json.loads(p.read_text(encoding='utf8'))
               for uid,t in d.get('translations',{}).items():
@@ -62,3 +62,5 @@ jobs:
 # rerun after chapter 2 realignment
 
 # rerun after reader regex repair
+
+# final rerun including chapter 2
