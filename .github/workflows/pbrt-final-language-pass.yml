@@ -58,3 +58,5 @@ jobs:
             git commit -m "fix(pbrt): final Korean language post-edit for chapters 3-8"
             git push origin HEAD:feat/pbrt-complete-book-20260922
           fi
+
+# rerun after chapter 2 realignment
