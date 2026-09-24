@@ -60,3 +60,5 @@ jobs:
           fi
 
 # rerun after chapter 2 realignment
+
+# rerun after reader regex repair
