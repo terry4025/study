@@ -24,3 +24,5 @@ jobs:
             src/reader/books/pbrt/outline.ts
             tools/pbrt
           retention-days: 7
+
+# final-pass export
