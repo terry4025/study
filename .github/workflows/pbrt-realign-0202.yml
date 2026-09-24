@@ -1,0 +1,55 @@
+name: PBRT realign chapter 2.2 only
+on:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - '.github/workflows/pbrt-realign-0202.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN: '35686230327'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/pbrt-complete-book-20260922
+          fetch-depth: 0
+      - name: Download aligned chapter 2 artifact
+        run: |
+          mkdir -p generated/ch02
+          gh run download "${SOURCE_RUN}" -n pbrt-translation-ch02 -D generated/ch02
+      - name: Replace only section 2.2 by source path
+        run: |
+          python3 - <<'PY'
+          import json,pathlib
+          root=pathlib.Path('generated/ch02')
+          candidates=list(root.rglob('02.json'))
+          assert len(candidates)==1,candidates
+          data=json.loads(candidates[0].read_text(encoding='utf8'))
+          target=None
+          for page in data['pages'].values():
+              if page.get('path')=='Monte_Carlo_Integration/Improving_Efficiency.html':
+                  target=page;break
+          assert target and target['source_units']==72
+          out={
+            'translations':target['translations'],
+            'preserved_reference_ids':target.get('preserved_reference_ids',[]),
+            'footnotes':target.get('footnotes',[]),
+            'notes':[],
+            'source_path':'Monte_Carlo_Integration/Improving_Efficiency',
+            'source_units':72,
+            'translation_method':target.get('translation_method','NLLB first pass')
+          }
+          pathlib.Path('translations/pbrt/ch02/02-02.ko.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+          PY
+      - name: Commit aligned 2.2
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add translations/pbrt/ch02/02-02.ko.json
+          git commit -m "fix(pbrt): restore source-aligned section 2.2" || true
+          git push origin HEAD:feat/pbrt-complete-book-20260922
