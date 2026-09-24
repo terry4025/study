@@ -1,0 +1,12 @@
+{
+  "translations": {
+    "u0000": "3 기하학 및 변환",
+    "u0001": "거의 모든 비보편적인 그래픽 프로그램은 점, 벡터 및 광선과 같은 수학적 구성을 나타내는 기하학적 수업의 기초 위에 구축된다. 이러한 수업은 시스템 전체에 편재하기 때문에 좋은 추상화 및 효율적인 구현이 중요하다. 이 장에서는 벡터와 벡터 및 광선과 같은 수학적 구성의 인터페이스와 구현을 제시한다. {{0}} 기하학적 기초. 이것들은 실제 장면 기하학(삼각형, 구면 등)을 나타내는 수업이 아니며, 이러한 수업은 장의 주제이다. {{1}}."
+  },
+  "preserved_reference_ids": [],
+  "footnotes": [],
+  "notes": [],
+  "source_path": "Geometry_and_Transformations",
+  "source_units": 2,
+  "translation_method": "NLLB first pass + checked manual overrides when available"
+}

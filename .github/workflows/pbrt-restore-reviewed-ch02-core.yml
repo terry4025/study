@@ -1,0 +1,36 @@
+name: PBRT restore reviewed chapter 2 core
+on:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - '.github/workflows/pbrt-restore-reviewed-ch02-core.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/pbrt-complete-book-20260922
+          fetch-depth: 0
+      - name: Restore reviewed chapter 2 core pages
+        run: |
+          git fetch origin complete/pbrt-source-translation-20260921
+          for f in 02-00 02-01 02-02; do
+            git show origin/complete/pbrt-source-translation-20260921:translations/pbrt/ch02/${f}.ko.json > translations/pbrt/ch02/${f}.ko.json
+          done
+          python3 - <<'PY'
+          import json,pathlib
+          for f in ['02-00','02-01','02-02']:
+              p=pathlib.Path('translations/pbrt/ch02')/(f+'.ko.json')
+              json.loads(p.read_text(encoding='utf8'))
+          print('reviewed chapter 2 core valid')
+          PY
+      - name: Commit reviewed restore
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add translations/pbrt/ch02/02-00.ko.json translations/pbrt/ch02/02-01.ko.json translations/pbrt/ch02/02-02.ko.json
+          git commit -m "fix(pbrt): restore reviewed chapter 2 core prose" || true
+          git push origin HEAD:feat/pbrt-complete-book-20260922

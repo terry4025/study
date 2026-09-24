@@ -1,0 +1,44 @@
+name: PBRT complete translation draft
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/pbrt-complete-book-20260922]
+    paths:
+      - 'tools/pbrt/translate_complete_draft.py'
+      - '.github/workflows/pbrt-complete-translation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  translate:
+    strategy:
+      fail-fast: false
+      max-parallel: 7
+      matrix:
+        batch: [ch03, ch04, ch05, ch06, ch07, ch08]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install translation runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "torch==2.5.1" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install "transformers==4.46.3" sentencepiece beautifulsoup4 lxml requests safetensors
+      - name: Generate source-aligned Korean drafts
+        env:
+          TOKENIZERS_PARALLELISM: 'false'
+        run: |
+          python tools/pbrt/translate_complete_draft.py --batch "${{ matrix.batch }}" --out "generated/${{ matrix.batch }}" --repo .
+      - uses: actions/upload-artifact@v5
+        with:
+          name: pbrt-translation-${{ matrix.batch }}
+          path: generated/${{ matrix.batch }}
+          retention-days: 7
+
+# final-pass-20260922b
