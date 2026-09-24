@@ -61,7 +61,7 @@ def clean(t):
   t=re.sub(r'[・]{3,}','',t);t=re.sub(r'\s+([,.!?;:])',r'\1',t);t=re.sub(r'\s{2,}',' ',t).strip()
   t=t.replace('분포로부터의 샘플링','분포에서의 샘플링').replace('분포로부터 샘플링','분포에서 샘플링').replace('분포로부터 샘플을','분포에서 샘플을')
   return t
-for ch in range(3,9):
+for ch in range(2,9):
   for p in sorted((ROOT/f"ch{ch:02d}").glob("*.ko.json")):
     d=json.loads(p.read_text(encoding="utf8"));changed=False
     if p.name not in REVIEWED:
